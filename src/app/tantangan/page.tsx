@@ -6,13 +6,13 @@ import {
   ChevronRight,
   Sparkles,
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Brain,
-  Award,
+  MessageCircle,
   type LucideIcon,
 } from "lucide-react";
 import Chip from "@/components/ui/Chip";
@@ -23,13 +23,13 @@ import challengesData from "@/content/challenges.json";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Brain,
-  Award,
+  MessageCircle,
   Sparkles,
 };
 

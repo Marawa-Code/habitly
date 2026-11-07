@@ -1,5 +1,5 @@
 {
-  "_note": "[PERLU DITINJAU TIM] Kuis penilaian diri ini bukan alat diagnosis klinis, melainkan kuesioner pemetaan kebutuhan latihan awal untuk remaja.",
+  "_note": "[PERLU DITINJAU TIM] Kuis refleksi diri ini bukan alat diagnosis klinis, melainkan kuesioner pemetaan kebutuhan latihan kebiasaan komunikasi awal untuk remaja.",
   "options": [
     { "value": 0, "label": "Tidak pernah" },
     { "value": 1, "label": "Kadang-kadang" },
@@ -10,58 +10,58 @@
     {
       "id": "q1",
       "challengeNo": 1,
-      "challengeId": "menjadi-pendengar",
+      "challengeId": "menjadi-pendengar-yang-baik",
       "isSafety": false,
-      "text": "Kamu merasa terlalu sibuk memikirkan responmu berikutnya sampai sulit benar-benar menyimak lawan bicara."
+      "text": "Kamu merasa terlalu sibuk memikirkan responmu berikutnya sampai sulit benar-benar menyimak apa yang sedang disampaikan lawan bicara."
     },
     {
       "id": "q2",
       "challengeNo": 2,
-      "challengeId": "belajar-mengobrol",
+      "challengeId": "menyapa-orang-baru",
       "isSafety": false,
-      "text": "Kamu merasa ragu atau bingung harus mulai dari mana saat ingin menyapa atau membuka obrolan santai."
+      "text": "Kamu merasa ragu atau canggung untuk memulai menyapa teman baru atau orang yang berpapasan denganmu di sekolah atau kampus."
     },
     {
       "id": "q3",
       "challengeNo": 3,
-      "challengeId": "mengatur-emosi",
+      "challengeId": "ngobrol-dengan-lawan-jenis",
       "isSafety": false,
-      "text": "Tubuhmu terasa tegang, tangan dingin, atau jantung berdegup kencang saat harus berhadapan dengan situasi baru."
+      "text": "Kamu merasa canggung atau tegang saat harus berbicara santai atau berdiskusi kerja kelompok dengan teman lawan jenis."
     },
     {
       "id": "q4",
       "challengeNo": 4,
-      "challengeId": "bicara-depan-umum",
+      "challengeId": "ngobrol-dengan-orang-mulai-dekat",
       "isSafety": false,
-      "text": "Kamu merasa cemas suaramu gemetar atau lupa kata-kata saat diminta berbicara di depan kelas atau kelompok."
+      "text": "Kamu merasa bingung mencari topik obrolan saat ingin membangun percakapan yang lebih akrab dengan teman yang mulai dekat."
     },
     {
       "id": "q5",
       "challengeNo": 5,
-      "challengeId": "bilang-tidak",
+      "challengeId": "berbicara-di-depan-umum",
       "isSafety": false,
-      "text": "Kamu merasa sulit menolak ajakan teman yang memberatkanmu karena takut dianggap tidak setia kawan."
+      "text": "Kamu merasa sangat gugup, suaramu gemetar, atau takut lupa kata-kata saat harus presentasi di depan kelas atau kelompok."
     },
     {
       "id": "q6",
       "challengeNo": 6,
-      "challengeId": "hubungan-sehat",
+      "challengeId": "bertanya-dan-menjawab-di-kelas",
       "isSafety": false,
-      "text": "Kamu merasa ragu untuk terbuka atau saling berbagi cerita secara jujur dengan teman sebayamu."
+      "text": "Kamu menahan diri untuk bertanya atau menjawab pertanyaan di kelas meskipun sebenarnya kamu tahu jawabannya atau ingin bertanya."
     },
     {
       "id": "q7",
       "challengeNo": 7,
-      "challengeId": "stop-overthinking",
+      "challengeId": "bilang-tidak",
       "isSafety": false,
-      "text": "Setelah selesai mengobrol, pikiranmu terus memutar ulang percakapan itu dan khawatir ada yang salah bicara."
+      "text": "Kamu merasa sulit menolak ajakan atau permintaan teman yang memberatkanmu karena takut membuat orang lain kecewa."
     },
     {
       "id": "q8",
       "challengeNo": 8,
-      "challengeId": "percaya-diri",
+      "challengeId": "menyampaikan-pendapat-dengan-sopan",
       "isSafety": false,
-      "text": "Kamu merasa minder saat membandingkan kemampuan bicaramu dengan orang lain yang terlihat lebih luwes."
+      "text": "Kamu memilih diam dan memendam ide atau pandanganmu dalam diskusi karena ragu mengemukakan perbedaan pendapat secara santun."
     },
     {
       "id": "q9",
@@ -75,7 +75,7 @@
       "challengeNo": null,
       "challengeId": null,
       "isSafety": true,
-      "text": "Apakah kamu merasa ditekan atau dipaksa melakukan hal yang membuat dirimu merasa sangat tertekan?"
+      "text": "Apakah kamu merasa ditekan atau dipaksa melakukan hal yang membuat dirimu merasa sangat tertekan oleh orang lain?"
     }
   ]
 }

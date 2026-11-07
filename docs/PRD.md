@@ -1,39 +1,55 @@
-# PRD: Habitly
+# PRD: Habitly: Latihan Kebiasaan Kecil untuk Remaja yang Ingin Lebih Percaya Diri Berkomunikasi
 
-Versi 0.2, 20 Oktober 2026. Platform: aplikasi web mobile-first (PWA) berbasis Next.js.
+Versi 0.3, 7 November 2026. Platform: aplikasi web mobile-first (PWA) berbasis Next.js.
 
 ## Masalah
 
-Remaja yang cemas secara sosial cenderung menghindari situasi komunikasi (bicara di kelas, memulai percakapan, bergaul). Semakin dihindari, semakin sulit dihadapi. Langkah pertama terasa terlalu besar dan tidak jelas.
+Remaja sering kali merasa canggung, ragu, atau kurang percaya diri dalam situasi komunikasi sehari-hari (menyapa orang baru, berbicara di kelas, mengobrol dengan lawan jenis, menyatakan pendapat, atau menolak ajakan). Tanpa latihan bertahap, mereka cenderung menghindar, sehingga rasa canggung semakin menetap.
 
-**Kesenjangan:** aplikasi motivasi dan habit tracker umum tidak memandu latihan bertahap yang spesifik untuk kecemasan sosial.
+**Kesenjangan:** Aplikasi motivasi atau habit tracker umum hanya mencatat target tanpa memberikan panduan tindakan komunikasi spesifik, sementara layanan konseling formal sering kali terasa terlalu berat atau intimidatif bagi remaja yang hanya ingin melatih rasa percaya diri sehari-hari.
 
-**Catatan data:** jangan mengarang statistik. Tandai `[PERLU SUMBER]` dan minta tim memverifikasi dari sumber resmi.
+**Positioning Produk:**
+- Habitly adalah alat bantu latihan kebiasaan komunikasi praktis, **BUKAN terapi atau diagnosis medis**.
+- Tidak menggunakan istilah diagnosis atau label klinis.
+- Seluruh 8 tantangan fokus murni pada keterampilan komunikasi sehari-hari di lingkungan sekolah, kelas, dan pertemanan.
+- Tugas tantangan dibingkai sopan dan etis (bukan PDKT/romantis, bukan menghubungi orang asing/internet).
 
 ## Pengguna
 
-- **Rani, 15 tahun, pelajar.** Pendiam, takut ditertawakan saat bicara di kelas, menghindari kerja kelompok. Tidak suka aplikasi yang terasa seperti "terapi".
-- **Dika, 19 tahun, mahasiswa baru.** Sulit memulai percakapan dengan teman baru dan ragu bertanya di perkuliahan. Ingin kebiasaan kecil tanpa tekanan.
+- **Rani, 15 tahun, pelajar.** Pendiam, canggung saat harus menyapa teman baru atau berbicara di depan kelas. Tidak suka aplikasi yang terasa kaku atau berbau "klinis".
+- **Dika, 19 tahun, mahasiswa baru.** Canggung saat harus mengobrol dengan teman sekelompok (termasuk lawan jenis) dan ragu menyampaikan pendapat dalam diskusi. Ingin kebiasaan kecil tanpa tekanan.
 
 ## Prinsip Produk
 
-1. **Tindakan, bukan motivasi.** Setiap hari ada satu tugas kecil yang jelas.
-2. **Kecil dan bertahap.** Tugas selesai dalam beberapa menit, naik tingkat perlahan, selalu ada "versi lebih ringan".
-3. **Tidak menghukum.** Melewatkan sehari tidak menghapus progres. Tidak ada peringkat atau perbandingan antar pengguna.
-4. **Aman dan jujur.** Alat bantu latihan, bukan terapi dan bukan diagnosis.
-5. **Hangat dan sederhana.** Bahasa Indonesia santai, tidak menghakimi, tanpa istilah klinis.
+1. **Tindakan komunikasi, bukan sekadar motivasi.** Setiap hari ada satu tugas komunikasi kecil yang jelas.
+2. **Kecil dan bertahap (Atomic Habits).** Tugas selesai dalam hitungan menit, naik tingkat perlahan, selalu ada "versi lebih ringan".
+3. **Tanpa pendekatan romantis atau kontak asing.** Latihan dilakukan di lingkungan yang sudah dikenal (sekolah, kelas, kampus, kegiatan kelompok).
+4. **Tidak menghukum.** Melewatkan sehari tidak menghapus progres. Tidak ada perbandingan atau kompetisi antar pengguna.
+5. **Aman, jujur, dan netral.** Tanpa klaim klinis atau penyembuhan.
+6. **Bahasa hangat dan santai.** Menggunakan bahasa Indonesia yang bersahabat bagi remaja ("kamu"), netral, tanpa prasangka.
 
 ## Tujuan
 
-- **T1.** Mengubah niat menjadi tindakan komunikasi kecil setiap hari.
-- **T2.** Jalur latihan yang naik tingkat bertahap sesuai kondisi pengguna.
-- **T3.** Progres yang terlihat (statistik, lencana).
-- **T4.** Prototipe stabil dan mudah didemokan dalam 7 menit.
+- **T1.** Mengubah niat berkomunikasi menjadi tindakan nyata lewat micro-task harian.
+- **T2.** Menghadirkan 8 tantangan komunikasi modular bertingkat (Pemula, Menengah, Lanjutan).
+- **T3.** Memperlihatkan perkembangan nyata (konsistensi harian, streak, lencana).
+- **T4.** Prototipe stabil, interaktif, dan mudah didemokan dalam 7 menit.
+
+## Delapan Tantangan Komunikasi
+
+1. **Menjadi Pendengar yang Baik** (14 hari, Pemula 1) - Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon.
+2. **Menyapa Orang Baru** (14 hari, Pemula 1) [Tersedia di Prototipe] - Membiasakan senyum ramah, kontak mata santai, dan sapaan wajar pada teman baru di sekolah/kampus.
+3. **Ngobrol dengan Lawan Jenis** (14 hari, Menengah 2) [Tersedia di Prototipe] - Percakapan sopan, wajar, dan tenang dalam interaksi belajar atau organisasi dengan teman lawan jenis tanpa unsur romantis.
+4. **Ngobrol dengan Orang yang Mulai Dekat** (14 hari, Menengah 2) [Tersedia di Prototipe] - Membuka obrolan santai seputar minat, hobi, dan keseharian dengan teman yang mulai akrab di lingkungan sekitar.
+5. **Berbicara di Depan Umum** (21 hari, Menengah 2) - Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok.
+6. **Bertanya dan Menjawab di Kelas** (7 hari, Pemula 1) - Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas.
+7. **Bilang Tidak** (7 hari, Pemula 1) - Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah.
+8. **Menyampaikan Pendapat dengan Sopan** (14 hari, Lanjutan 3) - Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun.
 
 ## Alur Utama
 
 1. Onboarding dan disclaimer, lalu persetujuan wajib.
-2. Kuis penilaian diri (8 pertanyaan tantangan + 2 pertanyaan keselamatan).
+2. Kuis refleksi kebutuhan komunikasi (8 pertanyaan tantangan + 2 pertanyaan keselamatan).
 3. Hasil kuis: profil netral (ringan/sedang/tinggi) dan anjuran bantuan jika skor tinggi.
 4. Rekomendasi 3 tantangan terbaik berdasarkan rumus kebutuhan dan penalti kesulitan.
 5. Beranda: satu micro-task harian (Atomic Habits: pemicu, tindakan, versi ringan, kalimat identitas).

@@ -9,6 +9,7 @@
 | 20 Okt 2026 | Konten sebagai JSON statis terpisah dari kode | Mudah diadaptasi jika studi kasus hari-H berbeda |
 | 7 Nov 2026 | Evolusi konsep: 1 jalur bertingkat menjadi 8 Tantangan terarah | Menyesuaikan kebutuhan pengguna remaja dengan konteks kecemasan sosial yang berbeda-beda; tiap tantangan berpendekatan Atomic Habits (pemicu, aksi mikroskopik, versi lebih ringan, dan pernyataan identitas). |
 | 7 Nov 2026 | Algoritma rekomendasi matematis dengan penalti kesulitan | Menyeimbangkan kebutuhan intervensi pengguna dengan kesiapan kapasitas psikologis tanpa model ML. |
+| 7 Nov 2026 | Penajaman Judul & Positioning: "Habitly: Latihan Kebiasaan Kecil untuk Remaja yang Ingin Lebih Percaya Diri Berkomunikasi" | Memfokuskan seluruh 8 tantangan hanya pada keterampilan komunikasi praktis sehari-hari, menanggalkan istilah klinis/diagnosis medis. Tantangan 2, 3, dan 4 dipilih sebagai konten prototipe bertingkat. Batasan etika ketat: interaksi lawan jenis & teman dekat non-romantis di lingkungan yang dikenal, tanpa kontak orang asing/internet. |
 
 Tambahkan baris baru untuk setiap keputusan teknis penting (konteks, pilihan, alasan).
 

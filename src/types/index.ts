@@ -28,7 +28,7 @@ export interface Challenge {
   durationDays: number;
   difficulty: Difficulty;
   focus: string;
-  available: boolean;     // true untuk tantangan aktif di prototipe (1, 2, 4)
+  available: boolean;     // true untuk tantangan aktif di prototipe (2, 3, 4)
 }
 
 export interface ChallengeTask {

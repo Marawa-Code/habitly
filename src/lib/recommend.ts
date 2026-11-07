@@ -30,7 +30,7 @@ export function recommendChallenges(
   // Hitung nilai per tantangan
   const scored = challenges
     .filter((c) => {
-      // Hubungan Sehat (kesulitan 3) hanya jika sudah pernah menyelesaikan min 1 tantangan
+      // Tantangan tingkat lanjutan (kesulitan 3: Menyampaikan Pendapat dengan Sopan) hanya jika sudah pernah menyelesaikan min 1 tantangan
       if (c.difficulty === 3 && completedChallengeIds.length === 0) {
         return false;
       }
@@ -50,8 +50,13 @@ export function recommendChallenges(
       };
     });
 
-  // Urutkan nilai_i menurun; seri: kesulitan lebih rendah dulu, lalu nomor tantangan
+  // Urutkan:
+  // Prioritaskan tantangan dengan konten prototipe tersedia (available: true) agar tidak terhalang "Segera hadir" saat mulai
+  // Kemudian nilai_i menurun; jika seri: kesulitan lebih rendah dulu, lalu nomor tantangan
   scored.sort((a, b) => {
+    if (a.challenge.available !== b.challenge.available) {
+      return a.challenge.available ? -1 : 1;
+    }
     if (b.nilai !== a.nilai) {
       return b.nilai - a.nilai;
     }

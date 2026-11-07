@@ -13,12 +13,13 @@ import {
   Target,
   ArrowRight,
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Award,
+  MessageCircle,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
@@ -32,13 +33,13 @@ import challengeTasksData from "@/content/challenge_tasks.json";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Brain,
-  Award,
+  MessageCircle,
   Sparkles,
 };
 

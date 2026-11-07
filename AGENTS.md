@@ -1,12 +1,14 @@
-# AGENTS.md: Habitly
+# AGENTS.md: Habitly: Latihan Kebiasaan Kecil untuk Remaja yang Ingin Lebih Percaya Diri Berkomunikasi
 
-Titik masuk untuk AI agent. Baca file ini dulu, lalu buka dokumen di `docs/` sesuai tugas. Jika ada konflik antar dokumen, `docs/PRD.md` dan file ini yang berlaku. Terakhir diperbarui: 20 Oktober 2026.
+Titik masuk untuk AI agent. Baca file ini dulu, lalu buka dokumen di `docs/` sesuai tugas. Jika ada konflik antar dokumen, `docs/PRD.md` dan file ini yang berlaku. Terakhir diperbarui: 7 November 2026.
 
 ## Ringkasan
 
-**Habitly** adalah aplikasi web mobile-first (PWA) berbasis **Next.js** untuk remaja dengan kecemasan sosial dan hambatan komunikasi. Pengguna dipandu membangun rasa percaya diri berkomunikasi lewat latihan kebiasaan kecil harian (pendekatan *Atomic Habits*): kuis penilaian diri, rekomendasi tantangan personal, micro-task harian dengan jurnal refleksi, pelacakan progres (statistik, lencana), dan komunitas yang aman.
+**Habitly: Latihan Kebiasaan Kecil untuk Remaja yang Ingin Lebih Percaya Diri Berkomunikasi** adalah aplikasi web mobile-first (PWA) berbasis **Next.js** untuk remaja yang ingin membangun rasa percaya diri dalam berkomunikasi sehari-hari. Fokus produk sepenuhnya pada **keterampilan komunikasi** praktis di lingkungan nyata (sekolah, kelas, pertemanan, organisasi) tanpa menggunakan label diagnosis klinis.
 
-Pembeda: aplikasi motivasi dan habit tracker yang ada berhenti pada motivasi pasif. Habitly memberi **tindakan kecil yang spesifik, bertingkat, dan terukur**.
+Pengguna dipandu lewat latihan kebiasaan kecil harian (pendekatan *Atomic Habits*): kuis refleksi kebutuhan komunikasi, rekomendasi tantangan personal, micro-task harian bertingkat dengan jurnal refleksi, pelacakan progres konsistensi (statistik, lencana), dan ruang dukungan yang aman.
+
+Pembeda: aplikasi motivasi dan habit tracker yang ada berhenti pada motivasi pasif. Habitly memberi **tindakan kecil yang spesifik, bertingkat, dan terukur**. Semua tantangan HANYA tentang komunikasi.
 
 Proyek ini dibuat untuk **Hackathon FIRETECH 2026** (tema: *Harmonizing Tech and Humanity: Creating Solutions for a Better Society*).
 

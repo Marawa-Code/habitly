@@ -76,7 +76,7 @@ Untuk setiap tantangan $i$ ($i = 1..8$):
 **Aturan pemeringkatan:**
 1. Urutkan secara menurun berdasarkan $\text{nilai}_i$.
 2. Jika seri: dahulukan tantangan dengan tingkat kesulitan lebih rendah, lalu nomor urut tantangan terkecil.
-3. Tantangan *Hubungan Sehat* (kesulitan 3) hanya boleh direkomendasikan jika pengguna sudah pernah menyelesaikan minimal 1 tantangan sebelumnya (`completedChallengeIds.length >= 1`).
+3. Tantangan tingkat lanjutan (*Menyampaikan Pendapat dengan Sopan*, kesulitan 3) hanya boleh direkomendasikan jika pengguna sudah pernah menyelesaikan minimal 1 tantangan sebelumnya (`completedChallengeIds.length >= 1`).
 4. Ambil 3 tantangan teratas:
    - Peringkat 1: "Mulai dari sini"
    - Peringkat 2 & 3: "Bisa kamu coba berikutnya"

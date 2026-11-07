@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Brain,
-  Award,
+  MessageCircle,
   Sparkles,
   Heart,
   ChevronRight,
@@ -28,13 +28,13 @@ import type { QuizResult, Challenge } from "@/types";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Ear,
-  MessageCircle,
-  HeartPulse,
+  UserPlus,
+  Users,
+  MessageSquare,
   Mic,
+  HelpCircle,
   Shield,
-  HeartHandshake,
-  Brain,
-  Award,
+  MessageCircle,
   Sparkles,
 };
 

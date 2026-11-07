@@ -1,194 +1,191 @@
 [
   {
-    "id": "ct-mp-1",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-1",
+    "challengeId": "menyapa-orang-baru",
     "day": 1,
-    "trigger": "Setelah duduk di samping teman atau seseorang yang sedang berbicara",
-    "text": "Fokuskan pandanganmu dan dengarkan satu kalimat penuh tanpa memikirkan apa yang akan kamu katakan berikutnya.",
-    "easierText": "Dengarkan orang berbicara selama 15 detik dengan hening dan perhatikan nada bicaranya.",
-    "identityStatement": "Aku sedang menjadi orang yang hadir penuh untuk orang lain."
+    "trigger": "Setelah bel istirahat berbunyi atau saat berpapasan di lorong kelas",
+    "text": "Memberikan senyuman ramah dan mengangguk pelan pada satu teman seangkatan yang berpapasan denganmu.",
+    "easierText": "Memberikan senyuman tipis dan kontak mata sekilas (1-2 detik) saat berpapasan tanpa harus mengangguk.",
+    "identityStatement": "Aku adalah pribadi yang ramah dan terbuka menyapa sekitarku."
   },
   {
-    "id": "ct-mp-2",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-2",
+    "challengeId": "menyapa-orang-baru",
     "day": 2,
-    "trigger": "Setelah seseorang selesai menceritakan sesuatu kepadamu hari ini",
-    "text": "Berikan satu anggukan perlahan dan respon singkat: \"Oh begitu ya\" atau \"Wah, terus gimana?\".",
-    "easierText": "Cukup berikan anggukan lembut dan senyuman ramah saat mereka menatapmu.",
-    "identityStatement": "Aku sedang menjadi pendengar yang hangat dan menghargai."
+    "trigger": "Setelah duduk di kelas atau meja kelompok",
+    "text": "Mengucapkan sapaan singkat 'Pagi!' atau 'Hai!' dengan suara jelas pada teman yang duduk di dekatmu.",
+    "easierText": "Mengucapkan salam atau sapaan pendek saat teman tersebut lebih dulu menatapmu.",
+    "identityStatement": "Aku sedang belajar membiasakan suara ramahku terdengar."
   },
   {
-    "id": "ct-mp-3",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-3",
+    "challengeId": "menyapa-orang-baru",
     "day": 3,
-    "trigger": "Setelah mendengar teman menyebutkan satu hal yang ia sukai atau keluhkan",
-    "text": "Ulangi satu kata kunci penting dari ceritanya untuk memastikan kamu memahaminya.",
-    "easierText": "Ingat satu nama atau fakta yang teman sebutkan dan catat di kepalamu.",
-    "identityStatement": "Aku sedang menjadi pendengar yang penuh perhatian."
+    "trigger": "Setelah teman sekelas meminjamkan barang atau membukakan pintu",
+    "text": "Mengucapkan 'Makasih banyak ya!' sambil menyebut nama atau memandang wajahnya dengan tulus.",
+    "easierText": "Mengucapkan 'Terima kasih ya' dengan senyum singkat.",
+    "identityStatement": "Aku menghargai setiap kebaikan kecil dari orang lain."
   },
   {
-    "id": "ct-mp-4",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-4",
+    "challengeId": "menyapa-orang-baru",
     "day": 4,
-    "trigger": "Setelah ada jeda obrolan selama 2-3 detik saat mengobrol",
-    "text": "Tahan diri untuk tidak langsung memotong atau panik mengisi keheningan; biarkan mengalir tenang.",
-    "easierText": "Tarik napas perlahan satu kali saat terjadi jeda obrolan tanpa merasa bersalah.",
-    "identityStatement": "Aku sedang menjadi pribadi yang tenang dalam percakapan."
+    "trigger": "Setelah bertemu teman baru yang belum terlalu akrab saat jam istirahat",
+    "text": "Memperkenalkan diri secara santai: 'Halo, kenalin aku [Nama], kamu yang kemarin ikut kegiatan [kegiatan] juga ya?'",
+    "easierText": "Menyapa dengan menyebut nama panggilannya saat melihat name tag atau mendengar temannya memanggil.",
+    "identityStatement": "Aku berani mengenalkan diriku dengan tenang dan percaya diri."
   },
   {
-    "id": "ct-mp-5",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-5",
+    "challengeId": "menyapa-orang-baru",
     "day": 5,
-    "trigger": "Setelah teman menceritakan pengalaman atau ceritanya hari ini",
-    "text": "Tanyakan satu pertanyaan lanjutan sederhana: \"Terus rasanya gimana waktu itu?\".",
-    "easierText": "Tanyakan respon pendek: \"Seru gak?\".",
-    "identityStatement": "Aku sedang menjadi teman yang peduli pada perasaan orang lain."
+    "trigger": "Setelah duduk bersebelahan sebelum kelas atau kegiatan dimulai",
+    "text": "Menanyakan pertanyaan santai seputar situasi: 'Buku catatan tugas tadi sudah dikumpulin belum ya?'",
+    "easierText": "Menanyakan waktu atau jadwal pelajaran berikutnya ke teman di samping.",
+    "identityStatement": "Aku nyaman memulai topik kecil dari hal-hal di sekitarku."
   },
   {
-    "id": "ct-mp-6",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-6",
+    "challengeId": "menyapa-orang-baru",
     "day": 6,
-    "trigger": "Setelah mengobrol dengan seseorang hari ini",
-    "text": "Ucapkan terima kasih singkat: \"Makasih ya udah cerita ke aku\".",
-    "easierText": "Kirimkan stiker jempol atau senyum ramah di chat setelah mengobrol.",
-    "identityStatement": "Aku sedang menjadi tempat yang aman untuk berbagi cerita."
+    "trigger": "Setelah kegiatan kelompok atau tugas kelas selesai",
+    "text": "Memberikan pujian atau apresiasi sederhana pada teman baru: 'Keren tadi idemu pas diskusi!'",
+    "easierText": "Mengangguk setuju dan tersenyum saat teman baru tersebut mengutarakan ide.",
+    "identityStatement": "Aku senang mengapresiasi dan menghargai orang lain."
   },
   {
-    "id": "ct-mp-7",
-    "challengeId": "menjadi-pendengar",
+    "id": "task-2-7",
+    "challengeId": "menyapa-orang-baru",
     "day": 7,
-    "trigger": "Setelah berdiskusi ringan di kelas atau kelompok",
-    "text": "Rangkum inti cerita teman dalam satu kalimat: \"Jadi intinya kamu merasa ... ya?\".",
-    "easierText": "Setujui satu poin terbaik dari pendapat teman dengan berkata: \"Setuju sama bagian itu\".",
-    "identityStatement": "Aku sedang menjadi pendengar aktif yang mengerti sudut pandang orang lain."
+    "trigger": "Setelah jam pulang sekolah atau kampus",
+    "text": "Melambaikan tangan sambil tersenyum dan mengucapkan 'Sampai besok ya!' ke teman yang searah pulang.",
+    "easierText": "Mengangguk ramah dan tersenyum saat berpisah di gerbang atau pintu kelas.",
+    "identityStatement": "Aku terbiasa mengakhiri pertemuan dengan kesan yang hangat."
   },
-
   {
-    "id": "ct-bm-1",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-1",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 1,
-    "trigger": "Setelah berpapasan dengan teman sekelas atau kenalan di koridor",
-    "text": "Tatap matanya sebentar dan ucapkan sapaan ringan: \"Pagi\" atau \"Hai, Duluan ya\".",
-    "easierText": "Cukup lemparkan senyuman tipis dan anggukan saat berpapasan.",
-    "identityStatement": "Aku sedang menjadi pribadi yang ramah dan terbuka."
+    "trigger": "Setelah berpapasan di lorong kelas atau ruang organisasi",
+    "text": "Mengangguk sopan dan memberikan senyuman ramah pada teman lawan jenis yang sekelas atau satu organisasi.",
+    "easierText": "Menjaga kontak mata sejenak (1 detik) dengan ekspresi wajah rileks saat berpapasan.",
+    "identityStatement": "Aku memandang teman lawan jenis secara wajar dan setara tanpa rasa canggung berlebihan."
   },
   {
-    "id": "ct-bm-2",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-2",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 2,
-    "trigger": "Setelah berdiri atau duduk di dekat seseorang yang sedang menunggu",
-    "text": "Komentari situasi sekitar secara netral: \"Hari ini panas banget ya\" atau \"Tugas tadi lumayan juga ya\".",
-    "easierText": "Katakan permisi saat lewat di dekat orang lain dengan suara yang terdengar jelas.",
-    "identityStatement": "Aku sedang melatih keberanian memulai interaksi kecil."
+    "trigger": "Setelah masuk ruang kelas atau ruang rapat kelompok",
+    "text": "Mengucapkan sapaan netral dan sopan seperti 'Pagi' atau 'Halo' saat duduk di dekat teman lawan jenis satu kelompok.",
+    "easierText": "Membalas sapaan teman lawan jenis dengan nada ramah dan senyuman.",
+    "identityStatement": "Aku mampu menyapa siapa pun di lingkungan belajarku dengan tenang."
   },
   {
-    "id": "ct-bm-3",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-3",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 3,
-    "trigger": "Setelah menerima bantuan kecil atau bertransaksi di kantin/toko",
-    "text": "Ucapkan terima kasih sambil menyebut nama orangnya atau memandang wajahnya dengan ramah.",
-    "easierText": "Ucapkan terima kasih dengan nada suara yang ceria dan mantap.",
-    "identityStatement": "Aku sedang menjadi orang yang menghargai keberadaan orang lain."
+    "trigger": "Setelah penjelasan guru atau pembagian tugas kelompok",
+    "text": "Menanyakan pertanyaan objektif terkait tugas atau materi ke teman lawan jenis: 'Bagian nomor 3 tadi instruksinya gimana ya?'",
+    "easierText": "Menanyakan hal administratif sederhana seperti 'Kertas tugasnya dikumpul ke siapa ya?'",
+    "identityStatement": "Aku fokus pada topik tugas dan kerja sama yang baik."
   },
   {
-    "id": "ct-bm-4",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-4",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 4,
-    "trigger": "Setelah menyapa seorang teman di waktu istirahat",
-    "text": "Lanjutkan dengan satu pertanyaan terbuka ringan: \"Tadi pulang naik apa?\" atau \"Udah ngerjain tugas belum?\".",
-    "easierText": "Tanyakan pertanyaan ya/tidak: \"Udah makan belum?\".",
-    "identityStatement": "Aku sedang menjadi teman mengobrol yang asyik."
+    "trigger": "Setelah teman lawan jenis memberikan ide atau pendapat dalam diskusi kelompok",
+    "text": "Merespons pendapatnya dengan sopan: 'Ide kamu bagus, bisa kita masukkan ke poin kedua kelompok.'",
+    "easierText": "Mengangguk setuju dan mencatat poin yang dia sampaikan ke lembar tugas kelompok.",
+    "identityStatement": "Aku menghargai masukan teman dalam diskusi bersama secara profesional."
   },
   {
-    "id": "ct-bm-5",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-5",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 5,
-    "trigger": "Setelah teman menjawab pertanyaanmu dalam obrolan",
-    "text": "Bagikan pengalaman singkatmu yang berkaitan dalam 1-2 kalimat: \"Oh aku juga kemarin gitu...\".",
-    "easierText": "Berikan reaksi yang mendukung: \"Wah asyik juga ya kalau begitu\".",
-    "identityStatement": "Aku sedang belajar bertukar cerita secara dua arah."
+    "trigger": "Setelah selesai mengerjakan tugas bersama di kelas",
+    "text": "Mengucapkan terima kasih atas kerja samanya: 'Makasih kerja samanya ya buat tugas hari ini.'",
+    "easierText": "Memberikan senyum apresiasi saat tugas selesai.",
+    "identityStatement": "Aku terbiasa membangun atmosfer kerja kelompok yang saling menghargai."
   },
   {
-    "id": "ct-bm-6",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-6",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 6,
-    "trigger": "Setelah mengobrol lebih dari 1 menit dengan seseorang",
-    "text": "Tutup obrolan dengan santai tanpa canggung: \"Eh duluan ya, mau ke sana dulu\".",
-    "easierText": "Pamit dengan senyuman dan lambaian tangan singkat.",
-    "identityStatement": "Aku memegang kendali atas awal dan akhir percakapanku."
+    "trigger": "Setelah jam istirahat di area kelas bersama teman-teman",
+    "text": "Ikut menanggapi topik obrolan umum yang sedang dibahas kelompok (tentang tugas atau kegiatan) dengan 1 kalimat wajar.",
+    "easierText": "Menyimak obrolan dengan kontak mata terbuka dan tersenyum pada hal menarik yang dibahas.",
+    "identityStatement": "Aku nyaman berada di lingkungan pergaulan yang sehat dan seimbang."
   },
   {
-    "id": "ct-bm-7",
-    "challengeId": "belajar-mengobrol",
+    "id": "task-3-7",
+    "challengeId": "ngobrol-dengan-lawan-jenis",
     "day": 7,
-    "trigger": "Setelah melihat teman membawa barang atau mengenakan sesuatu yang menarik",
-    "text": "Berikan satu pujian yang tulus: \"Tas kamu bagus deh, beli di mana?\".",
-    "easierText": "Kagumi barang tersebut dalam hati dan ucapkan: \"Keren tuh\".",
-    "identityStatement": "Aku sedang menjadi pribadi positif yang membawa energi baik."
+    "trigger": "Setelah diskusi atau kegiatan bersama selesai",
+    "text": "Mengonfirmasi pembagian peran tugas secara jelas: 'Nanti bagian materi ini aku yang rapikan, kamu yang bagian grafik ya?'",
+    "easierText": "Mengonfirmasi tenggat waktu tugas kelompok secara singkat: 'Kita kumpul besok siang kan ya?'",
+    "identityStatement": "Aku adalah rekan kerja tim yang komunikatif, jelas, dan dapat diandalkan."
   },
-
   {
-    "id": "ct-bd-1",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-1",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 1,
-    "trigger": "Setelah berada di kamar atau ruangan pribadi sendirian",
-    "text": "Berlatihlah membaca satu paragraf teks berita atau buku dengan suara lantang dan artikulasi tegas.",
-    "easierText": "Ucapkan nama lengkap dan hobimu dengan suara mantap di depan cermin.",
-    "identityStatement": "Aku sedang melatih suaraku agar terdengar jelas dan percaya diri."
+    "trigger": "Setelah menyapa teman yang mulai sering berinteraksi denganmu di kelas",
+    "text": "Menanyakan kabarnya secara lebih hangat: 'Gimana harimu hari ini, banyak tugas nggak?'",
+    "easierText": "Menanyakan 'Lagi sibuk ngerjain apa sekarang?' sambil tersenyum.",
+    "identityStatement": "Aku peduli dan terbuka membangun kedekatan pertemanan yang sehat."
   },
   {
-    "id": "ct-bd-2",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-2",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 2,
-    "trigger": "Setelah guru atau pemateri membuka sesi di kelas",
-    "text": "Duduklah dengan postur tegak, buka bahu, dan letakkan kedua tangan di atas meja dengan rileks.",
-    "easierText": "Tarik napas diafragma 4 detik, tahan 4 detik, lalu buang perlahan 4 detik sebelum pelajaran dimulai.",
-    "identityStatement": "Tubuhku menunjukkan kesiapan dan rasa tenang."
+    "trigger": "Setelah melihat barang atau aksesori yang dia kenakan (stiker botol minum, pin tas, atau buku)",
+    "text": "Mengajukan pertanyaan tentang minatnya: 'Eh, stiker di botol minummu lucu, itu karakter dari mana?'",
+    "easierText": "Mengamati minatnya dan memberikan pujian singkat: 'Bagus ya desain stikernya.'",
+    "identityStatement": "Aku tertarik mengenal hal-hal positif yang disukai temanku."
   },
   {
-    "id": "ct-bd-3",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-3",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 3,
-    "trigger": "Setelah guru bertanya secara umum ke seluruh kelas: \"Ada yang tahu?\"",
-    "text": "Jawab serentak bersama teman-teman dengan suara lantang dan yakin.",
-    "easierText": "Bisikkan jawaban yang benar kepada teman sebangkumu.",
-    "identityStatement": "Aku memiliki suara yang pantas didengar."
+    "trigger": "Setelah jeda antar pelajaran atau jam istirahat",
+    "text": "Menceritakan cerita kecil (1-2 kalimat) yang relevan: 'Tadi pagi aku hampir telat gara-gara macet di persimpangan jalan.'",
+    "easierText": "Menanggapi ceritanya dengan menceritakan pengalaman serupa secara singkat.",
+    "identityStatement": "Aku berani berbagi cerita ringan agar percakapan lebih akrab."
   },
   {
-    "id": "ct-bd-4",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-4",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 4,
-    "trigger": "Setelah sesi belajar kelompok kecil dimulai",
-    "text": "Sampaikan satu usulan atau ide singkat: \"Gimana kalau kita bagi tugas ini dulu?\".",
-    "easierText": "Tulis ide usulanmu di kertas catatan kelompok.",
-    "identityStatement": "Aku berkontribusi aktif dalam tim."
+    "trigger": "Setelah temanmu menceritakan sesuatu hal yang terjadi padanya",
+    "text": "Memberikan tanggapan aktif dengan bertanya balik: 'Terus kelanjutannya gimana?' atau 'Wah seru, sejak kapan kamu suka itu?'",
+    "easierText": "Mengangguk antusias dan berkata 'Seru banget ya ceritanya!'",
+    "identityStatement": "Aku adalah teman mengobrol yang antusias dan menyenangkan."
   },
   {
-    "id": "ct-bd-5",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-5",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 5,
-    "trigger": "Setelah ada materi yang belum kamu pahami sepenuhnya di kelas",
-    "text": "Angkat tangan dan ajukan satu pertanyaan klarifikasi: \"Pak/Bu, bagian tadi maksudnya bagaimana ya?\".",
-    "easierText": "Tulis pertanyaanmu di secarik kertas untuk ditanyakan saat kelas selesai.",
-    "identityStatement": "Aku berani bertanya demi perkembangan diriku."
+    "trigger": "Setelah selesai makan siang atau istirahat bersama",
+    "text": "Menanyakan rencananya di akhir pekan terkait hobi atau istirahat: 'Ada rencana seru nggak akhir pekan ini?'",
+    "easierText": "Menanyakan apakah dia menonton film atau mendengarkan lagu baru minggu ini.",
+    "identityStatement": "Aku nyaman mengobrol santai di luar topik tugas dan pelajaran."
   },
   {
-    "id": "ct-bd-6",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-6",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 6,
-    "trigger": "Setelah diminta berbicara atau membaca di hadapan kelompok",
-    "text": "Lakukan kontak mata bergantian dengan 2 orang berbeda selama masing-masing 2 detik.",
-    "easierText": "Arahkan pandangan ke dahi atau antara kedua alis lawan bicara.",
-    "identityStatement": "Aku mampu menatap audiens dengan tenang."
+    "trigger": "Saat temanmu tampak lelah atau membutuhkan bantuan kecil di kelas",
+    "text": "Menawarkan bantuan atau empati hangat: 'Kelihatan capek banget hari ini, ada yang bisa kubantu?'",
+    "easierText": "Memberikan semangat singkat: 'Semangat ya, dikit lagi selesai kok tugasnya.'",
+    "identityStatement": "Aku adalah teman yang suportif dan peka terhadap kondisi sekitar."
   },
   {
-    "id": "ct-bd-7",
-    "challengeId": "bicara-depan-umum",
+    "id": "task-4-7",
+    "challengeId": "ngobrol-dengan-orang-mulai-dekat",
     "day": 7,
-    "trigger": "Setelah selesai berbicara atau presentasi singkat",
-    "text": "Tutup dengan kalimat tegas dan senyuman: \"Sekian dari saya, terima kasih teman-teman\".",
-    "easierText": "Ucapkan terima kasih tanpa terburu-buru menundukkan kepala.",
-    "identityStatement": "Aku berani menyelesaikan apa yang sudah kumulai dengan bangga."
+    "trigger": "Saat menemukan hal menarik seputar hobi atau kegiatan yang sama-sama kalian sukai",
+    "text": "Mengajak diskusi singkat: 'Kemarin aku baca kabar tentang [topik/kegiatan], menurutmu gimana?'",
+    "easierText": "Menyebutkan kesamaan: 'Ternyata kita sama-sama suka [topik/hobi] ya!'",
+    "identityStatement": "Aku mampu membangun ikatan pertemanan yang bermakna lewat minat bersama."
   }
 ]
-

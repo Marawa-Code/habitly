@@ -1,82 +1,82 @@
 [
   {
-    "id": "menjadi-pendengar",
+    "id": "menjadi-pendengar-yang-baik",
     "no": 1,
     "name": "Menjadi Pendengar yang Baik",
     "icon": "Ear",
-    "durationDays": 21,
-    "difficulty": 1,
-    "focus": "Mendengar aktif dan penuh perhatian agar tidak tegang memikirkan respon sendiri",
-    "available": true
-  },
-  {
-    "id": "belajar-mengobrol",
-    "no": 2,
-    "name": "Belajar Mengobrol",
-    "icon": "MessageCircle",
     "durationDays": 14,
-    "difficulty": 2,
-    "focus": "Berani memulai dan menjaga percakapan santai dengan orang baru",
-    "available": true
-  },
-  {
-    "id": "mengatur-emosi",
-    "no": 3,
-    "name": "Mengatur Emosi",
-    "icon": "HeartPulse",
-    "durationDays": 21,
-    "difficulty": 2,
-    "focus": "Mengelola rasa gugup dan reaksi fisik saat situasi tegang",
+    "difficulty": 1,
+    "focus": "Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon sendiri",
     "available": false
   },
   {
-    "id": "bicara-depan-umum",
+    "id": "menyapa-orang-baru",
+    "no": 2,
+    "name": "Menyapa Orang Baru",
+    "icon": "UserPlus",
+    "durationDays": 14,
+    "difficulty": 1,
+    "focus": "Membiasakan senyum ramah, kontak mata santai, dan sapaan wajar pada teman baru di sekolah/kampus",
+    "available": true
+  },
+  {
+    "id": "ngobrol-dengan-lawan-jenis",
+    "no": 3,
+    "name": "Ngobrol dengan Lawan Jenis",
+    "icon": "Users",
+    "durationDays": 14,
+    "difficulty": 2,
+    "focus": "Percakapan sopan, wajar, dan tenang dalam interaksi belajar atau organisasi dengan teman lawan jenis",
+    "available": true
+  },
+  {
+    "id": "ngobrol-dengan-orang-mulai-dekat",
     "no": 4,
+    "name": "Ngobrol dengan Orang yang Mulai Dekat",
+    "icon": "MessageSquare",
+    "durationDays": 14,
+    "difficulty": 2,
+    "focus": "Membuka obrolan santai seputar minat, hobi, dan keseharian dengan teman yang mulai akrab di lingkungan sekitar",
+    "available": true
+  },
+  {
+    "id": "berbicara-di-depan-umum",
+    "no": 5,
     "name": "Berbicara di Depan Umum",
     "icon": "Mic",
     "durationDays": 21,
     "difficulty": 2,
-    "focus": "Keberanian dan kestabilan suara saat bicara atau presentasi di depan kelompok",
-    "available": true
+    "focus": "Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok",
+    "available": false
+  },
+  {
+    "id": "bertanya-dan-menjawab-di-kelas",
+    "no": 6,
+    "name": "Bertanya dan Menjawab di Kelas",
+    "icon": "HelpCircle",
+    "durationDays": 7,
+    "difficulty": 1,
+    "focus": "Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas",
+    "available": false
   },
   {
     "id": "bilang-tidak",
-    "no": 5,
+    "no": 7,
     "name": "Bilang Tidak",
     "icon": "Shield",
     "durationDays": 7,
     "difficulty": 1,
-    "focus": "Menegakkan batasan diri secara sopan tanpa beban rasa bersalah",
+    "focus": "Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah",
     "available": false
   },
   {
-    "id": "hubungan-sehat",
-    "no": 6,
-    "name": "Hubungan Sehat",
-    "icon": "HeartHandshake",
+    "id": "menyampaikan-pendapat-dengan-sopan",
+    "no": 8,
+    "name": "Menyampaikan Pendapat dengan Sopan",
+    "icon": "MessageCircle",
     "durationDays": 14,
     "difficulty": 3,
-    "focus": "Pola komunikasi sehat, saling percaya, dan empati dalam pertemanan",
-    "available": false
-  },
-  {
-    "id": "stop-overthinking",
-    "no": 7,
-    "name": "Stop Overthinking",
-    "icon": "Brain",
-    "durationDays": 7,
-    "difficulty": 2,
-    "focus": "Memutus kebiasaan menganalisis ulang obrolan dan menenangkan pikiran",
-    "available": false
-  },
-  {
-    "id": "percaya-diri",
-    "no": 8,
-    "name": "Membangun Kepercayaan Diri",
-    "icon": "Award",
-    "durationDays": 7,
-    "difficulty": 2,
-    "focus": "Mengenali kekuatan diri lewat pembuktian langkah-langkah kecil",
+    "focus": "Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun",
     "available": false
   }
 ]

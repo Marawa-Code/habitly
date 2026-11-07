@@ -22,6 +22,7 @@ import {
   Sprout,
   Clock,
   ArrowRight,
+  Settings,
   type LucideIcon,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -233,9 +234,19 @@ export default function HomePage() {
           </span>
         </div>
 
-        <Chip variant="mint" icon={<Flame size={14} strokeWidth={2} />}>
-          {streak} Hari
-        </Chip>
+        <div className="flex items-center gap-2">
+          <Chip variant="mint" icon={<Flame size={14} strokeWidth={2} />}>
+            {streak} Hari
+          </Chip>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event("habitly_open_settings"))}
+            aria-label="Buka Pengaturan Akun"
+            className="lg:hidden flex items-center justify-center w-8 h-8 rounded-full bg-surface border border-hairline text-ink-secondary hover:text-action hover:border-action transition-colors shadow-xs"
+          >
+            <Settings size={15} />
+          </button>
+        </div>
       </div>
 
       {/* Hero Banner: Mulai Tumbuh, Satu Hari Satu Langkah */}

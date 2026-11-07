@@ -36,6 +36,7 @@ export function saveState(state: Partial<AppState>): void {
   try {
     const current = loadState();
     localStorage.setItem(KEY, JSON.stringify({ ...current, ...state }));
+    window.dispatchEvent(new Event("habitly_state_change"));
   } catch {
     // penyimpanan penuh atau tidak tersedia
   }
@@ -44,6 +45,7 @@ export function saveState(state: Partial<AppState>): void {
 export function clearState(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(KEY);
+  window.dispatchEvent(new Event("habitly_state_change"));
 }
 
 // --- Helpers per entitas ---

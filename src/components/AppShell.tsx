@@ -1,9 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Compass, BarChart2, Users, LifeBuoy } from "lucide-react";
+import { Home, Compass, BarChart2, Users, LifeBuoy, Settings } from "lucide-react";
+import SettingsModal from "./SettingsModal";
+import { loadState } from "@/lib/storage";
+import type { User } from "@/types";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home", Icon: Home },
@@ -22,6 +25,27 @@ function isNoNav(pathname: string) {
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [user, setUser] = useState<User | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  useEffect(() => {
+    function syncUser() {
+      const state = loadState();
+      setUser(state.user);
+    }
+    syncUser();
+
+    function handleOpenSettings() {
+      setIsSettingsOpen(true);
+    }
+
+    window.addEventListener("habitly_state_change", syncUser);
+    window.addEventListener("habitly_open_settings", handleOpenSettings);
+    return () => {
+      window.removeEventListener("habitly_state_change", syncUser);
+      window.removeEventListener("habitly_open_settings", handleOpenSettings);
+    };
+  }, []);
 
   if (isNoNav(pathname)) {
     return <>{children}</>;
@@ -51,7 +75,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           />
           <span className="text-xl font-bold text-action tracking-tight">Habitly</span>
         </div>
-        <nav className="flex flex-col gap-1 px-3 flex-1" aria-label="Menu">
+
+        <nav className="flex flex-col gap-1 px-3 flex-1 overflow-y-auto" aria-label="Menu">
           {NAV_ITEMS.map(({ href, label, Icon }) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
             return (
@@ -71,8 +96,35 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             );
           })}
         </nav>
-        <div className="px-6 py-6 text-xs text-ink-faint">
-          Alat bantu latihan, bukan terapi.
+
+        {/* Profil Akun & Pengaturan di Bagian Paling Bawah Sidebar */}
+        <div className="p-3 border-t border-hairline mt-auto bg-surface">
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen(true)}
+            aria-label="Buka Pengaturan Akun"
+            className="flex items-center gap-3 w-full p-2.5 rounded-container hover:bg-canvas transition-colors text-left group focus:outline-none focus:ring-2 focus:ring-action cursor-pointer"
+          >
+            <div className="w-9 h-9 rounded-full bg-mint-tint border border-mint/40 text-action flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+              {user?.nickname ? user.nickname.charAt(0).toUpperCase() : "H"}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-ink truncate group-hover:text-action transition-colors">
+                {user?.nickname || "Sobat Habitly"}
+              </p>
+              <p className="text-[11px] text-ink-faint truncate">
+                Pengaturan Akun
+              </p>
+            </div>
+            <Settings
+              size={18}
+              className="text-ink-faint group-hover:text-action transition-colors shrink-0"
+              aria-hidden="true"
+            />
+          </button>
+          <div className="px-3 pt-2 text-[10px] text-ink-faint leading-tight">
+            Alat bantu latihan, bukan terapi.
+          </div>
         </div>
       </aside>
 
@@ -107,6 +159,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
       </div>
+
+      {/* Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        currentUser={user}
+        onUserUpdated={(updated) => setUser(updated)}
+      />
     </div>
   );
 }

@@ -287,17 +287,28 @@ export default function HomePage() {
                   <span className="text-[11px] font-bold uppercase tracking-wider text-action">
                     Latihan Hari Ini (Hari ke-{challengeDayN})
                   </span>
+                  <Link
+                    href={`/task/${currentTaskDetail.id}`}
+                    className="text-[11px] font-semibold text-action hover:underline"
+                  >
+                    Detail misi →
+                  </Link>
                 </div>
 
                 {isDone ? (
-                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-3 flex flex-col gap-2">
+                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-3.5 flex flex-col gap-2">
                     <div className="flex items-start gap-2.5">
                       <CheckCircle size={18} className="text-action shrink-0 mt-0.5" strokeWidth={2} />
-                      <p className="text-sm font-semibold text-ink leading-snug">
-                        {todayTask?.status === "swapped"
-                          ? currentTaskDetail.easierText
-                          : currentTaskDetail.text}
-                      </p>
+                      <div className="flex flex-col gap-0.5">
+                        <p className="text-sm font-bold text-ink leading-snug">
+                          {currentTaskDetail.title}
+                        </p>
+                        <p className="text-xs text-ink-secondary leading-relaxed">
+                          {todayTask?.status === "swapped"
+                            ? currentTaskDetail.easierText
+                            : currentTaskDetail.text}
+                        </p>
+                      </div>
                     </div>
                     <p className="text-xs text-action font-medium">
                       Langkah kecil yang berarti ✨
@@ -311,6 +322,16 @@ export default function HomePage() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
+                    {/* Judul & Deskripsi Misi */}
+                    <div className="flex flex-col gap-1">
+                      <h4 className="text-sm font-bold text-ink leading-snug">
+                        {currentTaskDetail.title}
+                      </h4>
+                      <p className="text-xs text-ink-secondary leading-relaxed">
+                        {currentTaskDetail.description}
+                      </p>
+                    </div>
+
                     {/* Pemicu Habit */}
                     <div className="bg-canvas border border-hairline rounded-lg px-3 py-2 text-xs text-ink-secondary">
                       <span className="font-semibold text-ink">Pemicu: </span>
@@ -318,9 +339,14 @@ export default function HomePage() {
                     </div>
 
                     {/* Tindakan */}
-                    <p className="text-sm text-ink font-semibold leading-relaxed">
-                      {currentTaskDetail.text}
-                    </p>
+                    <div className="p-3 bg-surface border border-action/25 rounded-card flex flex-col gap-1 shadow-soft">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-action">
+                        Tindakan Hari Ini
+                      </span>
+                      <p className="text-sm text-ink font-semibold leading-relaxed">
+                        {currentTaskDetail.text}
+                      </p>
+                    </div>
 
                     {/* Kalimat Identitas */}
                     <p className="text-xs text-ink-faint italic">

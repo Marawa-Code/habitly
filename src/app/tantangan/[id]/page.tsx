@@ -2,13 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 import {
   ArrowLeft,
   BookOpen,
-  Zap,
-  Brain,
-  TrendingUp,
-  CheckCircle2,
   Clock,
   Target,
   ArrowRight,
@@ -21,6 +18,8 @@ import {
   Shield,
   MessageCircle,
   Sparkles,
+  ChevronRight,
+  CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
@@ -121,9 +120,14 @@ export default function DetailTantanganPage() {
 
         <div>
           <h2 className="text-xl font-bold text-ink">{challenge.name}</h2>
-          <p className="mt-1 text-sm text-ink-secondary leading-relaxed">
+          <p className="mt-1 text-sm text-ink-secondary leading-relaxed font-medium">
             {challenge.focus}
           </p>
+          {challenge.description && (
+            <p className="mt-2 text-xs text-ink-secondary leading-relaxed border-t border-hairline pt-2">
+              {challenge.description}
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-2 pt-1 flex-wrap">
@@ -157,40 +161,66 @@ export default function DetailTantanganPage() {
           </div>
 
           <h3 className="text-base font-bold text-ink leading-snug">
-            Satu Langkah Kecil Setiap Hari
+            Satu Kebiasaan Mikro Setiap Hari
           </h3>
 
           <p className="text-sm text-ink-secondary leading-relaxed">
-            Tantangan ini dirancang dengan pendekatan kebiasaan mikroskopik: dimulai dari tindakan yang dapat diselesaikan dalam hitungan menit, selalu disertai pemicu yang jelas, dan memiliki alternatif latihan yang lebih ringan saat kecemasan sedang memuncak.
+            Setiap misi harian dirancang spesifik dengan pemicu yang jelas, tindakan yang dapat diselesaikan dalam hitungan menit, versi lebih ringan saat merasa cemas, dan kalimat afirmasi identitas.
           </p>
         </div>
       </Card>
 
-      {/* Pratinjau 3 Hari Pertama */}
+      {/* Daftar Misi Tantangan */}
       {tasks.length > 0 && (
-        <Card>
-          <div className="flex flex-col gap-3.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-ink-faint">
-              Contoh Latihan 3 Hari Pertama
-            </span>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-ink">
+              Misi Latihan ({tasks.length} Hari Tersedia)
+            </h3>
+            <span className="text-xs text-ink-faint">Bertahap & Terukur</span>
+          </div>
 
-            <div className="flex flex-col gap-3">
-              {tasks.slice(0, 3).map((task) => (
-                <div key={task.id} className="flex flex-col gap-1 p-3 bg-canvas border border-hairline rounded-lg">
-                  <div className="flex items-center justify-between text-[11px] text-action font-semibold">
-                    <span>Hari {task.day}</span>
+          <div className="flex flex-col gap-3">
+            {tasks.map((task) => (
+              <Link
+                key={task.id}
+                href={`/task/${task.id}`}
+                className="group p-4 bg-surface border border-hairline rounded-card shadow-soft hover:border-action/40 hover:shadow-modal transition-all flex flex-col gap-2.5"
+              >
+                {/* Header Misi: Hari & Judul */}
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold bg-mint-tint text-action px-2.5 py-0.5 rounded-full">
+                      Hari {task.day}
+                    </span>
+                    <h4 className="text-sm font-bold text-ink group-hover:text-action transition-colors">
+                      {task.title}
+                    </h4>
                   </div>
+                  <ChevronRight size={16} className="text-ink-faint group-hover:text-action group-hover:translate-x-0.5 transition-all shrink-0 mt-0.5" />
+                </div>
+
+                {/* Deskripsi Misi */}
+                <p className="text-xs text-ink-secondary leading-relaxed">
+                  {task.description}
+                </p>
+
+                {/* Box Tindakan */}
+                <div className="p-2.5 bg-canvas border border-hairline/80 rounded-lg flex flex-col gap-1">
                   <p className="text-xs text-ink font-medium leading-relaxed">
+                    <span className="text-action font-bold">Tindakan: </span>
                     {task.text}
                   </p>
-                  <p className="text-[11px] text-ink-faint italic mt-0.5">
-                    &ldquo;{task.identityStatement}&rdquo;
-                  </p>
                 </div>
-              ))}
-            </div>
+
+                {/* Kalimat Identitas */}
+                <p className="text-[11px] text-ink-faint italic">
+                  &ldquo;{task.identityStatement}&rdquo;
+                </p>
+              </Link>
+            ))}
           </div>
-        </Card>
+        </div>
       )}
 
       {/* CTA Button Fixed/Sticky on Mobile */}

@@ -7,6 +7,7 @@
     "durationDays": 14,
     "difficulty": 1,
     "focus": "Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon sendiri",
+    "description": "Banyak remaja merasa cemas saat mengobrol karena sibuk memikirkan 'nanti aku harus balas apa ya?'. Tantangan ini melatihmu menjadi pendengar yang tenang, hadir seutuhnya, dan memberi ruang bagi lawan bicara tanpa tekanan harus langsung pintar merespons.",
     "available": false
   },
   {
@@ -17,6 +18,7 @@
     "durationDays": 14,
     "difficulty": 1,
     "focus": "Membiasakan senyum ramah, kontak mata santai, dan sapaan wajar pada teman baru di sekolah/kampus",
+    "description": "Langkah pertama berkenalan sering kali terasa paling berat. Di tantangan ini, kamu akan memecah rasa canggung menjadi kebiasaan mikro harian: dari sekadar kontak mata 1 detik, senyuman hangat, hingga menyapa dengan nama tanpa takut diabaikan.",
     "available": true
   },
   {
@@ -27,6 +29,7 @@
     "durationDays": 14,
     "difficulty": 2,
     "focus": "Percakapan sopan, wajar, dan tenang dalam interaksi belajar atau organisasi dengan teman lawan jenis",
+    "description": "Rasa canggung atau deg-degan saat berinteraksi dengan teman lawan jenis adalah hal yang wajar bagi remaja. Tantangan ini fokus melatih komunikasi sopan, netral, dan santai di lingkungan sekolah atau kelompok belajar agar kamu bisa bekerja sama secara setara dan percaya diri.",
     "available": true
   },
   {
@@ -37,6 +40,7 @@
     "durationDays": 14,
     "difficulty": 2,
     "focus": "Membuka obrolan santai seputar minat, hobi, dan keseharian dengan teman yang mulai akrab di lingkungan sekitar",
+    "description": "Mengubah status dari kenalan biasa menjadi teman akrab membutuhkan keberanian membuka diri secara bertahap. Lewat tantangan ini, kamu belajar menanyakan kabar dengan hangat, menggali minat bersama, dan merespons cerita teman secara suportif.",
     "available": true
   },
   {
@@ -47,6 +51,7 @@
     "durationDays": 21,
     "difficulty": 2,
     "focus": "Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok",
+    "description": "Gugup di depan banyak orang adalah reaksi alami tubuh. Tantangan ini melatihmu menguasai teknik napas tenang, kestabilan volume suara, dan kontak mata bertahap saat berbicara di hadapan audiens atau kelompok kelas.",
     "available": false
   },
   {
@@ -57,6 +62,7 @@
     "durationDays": 7,
     "difficulty": 1,
     "focus": "Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas",
+    "description": "Takut dianggap bodoh atau salah bicara sering menahan kita untuk bertanya di kelas. Tantangan ini memandu langkah-langkah kecil untuk berani mengangkat tangan dan mengekspresikan rasa ingin tahu secara santun.",
     "available": false
   },
   {
@@ -67,6 +73,7 @@
     "durationDays": 7,
     "difficulty": 1,
     "focus": "Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah",
+    "description": "Menjaga hubungan baik bukan berarti harus selalu berkata 'iya'. Tantangan ini melatihmu menegakkan batasan personal yang sehat, menolak permintaan yang membebani secara sopan, dan terbebas dari rasa bersalah yang berlebihan.",
     "available": false
   },
   {
@@ -77,6 +84,7 @@
     "durationDays": 14,
     "difficulty": 3,
     "focus": "Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun",
+    "description": "Menyuarakan gagasan pribadi di tengah kelompok membutuhkan keberanian dan seni berkomunikasi. Di sini kamu akan melatih cara menyampaikan argumen logis, menanggapi perbedaan pendapat, dan tetap menghargai lawan bicara.",
     "available": false
   }
 ]

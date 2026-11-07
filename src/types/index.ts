@@ -28,6 +28,7 @@ export interface Challenge {
   durationDays: number;
   difficulty: Difficulty;
   focus: string;
+  description: string;    // Deskripsi lengkap tantangan & tujuan komunikasinya
   available: boolean;     // true untuk tantangan aktif di prototipe (2, 3, 4)
 }
 
@@ -35,10 +36,12 @@ export interface ChallengeTask {
   id: string;
   challengeId: string;
   day: number;
-  trigger: string;             // "Setelah ..."
-  text: string;                // Tindakan sangat kecil
-  easierText: string;          // Versi lebih ringan
-  identityStatement: string;   // "Aku sedang menjadi ..."
+  title: string;              // Judul spesifik misi harian
+  description: string;        // Deskripsi lengkap misi, tujuan & panduan menjalankannya
+  trigger: string;            // "Setelah ..."
+  text: string;               // Tindakan sangat kecil
+  easierText: string;         // Versi lebih ringan
+  identityStatement: string;  // "Aku sedang menjadi ..."
 }
 
 export interface DailyTask {

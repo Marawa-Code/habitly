@@ -88,13 +88,21 @@ export default function ResultPage() {
 
         {/* Anjuran bantuan (jika skor tinggi) */}
         {result.suggestHelp && (
-          <div className="bg-sky-light-tint rounded-card px-5 py-4 flex gap-3">
-            <Heart size={20} className="text-info-text shrink-0 mt-0.5" strokeWidth={1.75} />
-            <p className="text-sm text-info-text leading-relaxed">
-              Skor kamu cukup tinggi. Kami menyarankan kamu untuk berbicara dengan
-              orang dewasa yang kamu percaya atau tenaga profesional. Kamu bisa
-              menemukan informasi bantuan di tab <strong>Bantuan</strong>.
-            </p>
+          <div className="bg-sky-light-tint rounded-card px-5 py-4 flex flex-col gap-3">
+            <div className="flex gap-3">
+              <Heart size={20} className="text-info-text shrink-0 mt-0.5" strokeWidth={1.75} />
+              <p className="text-sm text-info-text leading-relaxed">
+                Skor kamu cukup tinggi. Kami menyarankan kamu untuk berbicara dengan
+                orang dewasa yang kamu percaya atau tenaga profesional.
+              </p>
+            </div>
+            <Button
+              variant="secondary"
+              onClick={() => router.push("/help")}
+              className="self-start"
+            >
+              Lihat sumber bantuan →
+            </Button>
           </div>
         )}
 

@@ -12,6 +12,14 @@ import {
   PenLine,
   Award,
   Lock,
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Sparkles,
 } from "lucide-react";
 import {
   LineChart,
@@ -43,6 +51,14 @@ const ICON_MAP: Record<string, LucideIcon> = {
   PenLine,
   CheckCircle,
   Award,
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Sparkles,
 };
 
 const TASKS_PER_LEVEL = 5;
@@ -82,10 +98,11 @@ export default function ProgressPage() {
   ).length;
 
   // Progres ke tingkat berikutnya
+  const currentLevel = state.currentLevel ?? 1;
   const doneAtCurrentLevel = totalDone % TASKS_PER_LEVEL;
   const levelProgress = Math.round((doneAtCurrentLevel / TASKS_PER_LEVEL) * 100);
-  const nextLevel = Math.min(state.currentLevel + 1, 5);
-  const isMaxLevel = state.currentLevel >= 5;
+  const nextLevel = Math.min(currentLevel + 1, 5);
+  const isMaxLevel = currentLevel >= 5;
 
   // Data grafik tren skor kuis
   const chartData = state.quizResults.map((r, i) => ({
@@ -165,7 +182,7 @@ export default function ProgressPage() {
                 Tingkat
               </span>
             </div>
-            <p className="text-3xl font-bold text-ink mt-1">{state.currentLevel}</p>
+            <p className="text-3xl font-bold text-ink mt-1">{currentLevel}</p>
             <p className="text-xs text-ink-secondary">dari 5 tingkat</p>
           </div>
         </Card>
@@ -232,10 +249,11 @@ export default function ProgressPage() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-canvas border border-hairline flex items-center justify-center text-xl shrink-0">
-                    <span role="img" aria-label={activeChallenge.name}>
-                      {activeChallenge.emoji}
-                    </span>
+                  <div className="w-10 h-10 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0">
+                    {(() => {
+                      const IconComp = ICON_MAP[activeChallenge.icon] ?? Sparkles;
+                      return <IconComp size={20} strokeWidth={2} />;
+                    })()}
                   </div>
                   <div>
                     <p className="text-sm font-bold text-ink">{activeChallenge.name}</p>

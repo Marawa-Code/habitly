@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import Button from "@/components/ui/Button";
 import quizData from "@/content/quiz.json";
-import { calculateScore, getProfile, getSuggestHelp, getInitialLevel, getDominantArea } from "@/lib/scoring";
-import { loadState, saveQuizResult, saveState } from "@/lib/storage";
+import { processQuizAnswers, getProfile, getSuggestHelp } from "@/lib/scoring";
+import { recommendChallenges } from "@/lib/recommend";
+import { loadState, saveQuizResult } from "@/lib/storage";
+import type { QuizResult } from "@/types";
 
 const questions = quizData.questions;
+const options = quizData.options;
 
 export default function QuizPage() {
   const router = useRouter();
@@ -19,7 +22,7 @@ export default function QuizPage() {
 
   const question = questions[index];
   const isLast = index === questions.length - 1;
-  const progress = Math.round(((index) / questions.length) * 100);
+  const progress = Math.round(((index + 1) / questions.length) * 100);
 
   function handleNext() {
     if (selected === null) return;
@@ -27,25 +30,28 @@ export default function QuizPage() {
 
     if (isLast) {
       setSubmitting(true);
-      const total = calculateScore(newAnswers);
+      const { challengeScores, safetyFlags, total } = processQuizAnswers(newAnswers);
       const profile = getProfile(total);
-      const suggestHelp = getSuggestHelp(total);
-      const pathId = getDominantArea(newAnswers);
-      const level = getInitialLevel(total);
+      const suggestHelp = getSuggestHelp(total, safetyFlags);
 
       const state = loadState();
-      const result = {
+      const recs = recommendChallenges(challengeScores, state.completedChallengeIds || []);
+      const recommendedChallengeIds = recs.map((r) => r.challenge.id);
+
+      const result: QuizResult = {
         id: crypto.randomUUID(),
         userId: state.user?.id ?? "anon",
         takenAt: new Date().toISOString(),
         answers: newAnswers,
+        challengeScores,
+        safetyFlags,
         total,
         profile,
         suggestHelp,
+        recommendedChallengeIds,
       };
 
       saveQuizResult(result);
-      saveState({ currentPathId: pathId, currentLevel: level });
       router.push("/result");
     } else {
       setAnswers(newAnswers);
@@ -102,21 +108,27 @@ export default function QuizPage() {
 
         {/* Pertanyaan */}
         <div className="flex flex-col gap-6 flex-1">
+          {question.isSafety && (
+            <span className="text-[11px] font-semibold text-info-text uppercase tracking-wider bg-sky-light-tint px-2.5 py-1 rounded-full self-start">
+              Pertanyaan Keselamatan
+            </span>
+          )}
+
           <h2 className="text-xl font-semibold text-ink leading-snug">
             {question.text}
           </h2>
 
           {/* Pilihan jawaban */}
           <div className="flex flex-col gap-3" role="radiogroup">
-            {question.options.map((option, i) => {
-              const isSelected = selected === i;
+            {options.map((opt) => {
+              const isSelected = selected === opt.value;
               return (
                 <button
-                  key={i}
+                  key={opt.value}
                   role="radio"
                   aria-checked={isSelected}
-                  onClick={() => setSelected(i)}
-                  className={`flex items-center gap-3 w-full text-left px-4 py-4 rounded-card border transition-all min-h-[56px] ${
+                  onClick={() => setSelected(opt.value)}
+                  className={`flex items-center gap-3 w-full text-left px-4 py-3.5 rounded-card border transition-all min-h-[52px] ${
                     isSelected
                       ? "border-action border-2 bg-mint-tint"
                       : "border-hairline bg-surface hover:border-action/40"
@@ -137,7 +149,7 @@ export default function QuizPage() {
                       isSelected ? "text-ink" : "text-ink-secondary"
                     }`}
                   >
-                    {option}
+                    {opt.label}
                   </span>
                 </button>
               );

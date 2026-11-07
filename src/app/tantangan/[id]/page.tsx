@@ -11,14 +11,42 @@ import {
   CheckCircle2,
   Clock,
   Target,
-  Rocket,
+  ArrowRight,
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Award,
+  Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 import Card from "@/components/ui/Card";
 import Chip from "@/components/ui/Chip";
 import Button from "@/components/ui/Button";
 import { loadState, saveState, todayString } from "@/lib/storage";
-import type { AppState, Challenge } from "@/types";
+import type { AppState, Challenge, ChallengeTask } from "@/types";
 import challengesData from "@/content/challenges.json";
+import challengeTasksData from "@/content/challenge_tasks.json";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+};
+
+const DIFFICULTY_LABELS: Record<number, string> = {
+  1: "Pemula",
+  2: "Menengah",
+  3: "Lanjutan",
+};
 
 export default function DetailTantanganPage() {
   const router = useRouter();
@@ -37,6 +65,9 @@ export default function DetailTantanganPage() {
   }, [router]);
 
   const challenge = (challengesData as Challenge[]).find((c) => c.id === challengeId);
+  const tasks = (challengeTasksData as ChallengeTask[]).filter(
+    (t) => t.challengeId === challengeId
+  );
 
   if (!state || !challenge) {
     return (
@@ -54,19 +85,16 @@ export default function DetailTantanganPage() {
   }
 
   const isActive = state.activeChallengeId === challenge.id;
+  const ChallengeIcon = ICON_MAP[challenge.icon] ?? Sparkles;
 
   function handleStartChallenge() {
-    if (!challenge) return;
+    if (!challenge || !challenge.available) return;
     saveState({
       activeChallengeId: challenge.id,
-      currentPathId: challenge.pathId,
       challengeStartDate: todayString(),
-      currentLevel: 1,
     });
     router.push("/");
   }
-
-  const factIcons = [Zap, Brain, TrendingUp];
 
   return (
     <div className="flex flex-col gap-6 pb-20">
@@ -75,7 +103,7 @@ export default function DetailTantanganPage() {
         <button
           onClick={() => router.back()}
           aria-label="Kembali"
-          className="w-9 h-9 rounded-full bg-surface border border-hairline flex items-center justify-center text-ink-secondary hover:text-ink hover:border-action transition-colors shadow-soft"
+          className="w-10 h-10 rounded-full bg-surface border border-hairline flex items-center justify-center text-ink-secondary hover:text-ink hover:border-action transition-colors shadow-soft"
         >
           <ArrowLeft size={18} strokeWidth={2} />
         </button>
@@ -85,17 +113,15 @@ export default function DetailTantanganPage() {
       </div>
 
       {/* Hero Card */}
-      <div className="relative overflow-hidden rounded-card bg-gradient-to-br from-mint-tint/70 to-sky-light-tint/60 border border-hairline px-6 py-6 shadow-soft flex flex-col gap-4">
-        <div className="w-14 h-14 rounded-2xl bg-surface border border-hairline/80 flex items-center justify-center text-3xl shadow-soft">
-          <span role="img" aria-label={challenge.name}>
-            {challenge.emoji}
-          </span>
+      <div className="relative overflow-hidden rounded-card bg-surface border border-hairline px-6 py-6 shadow-soft flex flex-col gap-4">
+        <div className="w-14 h-14 rounded-2xl bg-mint-tint flex items-center justify-center text-action shadow-soft">
+          <ChallengeIcon size={30} strokeWidth={2} />
         </div>
 
         <div>
           <h2 className="text-xl font-bold text-ink">{challenge.name}</h2>
           <p className="mt-1 text-sm text-ink-secondary leading-relaxed">
-            {challenge.description}
+            {challenge.focus}
           </p>
         </div>
 
@@ -104,104 +130,84 @@ export default function DetailTantanganPage() {
             {challenge.durationDays} Hari
           </Chip>
           <Chip variant="neutral" className="text-xs py-1 px-3" icon={<Target size={13} strokeWidth={2} />}>
-            {challenge.difficulty}
+            {DIFFICULTY_LABELS[challenge.difficulty]}
           </Chip>
           {isActive && (
             <Chip variant="mint" className="text-xs py-1 px-3">
               Sedang Aktif ✓
             </Chip>
           )}
+          {!challenge.available && (
+            <Chip variant="neutral" className="text-xs py-1 px-3 text-ink-faint">
+              Segera Hadir
+            </Chip>
+          )}
         </div>
       </div>
 
-      {/* Section 1: Penjelasan Ilmiah */}
+      {/* Pendekatan Atomic Habits */}
       <Card>
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2 text-action">
             <BookOpen size={18} strokeWidth={2} />
             <span className="text-xs font-bold uppercase tracking-wider">
-              Penjelasan Ilmiah
+              Metode Latihan Bertahap
             </span>
           </div>
 
           <h3 className="text-base font-bold text-ink leading-snug">
-            {challenge.science.title}
+            Satu Langkah Kecil Setiap Hari
           </h3>
 
           <p className="text-sm text-ink-secondary leading-relaxed">
-            {challenge.science.body}
+            Tantangan ini dirancang dengan pendekatan kebiasaan mikroskopik: dimulai dari tindakan yang dapat diselesaikan dalam hitungan menit, selalu disertai pemicu yang jelas, dan memiliki alternatif latihan yang lebih ringan saat kecemasan sedang memuncak.
           </p>
         </div>
       </Card>
 
-      {/* Section 2: Fakta Riset */}
-      <Card>
-        <div className="flex flex-col gap-3.5">
-          <span className="text-xs font-bold uppercase tracking-wider text-ink-faint">
-            Fakta Riset
-          </span>
+      {/* Pratinjau 3 Hari Pertama */}
+      {tasks.length > 0 && (
+        <Card>
+          <div className="flex flex-col gap-3.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-ink-faint">
+              Contoh Latihan 3 Hari Pertama
+            </span>
 
-          <div className="flex flex-col gap-3">
-            {challenge.facts.map((fact, index) => {
-              const IconComponent = factIcons[index % factIcons.length];
-              return (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="w-7 h-7 rounded-full bg-mint-tint flex items-center justify-center shrink-0 mt-0.5 text-action">
-                    <IconComponent size={14} strokeWidth={2} />
+            <div className="flex flex-col gap-3">
+              {tasks.slice(0, 3).map((task) => (
+                <div key={task.id} className="flex flex-col gap-1 p-3 bg-canvas border border-hairline rounded-lg">
+                  <div className="flex items-center justify-between text-[11px] text-action font-semibold">
+                    <span>Hari {task.day}</span>
                   </div>
-                  <p className="text-sm text-ink-secondary leading-relaxed">
-                    {fact}
+                  <p className="text-xs text-ink font-medium leading-relaxed">
+                    {task.text}
+                  </p>
+                  <p className="text-[11px] text-ink-faint italic mt-0.5">
+                    &ldquo;{task.identityStatement}&rdquo;
                   </p>
                 </div>
-              );
-            })}
+              ))}
+            </div>
           </div>
-        </div>
-      </Card>
-
-      {/* Section 3: Yang Akan Kamu Dapatkan */}
-      <Card>
-        <div className="flex flex-col gap-3.5">
-          <span className="text-xs font-bold uppercase tracking-wider text-ink-faint">
-            Yang Akan Kamu Dapatkan
-          </span>
-
-          <div className="flex flex-col gap-2.5">
-            {challenge.benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <CheckCircle2
-                  size={18}
-                  strokeWidth={2}
-                  className="text-action shrink-0 mt-0.5"
-                />
-                <p className="text-sm text-ink font-medium leading-relaxed">
-                  {benefit}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
+        </Card>
+      )}
 
       {/* CTA Button Fixed/Sticky on Mobile */}
       <div className="sticky bottom-20 lg:bottom-6 z-20 pt-2">
-        <Button
-          fullWidth
-          onClick={handleStartChallenge}
-          className="flex items-center justify-center gap-2 py-3.5 shadow-lg text-base"
-        >
-          {isActive ? (
-            <>
-              <span>Lanjutkan Tantangan</span>
-              <span>→</span>
-            </>
-          ) : (
-            <>
-              <Rocket size={18} strokeWidth={2} />
-              <span>Mulai Tantangan</span>
-            </>
-          )}
-        </Button>
+        {challenge.available ? (
+          <Button
+            fullWidth
+            onClick={handleStartChallenge}
+            className="flex items-center justify-center gap-2 py-3.5 shadow-soft text-base"
+          >
+            <span>{isActive ? "Lanjutkan Latihan Hari Ini" : "Mulai Tantangan Ini"}</span>
+            <ArrowRight size={18} />
+          </Button>
+        ) : (
+          <Button fullWidth disabled className="py-3.5 text-base">
+            Tantangan Ini Segera Hadir
+          </Button>
+        )}
       </div>
     </div>
   );

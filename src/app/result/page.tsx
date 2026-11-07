@@ -2,49 +2,89 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Heart, ChevronRight, Clock, Target, Rocket } from "lucide-react";
+import {
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+  Heart,
+  ChevronRight,
+  Clock,
+  Target,
+  ArrowRight,
+  type LucideIcon,
+} from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Chip from "@/components/ui/Chip";
 import { loadState, saveState, todayString } from "@/lib/storage";
+import { recommendChallenges, type ChallengeRecommendation } from "@/lib/recommend";
 import type { QuizResult, Challenge } from "@/types";
-import challengesData from "@/content/challenges.json";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+};
+
+const DIFFICULTY_LABELS: Record<number, string> = {
+  1: "Pemula",
+  2: "Menengah",
+  3: "Lanjutan",
+};
 
 const PROFILE_CONFIG = {
   ringan: {
     label: "Hambatan Ringan",
-    desc: "Kamu sudah punya fondasi yang bagus. Latihan eksposur bertahap akan semakin memperkuat kelancaran komunikasimu.",
+    desc: "Kamu sudah memiliki fondasi awal yang baik. Latihan mikroskopik teratur setiap hari akan semakin memperkuat rasa percaya dirimu.",
     color: "text-action",
     bg: "bg-mint-tint",
-    recommendedId: "belajar-mengobrol",
   },
   sedang: {
     label: "Hambatan Sedang",
-    desc: "Rasa gugup saat komunikasi cukup terasa, tapi itu sangat wajar. Dengan tantangan terarah, kamu bisa melatihnya hari demi hari.",
+    desc: "Rasa gugup atau cemas saat berkomunikasi cukup terasa, namun hal tersebut sangat wajar. Tantangan bertahap akan membantumu melatihnya pelan-pelan.",
     color: "text-action",
     bg: "bg-mint-tint",
-    recommendedId: "membangun-kepercayaan-diri",
   },
   tinggi: {
     label: "Hambatan Cukup Terasa",
-    desc: "Kamu tidak sendirian. Langkah pertama yang paling ringan pun bernilai besar. Habitly akan menemanimu mulai dari menenangkan pikiran.",
+    desc: "Kamu tidak sendirian. Langkah paling ringan sekalipun tetap merupakan kemajuan yang berharga. Habitly akan menemanimu melatih ketenangan diri.",
     color: "text-info-text",
     bg: "bg-sky-light-tint",
-    recommendedId: "stop-overthinking",
   },
 };
 
 export default function ResultPage() {
   const router = useRouter();
   const [result, setResult] = useState<QuizResult | null>(null);
+  const [recommendations, setRecommendations] = useState<ChallengeRecommendation[]>([]);
 
   useEffect(() => {
     const state = loadState();
     const latest = state.quizResults.at(-1) ?? null;
     setResult(latest);
+
+    if (latest) {
+      const recs = recommendChallenges(
+        latest.challengeScores || latest.answers.slice(0, 8),
+        state.completedChallengeIds || []
+      );
+      setRecommendations(recs);
+    }
   }, []);
 
-  if (!result) {
+  if (!result || recommendations.length === 0) {
     return (
       <div className="min-h-screen bg-canvas flex items-center justify-center">
         <p className="text-ink-secondary text-sm">Memuat hasil…</p>
@@ -53,24 +93,19 @@ export default function ResultPage() {
   }
 
   const config = PROFILE_CONFIG[result.profile];
-  const challenges = challengesData as Challenge[];
-
-  const recommendedChallenge =
-    challenges.find((c) => c.id === config.recommendedId) ?? challenges[0];
-
-  const otherChallenges = challenges.filter(
-    (c) => c.id !== recommendedChallenge.id
-  ).slice(0, 2);
+  const top1 = recommendations[0];
+  const nextRecs = recommendations.slice(1);
 
   function handleStartChallenge(challenge: Challenge) {
+    if (!challenge.available) return;
     saveState({
       activeChallengeId: challenge.id,
-      currentPathId: challenge.pathId,
       challengeStartDate: todayString(),
-      currentLevel: 1,
     });
     router.push("/");
   }
+
+  const Top1Icon = ICON_MAP[top1.challenge.icon] ?? Sparkles;
 
   return (
     <div className="min-h-screen bg-canvas flex flex-col px-6 py-10">
@@ -81,31 +116,30 @@ export default function ResultPage() {
           <div className={`inline-flex self-center rounded-full px-4 py-1.5 text-sm font-semibold ${config.bg} ${config.color}`}>
             {config.label}
           </div>
-          <h1 className="text-2xl font-bold text-ink">Hasil Kuis-mu</h1>
+          <h1 className="text-2xl font-bold text-ink">Hasil Penilaian Dirimu</h1>
           <p className="text-sm text-ink-faint">
-            Ini bukan diagnosis — skor ini membantumu menemukan tantangan yang paling pas.
+            Ini bukan diagnosis medis — skor ini membantumu menemukan tantangan latihan yang paling tepat.
           </p>
         </div>
 
-        {/* Kartu skor */}
+        {/* Kartu Profil & Skor */}
         <Card>
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-3">
             <p className="text-sm text-ink leading-relaxed">{config.desc}</p>
-            <div className="flex items-center justify-between text-xs text-ink-secondary pt-1 border-t border-hairline/80">
+            <div className="flex items-center justify-between text-xs text-ink-secondary pt-2 border-t border-hairline/80">
               <span className="font-medium">Total Skor Kuis:</span>
-              <span className="font-extrabold text-ink text-sm">{result.total} / 18</span>
+              <span className="font-extrabold text-ink text-sm">{result.total} / 24</span>
             </div>
           </div>
         </Card>
 
-        {/* Anjuran bantuan (jika skor tinggi) */}
+        {/* Anjuran Bantuan (Jika Skor Tinggi atau Flag Keselamatan) */}
         {result.suggestHelp && (
-          <div className="bg-sky-light-tint rounded-card px-5 py-4 flex flex-col gap-3 border border-sky-light">
+          <div className="bg-sky-light-tint rounded-card px-5 py-4 flex flex-col gap-3 border border-hairline">
             <div className="flex gap-3">
               <Heart size={20} className="text-info-text shrink-0 mt-0.5" strokeWidth={1.75} />
               <p className="text-sm text-info-text leading-relaxed">
-                Skor kamu cukup terasa. Kami menyarankan kamu untuk berbicara dengan
-                orang dewasa yang kamu percaya atau tenaga profesional jika dirasa perlu.
+                Skor kamu cukup terasa atau kamu sedang menghadapi situasi yang menekan. Kami menyarankanmu untuk berbicara dengan orang dewasa yang kamu percaya atau tenaga profesional.
               </p>
             </div>
             <Button
@@ -118,77 +152,110 @@ export default function ResultPage() {
           </div>
         )}
 
-        {/* Tantangan terbaik untukmu (layout/Hasil kuis.png) */}
-        <div className="flex flex-col gap-3">
+        {/* Rekomendasi 1: Mulai Dari Sini */}
+        <div className="flex flex-col gap-2.5">
           <div className="flex items-center gap-1.5 text-action">
             <span className="text-xs font-bold uppercase tracking-wider">
-              ✨ Rekomendasi untukmu
+              {top1.label}
             </span>
           </div>
 
-          <div className="relative overflow-hidden rounded-card bg-gradient-to-br from-mint-tint/80 via-mint-tint/50 to-sky-light-tint/50 border border-hairline p-5 shadow-soft flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-surface border border-hairline flex items-center justify-center text-2xl shrink-0 shadow-soft">
-                <span role="img" aria-label={recommendedChallenge.name}>
-                  {recommendedChallenge.emoji}
-                </span>
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-ink">
-                  {recommendedChallenge.name}
-                </h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <Chip variant="sky" className="text-[11px] py-0 px-2" icon={<Clock size={11} />}>
-                    {recommendedChallenge.durationDays} Hari
-                  </Chip>
-                  <Chip variant="neutral" className="text-[11px] py-0 px-2" icon={<Target size={11} />}>
-                    {recommendedChallenge.difficulty}
-                  </Chip>
+          <Card accent>
+            <div className="flex flex-col gap-4">
+              <div className="flex items-start gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0 shadow-soft">
+                  <Top1Icon size={24} strokeWidth={2} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-base font-bold text-ink leading-snug">
+                    {top1.challenge.name}
+                  </h2>
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
+                    <Chip variant="sky" className="text-[11px] py-0 px-2" icon={<Clock size={11} strokeWidth={2} />}>
+                      {top1.challenge.durationDays} Hari
+                    </Chip>
+                    <Chip variant="neutral" className="text-[11px] py-0 px-2" icon={<Target size={11} strokeWidth={2} />}>
+                      {DIFFICULTY_LABELS[top1.challenge.difficulty]}
+                    </Chip>
+                    {!top1.challenge.available && (
+                      <Chip variant="neutral" className="text-[11px] py-0 px-2 text-ink-faint">
+                        Segera hadir
+                      </Chip>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <p className="text-xs text-ink-secondary italic leading-relaxed bg-surface/70 border border-hairline/60 rounded-xl p-3">
-              &ldquo;{recommendedChallenge.description} — cocok banget buat kamu yang ingin mulai perjalanan pertumbuhan diri sekarang.&rdquo;
+              <p className="text-xs text-ink-secondary leading-relaxed bg-canvas border border-hairline rounded-lg p-3">
+                {top1.challenge.focus}
+              </p>
+
+              {top1.challenge.available ? (
+                <Button
+                  fullWidth
+                  onClick={() => handleStartChallenge(top1.challenge)}
+                  className="flex items-center justify-center gap-2"
+                >
+                  <span>Mulai Tantangan Ini</span>
+                  <ArrowRight size={16} />
+                </Button>
+              ) : (
+                <Button fullWidth disabled>
+                  Segera Hadir
+                </Button>
+              )}
+            </div>
+          </Card>
+        </div>
+
+        {/* Rekomendasi 2 & 3: Bisa Kamu Coba Berikutnya */}
+        {nextRecs.length > 0 && (
+          <div className="flex flex-col gap-2.5">
+            <p className="text-xs font-bold uppercase tracking-wider text-ink-faint">
+              Bisa kamu coba berikutnya
             </p>
 
-            <Button
-              fullWidth
-              onClick={() => handleStartChallenge(recommendedChallenge)}
-              className="flex items-center justify-center gap-2 py-3"
-            >
-              <Rocket size={16} />
-              <span>Mulai Tantangan Ini</span>
-            </Button>
-          </div>
-        </div>
-
-        {/* Tantangan lain yang cocok */}
-        <div className="flex flex-col gap-2.5">
-          <p className="text-xs font-bold uppercase tracking-wider text-ink-faint">
-            Tantangan lain yang cocok
-          </p>
-          {otherChallenges.map((c) => (
-            <div
-              key={c.id}
-              onClick={() => router.push(`/tantangan/${c.id}`)}
-              className="bg-surface border border-hairline rounded-card px-4 py-3 flex items-center gap-3 cursor-pointer hover:border-action/40 transition-colors shadow-soft group"
-            >
-              <div className="w-9 h-9 rounded-xl bg-canvas border border-hairline flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                <span role="img" aria-label={c.name}>{c.emoji}</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-ink truncate group-hover:text-action transition-colors">
-                  {c.name}
-                </p>
-                <p className="text-xs text-ink-faint">
-                  {c.durationDays} Hari · {c.difficulty}
-                </p>
-              </div>
-              <ChevronRight size={16} className="text-ink-faint group-hover:text-action transition-colors" />
+            <div className="flex flex-col gap-2.5">
+              {nextRecs.map((rec) => {
+                const IconComponent = ICON_MAP[rec.challenge.icon] ?? Sparkles;
+                return (
+                  <div
+                    key={rec.challenge.id}
+                    onClick={() => {
+                      if (rec.challenge.available) {
+                        handleStartChallenge(rec.challenge);
+                      }
+                    }}
+                    className={`bg-surface border border-hairline rounded-card px-4 py-3 flex items-center gap-3 transition-colors shadow-soft ${
+                      rec.challenge.available
+                        ? "cursor-pointer hover:border-action/40"
+                        : "opacity-80 cursor-default"
+                    }`}
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-canvas border border-hairline flex items-center justify-center text-action shrink-0">
+                      <IconComponent size={20} strokeWidth={1.75} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold text-ink truncate">
+                        {rec.challenge.name}
+                      </p>
+                      <p className="text-xs text-ink-faint">
+                        {rec.challenge.durationDays} Hari · {DIFFICULTY_LABELS[rec.challenge.difficulty]}
+                      </p>
+                    </div>
+                    {rec.challenge.available ? (
+                      <ChevronRight size={16} className="text-ink-faint" />
+                    ) : (
+                      <span className="text-[10px] text-ink-faint bg-canvas border border-hairline rounded px-2 py-0.5">
+                        Segera hadir
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
         {/* Opsi Ulangi Kuis */}
         <div className="pt-2 text-center">

@@ -1,38 +1,34 @@
 # Konten Tantangan: Habitly
 
-Konten disimpan sebagai JSON di `src/content/`. Isi akhir perlu ditinjau tim, idealnya dengan masukan konselor atau psikolog.
+Konten disimpan sebagai JSON di `src/content/`. Isi akhir perlu ditinjau tim, idealnya dengan masukan konselor atau psikolog [PERLU DITINJAU TIM].
 
-## Prinsip Penyusunan
+## Prinsip Penyusunan (Atomic Habits)
 
-- Setiap tugas kecil, spesifik, dan bisa selesai dalam beberapa menit.
-- Setiap tugas punya "versi lebih ringan".
-- Naik tingkat perlahan; tidak ada tugas yang memaksa.
+- **Tindakan Mikroskopik:** Setiap tugas sangat kecil, spesifik, dan selesai dalam 2-5 menit.
+- **Pemicu Jelas (*Implementation Intention*):** Setiap tugas diawali pemicu waktu atau kejadian ("Setelah ...").
+- **Versi Lebih Ringan (*Two-Minute Rule*):** Setiap tugas selalu memiliki alternatif yang lebih mudah jika rasa cemas sedang memuncak.
+- **Pernyataan Identitas (*Identity-based Habit*):** Setiap tugas diakhiri penegasan identitas ("Aku sedang menjadi ...").
+- **Tanpa Klaim Berlebihan:** Dilarang mengklaim "21 hari membentuk kebiasaan" atau klaim klinis kuratif.
 
-## Contoh Jalur "Percaya Diri Berkomunikasi"
+## Daftar 8 Tantangan
 
-| Tingkat | Fokus | Contoh micro-task | Versi lebih ringan |
-|---|---|---|---|
-| 1. Pemanasan | Kontak sosial paling ringan | Tersenyum atau mengangguk pada satu orang | Tersenyum pada diri sendiri di cermin |
-| 2. Memulai | Interaksi singkat satu lawan satu | Menyapa satu teman | Mengirim satu pesan singkat ke teman |
-| 3. Berani bertanya | Berbicara di situasi terstruktur | Mengajukan satu pertanyaan di kelas | Menyiapkan satu pertanyaan tertulis |
-| 4. Berbagi | Berbicara di kelompok kecil | Menyampaikan satu pendapat dalam diskusi | Menulis pendapat lalu membacakan ke satu teman |
-| 5. Tampil | Berbicara di depan lebih banyak orang | Presentasi singkat di depan kelompok kecil | Berlatih presentasi di depan satu orang |
+Ikon menggunakan Lucide icons (bukan emoji). Tingkat kesulitan: 1 = Pemula, 2 = Menengah, 3 = Lanjutan.
 
-## Pertanyaan Jurnal (Contoh)
+| No | ID | Nama Tantangan | Ikon Lucide | Durasi | Kesulitan | Fokus | Ketersediaan |
+|:---:|---|---|:---:|:---:|:---:|---|:---:|
+| 1 | `menjadi-pendengar` | Menjadi Pendengar yang Baik | `Ear` | 21 hari | 1 (Pemula) | Mendengar aktif dan penuh perhatian agar tidak tegang memikirkan respon sendiri | Siap (Min. 7 hari) |
+| 2 | `belajar-mengobrol` | Belajar Mengobrol | `MessageCircle` | 14 hari | 2 (Menengah) | Berani memulai dan menjaga percakapan santai dengan orang baru | Siap (Min. 7 hari) |
+| 3 | `mengatur-emosi` | Mengatur Emosi | `HeartPulse` | 21 hari | 2 (Menengah) | Mengelola rasa gugup dan reaksi fisik saat situasi tegang | Segera hadir |
+| 4 | `bicara-depan-umum` | Berbicara di Depan Umum | `Mic` | 21 hari | 2 (Menengah) | Keberanian dan kestabilan suara saat bicara atau presentasi di depan kelompok | Siap (Min. 7 hari) |
+| 5 | `bilang-tidak` | Bilang Tidak | `Shield` | 7 hari | 1 (Pemula) | Menegakkan batasan diri secara sopan tanpa beban rasa bersalah | Segera hadir |
+| 6 | `hubungan-sehat` | Hubungan Sehat | `HeartHandshake` | 14 hari | 3 (Lanjutan) | Pola komunikasi sehat, saling percaya, dan empati dalam pertemanan | Segera hadir |
+| 7 | `stop-overthinking` | Stop Overthinking | `Brain` | 7 hari | 2 (Menengah) | Memutus kebiasaan menganalisis ulang obrolan dan menenangkan pikiran | Segera hadir |
+| 8 | `percaya-diri` | Membangun Kepercayaan Diri | `Award` | 7 hari | 2 (Menengah) | Mengenali kekuatan diri lewat pembuktian langkah-langkah kecil | Segera hadir |
+
+*Catatan status prototipe:* Hanya tantangan 1, 2, dan 4 yang memiliki konten aktif untuk prototipe hackathon (minimal 7 hari pertama). Lima tantangan lainnya tampil di daftar dengan label "Segera hadir".
+
+## Pertanyaan Jurnal
 
 - Apa yang kamu rasakan sebelum dan sesudah melakukannya?
-- Apa yang berhasil hari ini?
-- Satu hal kecil yang ingin kamu coba besok?
-
-## Lencana (Contoh)
-
-| Nama | Aturan |
-|---|---|
-| Langkah Pertama | Tugas pertama selesai |
-| Konsisten 3 Hari | Streak 3 hari |
-| Naik Tingkat | Naik satu tingkat |
-| Jurnal Pertama | Jurnal pertama terisi |
-
-## Pertanyaan Kuis
-
-Draf 6 pertanyaan berskala 0-3 (tidak pernah, kadang, sering, hampir selalu) belum ditulis. Tulis dengan bahasa netral, tanpa istilah klinis, dan minta peninjauan tim sebelum dipakai.
+- Apa satu hal kecil yang berhasil hari ini?
+- Satu hal kecil apa yang ingin kamu coba besok?

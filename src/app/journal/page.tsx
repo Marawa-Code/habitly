@@ -10,6 +10,7 @@ import { loadState, saveJournalEntry, saveState, getTodayTask } from "@/lib/stor
 import { evaluateBadges } from "@/lib/badges";
 import type { DailyTask } from "@/types";
 import tasksData from "@/content/tasks.json";
+import challengeTasksData from "@/content/challenge_tasks.json";
 
 const JOURNAL_PROMPTS = [
   "Apa yang kamu rasakan sebelum dan sesudah melakukannya?",
@@ -48,9 +49,9 @@ export default function JournalPage() {
     const dt = getTodayTask(s);
     setTodayTask(dt ?? null);
     if (dt) {
-      const detail = (tasksData as { id: string; text: string }[]).find(
-        (t) => t.id === dt.taskId
-      );
+      const detail =
+        (challengeTasksData as { id: string; text: string }[]).find((t) => t.id === dt.taskId) ??
+        (tasksData as { id: string; text: string }[]).find((t) => t.id === dt.taskId);
       setTaskText(detail?.text ?? "");
     }
   }, [router]);

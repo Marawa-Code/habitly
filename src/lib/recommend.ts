@@ -1,37 +1,74 @@
-import type { Task, AppState } from "@/types";
-import type { Level } from "@/types";
-import tasks from "@/content/tasks.json";
+import challengesData from "@/content/challenges.json";
+import type { Challenge } from "@/types";
 
-const TASKS_PER_LEVEL = 5; // naik tingkat setelah N tugas selesai
-
-/**
- * Ambil satu tugas yang belum pernah dimunculkan hari ini,
- * sesuai jalur dan tingkat pengguna.
- */
-export function pickTask(pathId: string, level: Level, usedTaskIds: string[]): Task | null {
-  const pool = (tasks as Task[]).filter(
-    (t) => t.pathId === pathId && t.level === level && !usedTaskIds.includes(t.id)
-  );
-  if (pool.length === 0) {
-    // Semua tugas di tingkat ini sudah dipakai, ulangi dari awal
-    const fallback = (tasks as Task[]).filter(
-      (t) => t.pathId === pathId && t.level === level
-    );
-    if (fallback.length === 0) return null;
-    return fallback[Math.floor(Math.random() * fallback.length)];
-  }
-  return pool[Math.floor(Math.random() * pool.length)];
+export interface ChallengeRecommendation {
+  challenge: Challenge;
+  kebutuhan: number;
+  penalti: number;
+  nilai: number;
+  rank: number;
+  label: "Mulai dari sini" | "Bisa kamu coba berikutnya";
 }
 
 /**
- * Cek apakah pengguna sudah cukup tugas selesai untuk naik tingkat.
+ * Rekomendasi tantangan berdasarkan formula penalti kesulitan dan skor kebutuhan kuis.
+ *
+ * kebutuhan_i = skor_i / 3
+ * tingkat_umum = total_skor / (jumlah_tantangan * 3)
+ * penalti_i = 0.3 * tingkat_umum * (kesulitan_i - 1) / 2
+ * nilai_i = kebutuhan_i - penalti_i
  */
-export function shouldLevelUp(state: AppState): boolean {
-  if (state.currentLevel >= 5) return false;
-  const doneTasks = state.dailyTasks.filter(
-    (t) => t.status === "done" || t.status === "swapped"
-  );
-  // Hitung tugas selesai di tingkat saat ini (sederhana: semua done sejak terakhir level up)
-  return doneTasks.length > 0 && doneTasks.length % TASKS_PER_LEVEL === 0;
-}
+export function recommendChallenges(
+  challengeScores: number[],
+  completedChallengeIds: string[] = []
+): ChallengeRecommendation[] {
+  const challenges = challengesData as Challenge[];
+  const jumlahTantangan = challenges.length; // 8
+  const totalSkor = challengeScores.reduce((sum, s) => sum + (s || 0), 0);
+  const tingkatUmum = totalSkor / (jumlahTantangan * 3);
 
+  // Hitung nilai per tantangan
+  const scored = challenges
+    .filter((c) => {
+      // Hubungan Sehat (kesulitan 3) hanya jika sudah pernah menyelesaikan min 1 tantangan
+      if (c.difficulty === 3 && completedChallengeIds.length === 0) {
+        return false;
+      }
+      return true;
+    })
+    .map((c) => {
+      const skor_i = challengeScores[c.no - 1] ?? 0;
+      const kebutuhan_i = skor_i / 3;
+      const penalti_i = 0.3 * tingkatUmum * ((c.difficulty - 1) / 2);
+      const nilai_i = kebutuhan_i - penalti_i;
+
+      return {
+        challenge: c,
+        kebutuhan: kebutuhan_i,
+        penalti: penalti_i,
+        nilai: nilai_i,
+      };
+    });
+
+  // Urutkan nilai_i menurun; seri: kesulitan lebih rendah dulu, lalu nomor tantangan
+  scored.sort((a, b) => {
+    if (b.nilai !== a.nilai) {
+      return b.nilai - a.nilai;
+    }
+    if (a.challenge.difficulty !== b.challenge.difficulty) {
+      return a.challenge.difficulty - b.challenge.difficulty;
+    }
+    return a.challenge.no - b.challenge.no;
+  });
+
+  // Ambil 3 teratas
+  const top3 = scored.slice(0, 3).map((item, index) => ({
+    ...item,
+    rank: index + 1,
+    label: (index === 0 ? "Mulai dari sini" : "Bisa kamu coba berikutnya") as
+      | "Mulai dari sini"
+      | "Bisa kamu coba berikutnya",
+  }));
+
+  return top3;
+}

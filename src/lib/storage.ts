@@ -7,13 +7,12 @@ const KEY = "habitly_state";
 const defaultState: AppState = {
   user: null,
   quizResults: [],
-  currentPathId: null,
-  currentLevel: 1,
+  activeChallengeId: null,
+  completedChallengeIds: [],
+  challengeStartDate: null,
   dailyTasks: [],
   journalEntries: [],
   earnedBadgeIds: [],
-  activeChallengeId: null,
-  challengeStartDate: null,
 };
 
 export function loadState(): AppState {
@@ -84,4 +83,3 @@ export function todayString(): string {
 export function getTodayTask(state: AppState): DailyTask | undefined {
   return state.dailyTasks.find((t) => t.date === todayString());
 }
-

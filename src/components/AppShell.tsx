@@ -6,8 +6,7 @@ import { usePathname } from "next/navigation";
 import { Home, Compass, BarChart2, Users, LifeBuoy } from "lucide-react";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home", Icon: Home },
-  { href: "/tantangan", label: "Tantangan", Icon: Compass },
+  { href: "/", label: "Hari Ini", Icon: Home },
   { href: "/progress", label: "Progres", Icon: BarChart2 },
   { href: "/community", label: "Komunitas", Icon: Users },
   { href: "/help", label: "Bantuan", Icon: LifeBuoy },

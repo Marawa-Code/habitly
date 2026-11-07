@@ -1,54 +1,41 @@
 import type { QuizResult } from "@/types";
-import type { Level } from "@/types";
 
 /**
- * Hitung skor total dari jawaban kuis (tiap jawaban 0-3).
- * Total 0-18.
+ * Pisahkan jawaban menjadi 8 skor tantangan dan 2 penanda keselamatan.
  */
-export function calculateScore(answers: number[]): number {
-  return answers.reduce((sum, a) => sum + a, 0);
+export function processQuizAnswers(allAnswers: number[]): {
+  challengeScores: number[];
+  safetyFlags: boolean[];
+  total: number;
+} {
+  const challengeScores = allAnswers.slice(0, 8);
+  const safetyAnswers = allAnswers.slice(8, 10);
+
+  // Total hanya dihitung dari 8 pertanyaan tantangan (0 - 24)
+  const total = challengeScores.reduce((sum, score) => sum + (score || 0), 0);
+
+  // Pertanyaan keselamatan (jawaban > 0: kadang-kadang, sering, hampir selalu menunjukkan indikasi masalah)
+  const safetyFlags = safetyAnswers.map((ans) => ans > 0);
+
+  return { challengeScores, safetyFlags, total };
 }
 
 /**
- * Tentukan profil netral berdasarkan total skor.
+ * Tentukan profil netral berdasarkan total skor 8 tantangan.
  * BUKAN alat diagnosis klinis.
  */
 export function getProfile(total: number): QuizResult["profile"] {
-  if (total <= 6) return "ringan";
-  if (total <= 12) return "sedang";
+  if (total <= 8) return "ringan";
+  if (total <= 16) return "sedang";
   return "tinggi";
 }
 
 /**
- * Apakah skor tinggi dan perlu anjuran bantuan profesional?
+ * Cek apakah perlu anjuran rujukan bantuan profesional:
+ * Total >= 17 ATAU ada indikasi pada pertanyaan keselamatan.
  */
-export function getSuggestHelp(total: number): boolean {
-  return total >= 13;
+export function getSuggestHelp(total: number, safetyFlags: boolean[]): boolean {
+  if (total >= 17) return true;
+  if (safetyFlags.some((flag) => flag === true)) return true;
+  return false;
 }
-
-/**
- * Tentukan tingkat awal berdasarkan skor.
- * Skor tinggi → mulai dari tingkat rendah (lebih banyak latihan ringan).
- */
-export function getInitialLevel(total: number): Level {
-  if (total <= 6) return 3;
-  if (total <= 12) return 2;
-  return 1;
-}
-
-/**
- * Tentukan pertanyaan mana yang skornya paling tinggi
- * untuk merekomendasikan jalur yang sesuai.
- * Indeks: 0=q1(bicara kelas), 1=q2(percaya diri), 2=q3(bertanya),
- *         3=q4(percaya diri), 4=q5(kerja kelompok), 5=q6(percaya diri)
- */
-export function getDominantArea(answers: number[]): "bicara-kelas" | "kerja-kelompok" | "percaya-diri" {
-  const bicaraKelas = answers[0] + answers[2];     // gugup bicara + susah bertanya
-  const kerjaKelompok = answers[4];                // hindari diskusi kelompok
-  const percayaDiri = answers[1] + answers[3] + answers[5]; // sisanya
-
-  if (bicaraKelas >= kerjaKelompok && bicaraKelas >= percayaDiri) return "bicara-kelas";
-  if (kerjaKelompok >= percayaDiri) return "kerja-kelompok";
-  return "percaya-diri";
-}
-

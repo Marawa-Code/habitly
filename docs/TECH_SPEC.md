@@ -1,26 +1,19 @@
 # Tech Spec: Habitly
 
-Keputusan tim: **Next.js**. Konfirmasi dengan tim sebelum mengganti.
+Keputusan tim: **Next.js** (App Router) + **TypeScript** + **Tailwind CSS (v3)**.
 
 ## Stack
 
 | Bagian | Pilihan |
 |---|---|
 | Framework | Next.js (App Router), TypeScript |
-| Tampilan | Tailwind CSS, komponen siap pakai (mis. shadcn/ui) |
+| Gaya UI | Tailwind CSS (v3 via `tailwind.config.ts`), sistem token dari `docs/DESIGN.md` |
+| Font | Plus Jakarta Sans lewat `next/font/google` |
+| Ikon | Lucide React (gaya garis, BUKAN emoji) |
 | Grafik | Recharts |
-| Penyimpanan prototipe | localStorage atau IndexedDB; Supabase atau Firebase hanya jika butuh akun dan data bersama |
-| PWA | Web app manifest dan service worker agar bisa dipasang ke layar utama dan alur P0 tetap jalan saat sinyal buruk |
-| Deploy | Vercel (tautan prototipe wajib diunggah) |
-
-## Catatan Teknis
-
-- **Client component:** komponen yang membaca atau menulis localStorage/IndexedDB harus ditandai `"use client"`. Jangan mengakses `window` saat render di server.
-- **Hidrasi:** muat data dari penyimpanan lokal di `useEffect` agar tidak terjadi ketidakcocokan hidrasi.
-- **Demo tanpa jaringan:** alur P0 tidak boleh bergantung pada API eksternal. Sediakan data contoh (seed) dan mode demo.
-- **Konten modular:** tugas, kuis, dan lencana disimpan sebagai JSON terpisah dari kode agar mudah diganti jika studi kasus hari-H berbeda.
-- **Mobile-first:** lebar ponsel sebagai acuan utama; target sentuh cukup besar.
-- **Notifikasi:** jangan menjanjikan notifikasi yang andal. Tulis sebagai rencana (P2).
+| Penyimpanan | localStorage (client-side, aman hidrasi via `useEffect`) |
+| PWA | Web app manifest dan service worker |
+| Deploy | Vercel |
 
 ## Struktur Folder
 
@@ -30,55 +23,61 @@ habitly/
 ├── README.md
 ├── docs/
 ├── public/
-│   ├── manifest.webmanifest
-│   └── icons/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx
-│   │   ├── page.tsx                 # beranda: tugas hari ini
+│   │   ├── page.tsx                 # beranda: tugas harian dari tantangan aktif
 │   │   ├── onboarding/page.tsx
 │   │   ├── quiz/page.tsx
 │   │   ├── result/page.tsx
-│   │   ├── task/[id]/page.tsx
 │   │   ├── journal/page.tsx
 │   │   ├── progress/page.tsx
 │   │   ├── community/page.tsx
 │   │   └── help/page.tsx
 │   ├── components/
+│   │   ├── ui/                      # Button, Card, Input/Textarea, Chip, ProgressBar, BadgeCard
+│   │   └── AppShell.tsx             # Sidebar desktop + tab bar mobile (4 tab)
 │   ├── content/                     # JSON konten
-│   │   ├── quiz.json
-│   │   ├── paths.json
-│   │   ├── tasks.json
+│   │   ├── quiz.json                # 8 pertanyaan tantangan + 2 pertanyaan keselamatan [PERLU DITINJAU TIM]
+│   │   ├── challenges.json          # 8 tantangan (3 aktif, 5 segera hadir)
+│   │   ├── challenge_tasks.json     # Tugas harian pendekatan Atomic Habits
 │   │   └── badges.json
 │   ├── lib/
-│   │   ├── storage.ts               # pembungkus penyimpanan lokal
-│   │   ├── scoring.ts               # skor kuis dan profil
-│   │   ├── recommend.ts             # pilih jalur dan tugas
-│   │   ├── streak.ts
-│   │   └── badges.ts
+│   │   ├── storage.ts               # Pembungkus localStorage
+│   │   ├── scoring.ts               # Perhitungan profil dan batas keselamatan
+│   │   ├── recommend.ts             # Algoritma rekomendasi tantangan
+│   │   ├── streak.ts                # Logika streak dan hari aktif
+│   │   ├── badges.ts                # Evaluasi lencana
+│   │   └── seed.ts                  # Data demo untuk presentasi
 │   └── types/index.ts
 ```
 
 ## Logika Utama
 
-### Skor kuis (usulan, perlu ditinjau tim)
+### 1. Kuis Penilaian Diri (8 Pertanyaan Tantangan + 2 Pertanyaan Keselamatan)
 
-- 6 pertanyaan, tiap pertanyaan berskala 0-3 (tidak pernah, kadang, sering, hampir selalu).
-- Total 0-18. Contoh label netral: 0-6 `ringan`, 7-12 `sedang`, 13-18 `tinggi`.
-- Jika `tinggi`, set `suggestHelp = true` dan tampilkan anjuran bicara dengan orang dewasa tepercaya atau tenaga profesional.
-- **Penting:** bukan alat diagnosis, dan batas skor belum divalidasi secara klinis. Jelaskan itu di UI dan proposal. Idealnya ditinjau konselor atau psikolog.
+- 8 pertanyaan tantangan berskala 0-3 (0: Tidak pernah, 1: Kadang-kadang, 2: Sering, 3: Hampir selalu).
+- Total skor tantangan: 0 - 24.
+- 2 pertanyaan keselamatan di akhir (merasa tidak aman atau ditekan orang lain), TIDAK ikut dihitung dalam total skor.
+- **Profil netral (bukan diagnosis):**
+  - `0 - 8` : **Hambatan Ringan**
+  - `9 - 16`: **Hambatan Sedang**
+  - `17 - 24`: **Hambatan Cukup Terasa**
+- Jika total >= 17 ATAU jawaban keselamatan menandakan masalah, set `suggestHelp = true` dan tampilkan anjuran bicara dengan orang dewasa tepercaya atau profesional kesehatan mental, serta tautan ke halaman Bantuan.
 
-### Rekomendasi jalur dan tugas
+### 2. Rumus Rekomendasi Tantangan (`lib/recommend.ts`)
 
-- Pilih jalur berdasarkan pertanyaan dengan skor tertinggi (memulai percakapan, bicara di kelas, kerja kelompok).
-- Tingkat awal diturunkan dari total skor (skor tinggi mulai dari tingkat lebih rendah).
-- Naik tingkat setelah N tugas selesai di tingkat itu (usulan: 5). Jika pengguna sering memakai versi ringan, tahan di tingkat yang sama.
+Untuk setiap tantangan $i$ ($i = 1..8$):
+- $\text{kebutuhan}_i = \frac{\text{skor}_i}{3}$
+- $\text{tingkat\_umum} = \frac{\text{total\_skor}}{8 \times 3} = \frac{\text{total\_skor}}{24}$
+- $\text{penalti}_i = 0.3 \times \text{tingkat\_umum} \times \frac{\text{kesulitan}_i - 1}{2}$
+- $\text{nilai}_i = \text{kebutuhan}_i - \text{penalti}_i$
 
-### Streak
-
-- Hitung hari berturut-turut dengan tugas selesai.
-- Toleransi 1 hari terlewat tanpa mereset total (P1). Tampilkan pesan dukungan, bukan peringatan.
-
-### Lencana
-
-Aturan didefinisikan di `src/content/badges.json` (contoh di `docs/CONTENT_CHALLENGES.md`) dan dievaluasi oleh `lib/badges.ts`.
+**Aturan pemeringkatan:**
+1. Urutkan secara menurun berdasarkan $\text{nilai}_i$.
+2. Jika seri: dahulukan tantangan dengan tingkat kesulitan lebih rendah, lalu nomor urut tantangan terkecil.
+3. Tantangan *Hubungan Sehat* (kesulitan 3) hanya boleh direkomendasikan jika pengguna sudah pernah menyelesaikan minimal 1 tantangan sebelumnya (`completedChallengeIds.length >= 1`).
+4. Ambil 3 tantangan teratas:
+   - Peringkat 1: "Mulai dari sini"
+   - Peringkat 2 & 3: "Bisa kamu coba berikutnya"
+5. Hanya tantangan yang memiliki konten aktif di prototipe (`available: true`) yang dapat dimulai; tantangan "Segera hadir" tetap ditampilkan tetapi tidak menjadi tombol utama mulai.

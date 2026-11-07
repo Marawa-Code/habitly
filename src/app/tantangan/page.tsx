@@ -2,12 +2,42 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronRight, Sparkles } from "lucide-react";
+import {
+  ChevronRight,
+  Sparkles,
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  type LucideIcon,
+} from "lucide-react";
 import Chip from "@/components/ui/Chip";
 import Button from "@/components/ui/Button";
 import { loadState } from "@/lib/storage";
 import type { AppState, Challenge } from "@/types";
 import challengesData from "@/content/challenges.json";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+};
+
+const DIFFICULTY_LABELS: Record<number, string> = {
+  1: "Pemula",
+  2: "Menengah",
+  3: "Lanjutan",
+};
 
 export default function TantanganPage() {
   const router = useRouter();
@@ -38,7 +68,7 @@ export default function TantanganPage() {
       <div>
         <h1 className="text-2xl font-bold text-ink">Semua Tantangan</h1>
         <p className="mt-1 text-sm text-ink-secondary">
-          Pilih tantangan yang paling kamu butuhkan untuk mulai berprogres.
+          Pilih tantangan yang paling kamu butuhkan untuk mulai melatih kebiasaan berkomunikasi.
         </p>
       </div>
 
@@ -46,21 +76,25 @@ export default function TantanganPage() {
       <div className="flex flex-col gap-3">
         {challenges.map((c) => {
           const isActive = state.activeChallengeId === c.id;
+          const IconComponent = ICON_MAP[c.icon] ?? Sparkles;
 
           return (
             <div
               key={c.id}
-              onClick={() => router.push(`/tantangan/${c.id}`)}
+              onClick={() => {
+                if (c.available) {
+                  router.push(`/tantangan/${c.id}`);
+                }
+              }}
               className={[
-                "group bg-surface border rounded-card px-4 py-4 flex items-center gap-3.5 cursor-pointer shadow-soft transition-all hover:border-action/40 hover:shadow-md",
+                "group bg-surface border rounded-card px-4 py-4 flex items-center gap-3.5 shadow-soft transition-all",
+                c.available ? "cursor-pointer hover:border-action/40 hover:shadow-md" : "opacity-80 cursor-default",
                 isActive ? "border-action bg-mint-tint/20 ring-1 ring-action/20" : "border-hairline",
               ].join(" ")}
             >
               {/* Icon Container */}
-              <div className="w-12 h-12 rounded-2xl bg-canvas border border-hairline/60 flex items-center justify-center text-2xl shrink-0 group-hover:scale-105 transition-transform">
-                <span role="img" aria-label={c.name}>
-                  {c.emoji}
-                </span>
+              <div className="w-12 h-12 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0 group-hover:scale-105 transition-transform">
+                <IconComponent size={22} strokeWidth={2} />
               </div>
 
               {/* Info */}
@@ -74,10 +108,15 @@ export default function TantanganPage() {
                       Aktif ✓
                     </Chip>
                   )}
+                  {!c.available && (
+                    <span className="text-[10px] text-ink-faint bg-canvas border border-hairline px-2 py-0.5 rounded">
+                      Segera hadir
+                    </span>
+                  )}
                 </div>
 
                 <p className="text-xs text-ink-secondary line-clamp-1 leading-relaxed">
-                  {c.description}
+                  {c.focus}
                 </p>
 
                 <div className="flex items-center gap-2 mt-0.5">
@@ -85,16 +124,18 @@ export default function TantanganPage() {
                     {c.durationDays} Hari
                   </Chip>
                   <Chip variant="neutral" className="text-[11px] py-0 px-2 font-medium">
-                    {c.difficulty}
+                    {DIFFICULTY_LABELS[c.difficulty]}
                   </Chip>
                 </div>
               </div>
 
               {/* Chevron */}
-              <ChevronRight
-                size={18}
-                className="text-ink-faint shrink-0 group-hover:text-action group-hover:translate-x-0.5 transition-all"
-              />
+              {c.available && (
+                <ChevronRight
+                  size={18}
+                  className="text-ink-faint shrink-0 group-hover:text-action group-hover:translate-x-0.5 transition-all"
+                />
+              )}
             </div>
           );
         })}
@@ -118,10 +159,9 @@ export default function TantanganPage() {
           className="flex items-center justify-center gap-2"
         >
           <Sparkles size={16} className="text-action" />
-          <span>Atau mulai kuis dulu ✨</span>
+          <span>Mulai Kuis Penilaian Diri</span>
         </Button>
       </div>
     </div>
   );
 }
-

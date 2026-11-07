@@ -1,35 +1,81 @@
 {
+  "_note": "[PERLU DITINJAU TIM] Kuis penilaian diri ini bukan alat diagnosis klinis, melainkan kuesioner pemetaan kebutuhan latihan awal untuk remaja.",
+  "options": [
+    { "value": 0, "label": "Tidak pernah" },
+    { "value": 1, "label": "Kadang-kadang" },
+    { "value": 2, "label": "Sering" },
+    { "value": 3, "label": "Hampir selalu" }
+  ],
   "questions": [
     {
       "id": "q1",
-      "text": "Seberapa sering kamu merasa gugup saat harus berbicara di depan kelas atau kelompok?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 1,
+      "challengeId": "menjadi-pendengar",
+      "isSafety": false,
+      "text": "Kamu merasa terlalu sibuk memikirkan responmu berikutnya sampai sulit benar-benar menyimak lawan bicara."
     },
     {
       "id": "q2",
-      "text": "Seberapa sering kamu menghindari memulai percakapan dengan orang yang belum kamu kenal?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 2,
+      "challengeId": "belajar-mengobrol",
+      "isSafety": false,
+      "text": "Kamu merasa ragu atau bingung harus mulai dari mana saat ingin menyapa atau membuka obrolan santai."
     },
     {
       "id": "q3",
-      "text": "Seberapa sering kamu kesulitan bertanya kepada guru atau dosen meski tidak paham?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 3,
+      "challengeId": "mengatur-emosi",
+      "isSafety": false,
+      "text": "Tubuhmu terasa tegang, tangan dingin, atau jantung berdegup kencang saat harus berhadapan dengan situasi baru."
     },
     {
       "id": "q4",
-      "text": "Seberapa sering kamu merasa khawatir ditertawakan saat menyampaikan pendapat?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 4,
+      "challengeId": "bicara-depan-umum",
+      "isSafety": false,
+      "text": "Kamu merasa cemas suaramu gemetar atau lupa kata-kata saat diminta berbicara di depan kelas atau kelompok."
     },
     {
       "id": "q5",
-      "text": "Seberapa sering kamu menghindari bergabung dalam diskusi kelompok?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 5,
+      "challengeId": "bilang-tidak",
+      "isSafety": false,
+      "text": "Kamu merasa sulit menolak ajakan teman yang memberatkanmu karena takut dianggap tidak setia kawan."
     },
     {
       "id": "q6",
-      "text": "Seberapa sering rasa cemas membuat kamu mengurungkan niat untuk bersosialisasi?",
-      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+      "challengeNo": 6,
+      "challengeId": "hubungan-sehat",
+      "isSafety": false,
+      "text": "Kamu merasa ragu untuk terbuka atau saling berbagi cerita secara jujur dengan teman sebayamu."
+    },
+    {
+      "id": "q7",
+      "challengeNo": 7,
+      "challengeId": "stop-overthinking",
+      "isSafety": false,
+      "text": "Setelah selesai mengobrol, pikiranmu terus memutar ulang percakapan itu dan khawatir ada yang salah bicara."
+    },
+    {
+      "id": "q8",
+      "challengeNo": 8,
+      "challengeId": "percaya-diri",
+      "isSafety": false,
+      "text": "Kamu merasa minder saat membandingkan kemampuan bicaramu dengan orang lain yang terlihat lebih luwes."
+    },
+    {
+      "id": "q9",
+      "challengeNo": null,
+      "challengeId": null,
+      "isSafety": true,
+      "text": "Dalam beberapa hari terakhir, apakah kamu merasa sangat terbebani atau merasa tidak aman di lingkungan sekitarmu?"
+    },
+    {
+      "id": "q10",
+      "challengeNo": null,
+      "challengeId": null,
+      "isSafety": true,
+      "text": "Apakah kamu merasa ditekan atau dipaksa melakukan hal yang membuat dirimu merasa sangat tertekan?"
     }
   ]
 }
-

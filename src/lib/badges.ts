@@ -13,7 +13,7 @@ export function evaluateBadges(state: AppState): string[] {
   ).length;
   const totalJournals = state.journalEntries.length;
   const streak = getStreakFromState(state);
-  const leveledUp = state.currentLevel > 1 ? 1 : 0;
+  const leveledUp = (state.currentLevel ?? 1) > 1 ? 1 : 0;
 
   const context: Record<string, number> = {
     totalDone,

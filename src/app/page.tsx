@@ -11,46 +11,93 @@ import {
   MessageCircle,
   BarChart2,
   Zap,
+  Ear,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+  Sprout,
+  Clock,
+  type LucideIcon,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
-import Chip from "@/components/ui/Chip";
 import ProgressBar from "@/components/ui/ProgressBar";
+import Chip from "@/components/ui/Chip";
 import { loadState, saveState, getTodayTask, saveDailyTask, todayString } from "@/lib/storage";
-import { pickTask, shouldLevelUp } from "@/lib/recommend";
 import { calculateStreak } from "@/lib/streak";
 import { evaluateBadges } from "@/lib/badges";
-import type { AppState, DailyTask, Task, Challenge } from "@/types";
-import tasksData from "@/content/tasks.json";
+import type { AppState, DailyTask, Challenge, ChallengeTask } from "@/types";
 import challengesData from "@/content/challenges.json";
+import challengeTasksData from "@/content/challenge_tasks.json";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  Ear,
+  MessageCircle,
+  HeartPulse,
+  Mic,
+  Shield,
+  HeartHandshake,
+  Brain,
+  Award,
+  Sparkles,
+};
+
+const DIFFICULTY_LABELS: Record<number, string> = {
+  1: "Pemula",
+  2: "Menengah",
+  3: "Lanjutan",
+};
 
 export default function HomePage() {
   const router = useRouter();
   const [state, setState] = useState<AppState | null>(null);
   const [todayTask, setTodayTask] = useState<DailyTask | null>(null);
-  const [taskDetail, setTaskDetail] = useState<Task | null>(null);
+  const [currentTaskDetail, setCurrentTaskDetail] = useState<ChallengeTask | null>(null);
   const [streak, setStreak] = useState(0);
-  const [leveledUp, setLeveledUp] = useState(false);
 
   const refresh = useCallback(() => {
     const s = loadState();
 
     // Jika belum onboarding
-    if (!s.user) { router.replace("/onboarding"); return; }
+    if (!s.user) {
+      router.replace("/onboarding");
+      return;
+    }
 
     setState(s);
     setStreak(calculateStreak(s.dailyTasks));
 
-    // Cari atau buat tugas hari ini jika ada jalur latihan aktif
+    const challenges = challengesData as Challenge[];
+    const tasks = challengeTasksData as ChallengeTask[];
+
+    // Hitung hari tantangan aktif
+    let dayN = 1;
+    if (s.activeChallengeId && s.challengeStartDate) {
+      const start = new Date(s.challengeStartDate).getTime();
+      const now = new Date(todayString()).getTime();
+      const diffDays = Math.max(0, Math.floor((now - start) / (1000 * 60 * 60 * 24)));
+      const activeCh = challenges.find((c) => c.id === s.activeChallengeId);
+      const maxDays = activeCh ? activeCh.durationDays : 14;
+      dayN = Math.min(maxDays, diffDays + 1);
+    }
+
+    // Cari atau buat tugas hari ini
     let dt = getTodayTask(s);
-    if (!dt && s.currentPathId) {
-      const usedIds = s.dailyTasks.map((t) => t.taskId);
-      const picked = pickTask(s.currentPathId, s.currentLevel, usedIds);
-      if (picked) {
+    if (!dt && s.activeChallengeId) {
+      const cTask =
+        tasks.find((t) => t.challengeId === s.activeChallengeId && t.day === dayN) ??
+        tasks.find((t) => t.challengeId === s.activeChallengeId);
+
+      if (cTask) {
         dt = {
           id: crypto.randomUUID(),
           userId: s.user.id,
-          taskId: picked.id,
+          challengeId: s.activeChallengeId,
+          taskId: cTask.id,
+          day: dayN,
           date: todayString(),
           status: "pending",
         };
@@ -60,24 +107,19 @@ export default function HomePage() {
     setTodayTask(dt ?? null);
 
     if (dt) {
-      const detail = (tasksData as Task[]).find((t) => t.id === dt!.taskId) ?? null;
-      setTaskDetail(detail);
+      const detail = tasks.find((t) => t.id === dt!.taskId) ?? null;
+      setCurrentTaskDetail(detail);
     }
   }, [router]);
 
-  useEffect(() => { refresh(); }, [refresh]);
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
 
   function markDone(status: "done" | "swapped") {
     if (!todayTask) return;
     const updated: DailyTask = { ...todayTask, status };
     saveDailyTask(updated);
-
-    // Cek naik tingkat
-    const s = loadState();
-    if (shouldLevelUp(s) && s.currentLevel < 5) {
-      saveState({ currentLevel: (s.currentLevel + 1) as AppState["currentLevel"] });
-      setLeveledUp(true);
-    }
 
     // Update lencana
     const s2 = loadState();
@@ -101,8 +143,6 @@ export default function HomePage() {
   ).length;
 
   const challenges = challengesData as Challenge[];
-
-  // Cek tantangan aktif
   const activeChallenge = challenges.find((c) => c.id === state.activeChallengeId);
 
   let challengeDayN = 1;
@@ -119,17 +159,17 @@ export default function HomePage() {
     remainingDays = Math.max(0, activeChallenge.durationDays - challengeDayN);
   }
 
-  // 3 Tantangan Populer untuk fallback ketika belum ada tantangan aktif
-  const popularChallenges = challenges.slice(0, 3);
+  const ActiveIcon = activeChallenge ? (ICON_MAP[activeChallenge.icon] ?? Sparkles) : Sparkles;
+  const popularChallenges = challenges.filter((c) => c.available).slice(0, 3);
 
   return (
     <div className="flex flex-col gap-6 pb-6">
 
       {/* Top Header: Logo + App Name & Streak */}
       <div className="flex items-center justify-between pt-1">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-mint-tint flex items-center justify-center text-action font-bold text-sm shadow-soft">
-            🌱
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-mint-tint flex items-center justify-center text-action shadow-soft">
+            <Sprout size={18} strokeWidth={2.2} />
           </div>
           <span className="font-extrabold text-sm tracking-wider uppercase text-action">
             Habitly
@@ -142,59 +182,47 @@ export default function HomePage() {
       </div>
 
       {/* Hero Banner: Mulai Tumbuh, Satu Hari Satu Langkah */}
-      <div className="relative overflow-hidden rounded-card bg-gradient-to-br from-mint-tint/80 via-mint-tint/50 to-sky-light-tint/50 border border-hairline p-6 shadow-soft flex flex-col gap-4">
+      <div className="relative overflow-hidden rounded-card bg-surface border border-hairline p-6 shadow-soft flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <p className="text-[11px] font-bold text-action uppercase tracking-widest">
-            Selamat Datang Kembali 👋
+            Selamat Datang Kembali
           </p>
           <h1 className="text-2xl font-bold text-ink leading-tight">
             Mulai tumbuh,<br />
-            satu hari satu langkah 🌿
+            satu hari satu langkah
           </h1>
           <p className="text-xs text-ink-secondary leading-relaxed mt-0.5">
-            Temukan tantangan yang tepat untukmu dan jadilah versi terbaik dirimu, {state.user?.nickname}.
+            Latih rasa percaya dirimu berkomunikasi setiap hari, {state.user?.nickname}.
           </p>
         </div>
 
         <div>
           <button
             onClick={() => router.push("/quiz")}
-            className="w-full bg-surface border border-hairline/80 hover:border-action/50 text-ink font-bold text-sm py-3 px-5 rounded-full shadow-soft hover:shadow transition-all flex items-center justify-center gap-2 group"
+            className="w-full bg-surface border border-hairline hover:border-action/50 text-ink font-bold text-sm py-3 px-5 rounded-full shadow-soft hover:shadow transition-all flex items-center justify-center gap-2 group"
           >
             <Zap size={16} className="text-action fill-action group-hover:scale-110 transition-transform" />
-            <span>Mulai Kuis Sekarang</span>
+            <span>Mulai Penilaian Diri</span>
             <ChevronRight size={16} className="text-ink-faint group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-2 pt-3 border-t border-hairline/60 text-center">
+        {/* Baris Statistik */}
+        <div className="grid grid-cols-3 gap-2 pt-3 border-t border-hairline text-center">
           <div>
             <p className="text-lg font-extrabold text-ink">8</p>
             <p className="text-[11px] text-ink-faint">Tantangan</p>
           </div>
-          <div className="border-x border-hairline/60">
-            <p className="text-lg font-extrabold text-ink">{totalDone > 0 ? totalDone : "2.1k"}</p>
-            <p className="text-[11px] text-ink-faint">{totalDone > 0 ? "Tugas Selesai" : "Pengguna"}</p>
+          <div className="border-x border-hairline">
+            <p className="text-lg font-extrabold text-ink">{totalDone}</p>
+            <p className="text-[11px] text-ink-faint">Tugas Selesai</p>
           </div>
           <div>
-            <p className="text-lg font-extrabold text-ink">84%</p>
-            <p className="text-[11px] text-ink-faint">Berhasil</p>
+            <p className="text-lg font-extrabold text-ink">{streak > 0 ? `${streak} Hari` : "Aktif"}</p>
+            <p className="text-[11px] text-ink-faint">Konsistensi</p>
           </div>
         </div>
       </div>
-
-      {/* Notifikasi naik tingkat */}
-      {leveledUp && (
-        <div className="bg-mint-tint border border-mint rounded-card px-5 py-4">
-          <p className="text-action font-semibold text-sm">
-            🎉 Selamat! Kamu naik ke Tingkat {state.currentLevel}.
-          </p>
-          <p className="text-action/80 text-xs mt-1">
-            Tantangan baru menunggumu. Pelan-pelan juga maju!
-          </p>
-        </div>
-      )}
 
       {/* Section: Tantangan Aktif */}
       <div className="flex flex-col gap-3">
@@ -204,7 +232,7 @@ export default function HomePage() {
             href="/tantangan"
             className="text-xs font-semibold text-action hover:underline flex items-center gap-0.5"
           >
-            <span>Lihat semua</span>
+            <span>Semua tantangan</span>
             <ChevronRight size={14} />
           </Link>
         </div>
@@ -213,10 +241,8 @@ export default function HomePage() {
           <div className="bg-surface border border-hairline rounded-card p-5 shadow-soft flex flex-col gap-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-12 h-12 rounded-2xl bg-canvas border border-hairline flex items-center justify-center text-2xl shrink-0">
-                  <span role="img" aria-label={activeChallenge.name}>
-                    {activeChallenge.emoji}
-                  </span>
+                <div className="w-12 h-12 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0">
+                  <ActiveIcon size={24} strokeWidth={2} />
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold text-ink truncate">
@@ -228,42 +254,37 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Button
-                variant="primary"
-                onClick={() => router.push(`/tantangan/${activeChallenge.id}`)}
-                className="text-xs py-2 px-4 shrink-0 shadow-none"
-              >
-                Lanjut
-              </Button>
+              <span className="text-xs font-semibold text-action bg-mint-tint px-2.5 py-1 rounded-full shrink-0">
+                {DIFFICULTY_LABELS[activeChallenge.difficulty]}
+              </span>
             </div>
 
-            {/* Progress bar */}
+            {/* Bilah Progres */}
             <div>
               <ProgressBar value={challengePercent} />
               <div className="flex items-center justify-between text-xs text-ink-faint mt-1.5">
-                <span>{challengePercent}% selesai</span>
-                <span>{remainingDays > 0 ? `${remainingDays} hari lagi 🎯` : "Tantangan selesai! 🎉"}</span>
+                <span>{challengePercent}% tercapai</span>
+                <span>{remainingDays > 0 ? `${remainingDays} hari lagi` : "Tantangan selesai"}</span>
               </div>
             </div>
 
-            {/* Box Tantangan Hari Ini */}
-            {taskDetail && (
+            {/* Box Tugas Hari Ini (Atomic Habits) */}
+            {currentTaskDetail && (
               <div className="mt-2 pt-4 border-t border-hairline flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-action">
-                    Tantangan Hari Ini
-                  </span>
-                  <span className="text-xs text-ink-faint">
-                    Tingkat {state.currentLevel} dari 5
+                    Latihan Hari Ini (Hari ke-{challengeDayN})
                   </span>
                 </div>
 
                 {isDone ? (
-                  <div className="bg-mint-tint/40 border border-mint/40 rounded-xl p-3 flex flex-col gap-2">
+                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-3 flex flex-col gap-2">
                     <div className="flex items-start gap-2.5">
                       <CheckCircle size={18} className="text-action shrink-0 mt-0.5" strokeWidth={2} />
                       <p className="text-sm font-semibold text-ink leading-snug">
-                        {taskDetail.text}
+                        {todayTask?.status === "swapped"
+                          ? currentTaskDetail.easierText
+                          : currentTaskDetail.text}
                       </p>
                     </div>
                     <p className="text-xs text-action font-medium">
@@ -278,10 +299,23 @@ export default function HomePage() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
+                    {/* Pemicu Habit */}
+                    <div className="bg-canvas border border-hairline rounded-lg px-3 py-2 text-xs text-ink-secondary">
+                      <span className="font-semibold text-ink">Pemicu: </span>
+                      {currentTaskDetail.trigger}
+                    </div>
+
+                    {/* Tindakan */}
                     <p className="text-sm text-ink font-semibold leading-relaxed">
-                      {taskDetail.text}
+                      {currentTaskDetail.text}
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-2">
+
+                    {/* Kalimat Identitas */}
+                    <p className="text-xs text-ink-faint italic">
+                      &ldquo;{currentTaskDetail.identityStatement}&rdquo;
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
                       <Button fullWidth onClick={() => markDone("done")} className="py-2.5 text-xs">
                         Sudah kulakukan ✓
                       </Button>
@@ -289,27 +323,15 @@ export default function HomePage() {
                         variant="secondary"
                         fullWidth
                         className="py-2.5 text-xs"
-                        onClick={() => {
-                          const usedIds = state.dailyTasks.map((t) => t.taskId);
-                          const easier = pickTask(
-                            state.currentPathId!,
-                            Math.max(1, state.currentLevel - 1) as AppState["currentLevel"],
-                            usedIds
-                          );
-                          if (easier && todayTask) {
-                            const updated: DailyTask = { ...todayTask, taskId: easier.id };
-                            saveDailyTask(updated);
-                            setTodayTask(updated);
-                            setTaskDetail(easier);
-                          }
-                        }}
+                        onClick={() => markDone("swapped")}
                       >
-                        Versi lebih ringan
+                        Pakai versi lebih ringan
                       </Button>
                     </div>
-                    {taskDetail.easierText && (
-                      <p className="text-xs text-ink-faint italic">
-                        Versi ringan: {taskDetail.easierText}
+
+                    {currentTaskDetail.easierText && (
+                      <p className="text-[11px] text-ink-faint">
+                        Versi ringan: {currentTaskDetail.easierText}
                       </p>
                     )}
                   </div>
@@ -318,33 +340,36 @@ export default function HomePage() {
             )}
           </div>
         ) : (
-          /* Jika belum ada tantangan aktif, tampilkan kartu tantangan populer */
+          /* Jika belum ada tantangan aktif, tampilkan opsi tantangan yang tersedia */
           <div className="flex flex-col gap-2.5">
-            {popularChallenges.map((c) => (
-              <div
-                key={c.id}
-                onClick={() => router.push(`/tantangan/${c.id}`)}
-                className="bg-surface border border-hairline rounded-card px-4 py-3.5 flex items-center gap-3 cursor-pointer hover:border-action/40 shadow-soft transition-all group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-canvas border border-hairline flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
-                  <span role="img" aria-label={c.name}>{c.emoji}</span>
+            {popularChallenges.map((c) => {
+              const IconComp = ICON_MAP[c.icon] ?? Sparkles;
+              return (
+                <div
+                  key={c.id}
+                  onClick={() => router.push(`/tantangan/${c.id}`)}
+                  className="bg-surface border border-hairline rounded-card px-4 py-3.5 flex items-center gap-3 cursor-pointer hover:border-action/40 shadow-soft transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-mint-tint flex items-center justify-center text-action shrink-0 group-hover:scale-105 transition-transform">
+                    <IconComp size={20} strokeWidth={1.75} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-bold text-ink truncate group-hover:text-action transition-colors">
+                      {c.name}
+                    </h3>
+                    <p className="text-xs text-ink-faint">
+                      {c.durationDays} Hari · {DIFFICULTY_LABELS[c.difficulty]}
+                    </p>
+                  </div>
+                  <ChevronRight size={16} className="text-ink-faint group-hover:text-action group-hover:translate-x-0.5 transition-all" />
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-bold text-ink truncate group-hover:text-action transition-colors">
-                    {c.name}
-                  </h3>
-                  <p className="text-xs text-ink-faint">
-                    {c.durationDays} Hari · {c.difficulty}
-                  </p>
-                </div>
-                <ChevronRight size={16} className="text-ink-faint group-hover:text-action group-hover:translate-x-0.5 transition-all" />
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
 
-      {/* Section: 3 Quick Access Cards (Jelajahi, Komunitas, Progress) */}
+      {/* Section: 3 Kartu Akses Cepat */}
       <div className="grid grid-cols-3 gap-3">
         {/* Jelajahi */}
         <div
@@ -374,16 +399,16 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Progress */}
+        {/* Progres */}
         <div
           onClick={() => router.push("/progress")}
           className="bg-surface border border-hairline rounded-card p-3.5 flex flex-col items-center text-center gap-2 cursor-pointer hover:border-action/40 hover:shadow-soft transition-all group"
         >
-          <div className="w-10 h-10 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-canvas border border-hairline flex items-center justify-center text-ink-secondary group-hover:scale-110 transition-transform">
             <BarChart2 size={20} strokeWidth={2} />
           </div>
           <div>
-            <p className="text-xs font-bold text-ink">Progress</p>
+            <p className="text-xs font-bold text-ink">Progres</p>
             <p className="text-[10px] text-ink-faint mt-0.5">Lihat statistik</p>
           </div>
         </div>

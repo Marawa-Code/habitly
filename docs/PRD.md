@@ -32,15 +32,14 @@ Remaja yang cemas secara sosial cenderung menghindari situasi komunikasi (bicara
 
 ## Alur Utama
 
-1. Onboarding dan disclaimer, lalu persetujuan.
-2. Kuis penilaian diri (5-8 pertanyaan).
-3. Hasil kuis: profil hambatan dan tingkat awal (bukan diagnosis).
-4. Rekomendasi jalur tantangan.
-5. Beranda: satu micro-task hari ini, tandai selesai (atau ganti ke versi lebih ringan).
-6. Jurnal refleksi singkat setelah tugas.
+1. Onboarding dan disclaimer, lalu persetujuan wajib.
+2. Kuis penilaian diri (8 pertanyaan tantangan + 2 pertanyaan keselamatan).
+3. Hasil kuis: profil netral (ringan/sedang/tinggi) dan anjuran bantuan jika skor tinggi.
+4. Rekomendasi 3 tantangan terbaik berdasarkan rumus kebutuhan dan penalti kesulitan.
+5. Beranda: satu micro-task harian (Atomic Habits: pemicu, tindakan, versi ringan, kalimat identitas).
+6. Jurnal refleksi singkat setelah tugas (privat).
 7. Progres: streak, total tugas, tren skor kuis, lencana.
-8. Naik tingkat setelah beberapa tugas selesai.
-9. Komunitas (opsional).
+8. Komunitas aman berbasis pesan dukungan terpilih (anonim, tanpa teks bebas).
 
 ## Kebutuhan Fungsional
 
@@ -51,15 +50,15 @@ Prioritas: **P0** wajib di prototipe, **P1** jika waktu cukup, **P2** hanya dije
 | F-01 | Layar pembuka dan disclaimer bahwa Habitly bukan pengganti tenaga profesional | P0 |
 | F-02 | Persetujuan disclaimer dan kebijakan privasi singkat sebelum lanjut | P0 |
 | F-03 | Nama panggilan atau avatar tanpa data identitas asli | P1 |
-| F-04 | Kuis 5-8 pertanyaan berskala | P0 |
-| F-05 | Hitung skor dengan aturan sederhana, hasilkan profil dan tingkat awal | P0 |
-| F-06 | Skor tinggi: tampilkan anjuran bicara dengan orang dewasa tepercaya atau tenaga profesional, tanpa label diagnosis | P0 |
+| F-04 | Kuis 8 pertanyaan tantangan berskala 0-3 ditambah 2 pertanyaan keselamatan | P0 |
+| F-05 | Hitung skor 0-24, hasilkan profil netral (ringan/sedang/tinggi) | P0 |
+| F-06 | Skor tinggi (>=17) atau penanda keselamatan: tampilkan anjuran bicara dengan orang dewasa tepercaya atau tenaga profesional | P0 |
 | F-07 | Ulang kuis dan bandingkan skor dari waktu ke waktu | P1 |
-| F-08 | Rekomendasi satu jalur tantangan (rule-based) | P0 |
-| F-09 | Ganti jalur tantangan | P1 |
-| F-10 | Satu micro-task per hari sesuai jalur dan tingkat | P0 |
+| F-08 | Rekomendasi 3 tantangan terbaik dengan algoritma pembobotan kesulitan | P0 |
+| F-09 | Jelajahi dan pilih 8 tantangan terarah | P1 |
+| F-10 | Satu micro-task per hari berpendekatan Atomic Habits (pemicu, aksi, versi ringan, identitas) | P0 |
 | F-11 | Tandai selesai atau ganti dengan versi lebih ringan | P0 |
-| F-12 | Minimal 3 tingkat kesulitan | P0 |
+| F-12 | 8 tantangan dengan 3 tingkat kesulitan (Pemula, Menengah, Lanjutan) | P0 |
 | F-13 | Pengingat harian (dukungan notifikasi PWA terbatas, terutama iOS) | P2 |
 | F-14 | Jurnal refleksi terpandu setelah tugas | P0 |
 | F-15 | Jurnal privat, hanya terlihat pemiliknya | P0 |

@@ -12,7 +12,6 @@ import {
   PenLine,
   Award,
   Lock,
-  RefreshCw,
 } from "lucide-react";
 import {
   LineChart,
@@ -27,12 +26,13 @@ import Card from "@/components/ui/Card";
 import BadgeCard from "@/components/ui/BadgeCard";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Button from "@/components/ui/Button";
-import { loadState, saveState } from "@/lib/storage";
+import { loadState, todayString } from "@/lib/storage";
 import { calculateStreak, countActiveDays } from "@/lib/streak";
 import { badges } from "@/lib/badges";
 import { seedDemoData } from "@/lib/seed";
-import type { AppState } from "@/types";
+import type { AppState, Challenge } from "@/types";
 import type { LucideIcon } from "lucide-react";
+import challengesData from "@/content/challenges.json";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Footprints,
@@ -44,18 +44,6 @@ const ICON_MAP: Record<string, LucideIcon> = {
   CheckCircle,
   Award,
 };
-
-const PATH_LABELS: Record<string, string> = {
-  "percaya-diri": "Percaya Diri",
-  "bicara-kelas": "Bicara di Kelas",
-  "kerja-kelompok": "Kerja Kelompok",
-};
-
-const PATHS = [
-  { id: "percaya-diri", name: "Percaya Diri Berkomunikasi" },
-  { id: "bicara-kelas", name: "Bicara di Kelas" },
-  { id: "kerja-kelompok", name: "Kerja Kelompok" },
-];
 
 const TASKS_PER_LEVEL = 5;
 
@@ -109,9 +97,21 @@ export default function ProgressPage() {
     }),
   }));
 
-  const pathLabel = state.currentPathId
-    ? (PATH_LABELS[state.currentPathId] ?? state.currentPathId)
-    : "-";
+  const activeChallenge = (challengesData as Challenge[]).find(
+    (c) => c.id === state.activeChallengeId
+  );
+
+  let challengeDayN = 1;
+  let challengePercent = 0;
+  if (activeChallenge) {
+    if (state.challengeStartDate) {
+      const start = new Date(state.challengeStartDate).getTime();
+      const now = new Date(todayString()).getTime();
+      const diffDays = Math.max(0, Math.floor((now - start) / (1000 * 60 * 60 * 24)));
+      challengeDayN = Math.min(activeChallenge.durationDays, diffDays + 1);
+    }
+    challengePercent = Math.round((challengeDayN / activeChallenge.durationDays) * 100);
+  }
 
   const earnedCount = state.earnedBadgeIds.length;
 
@@ -193,7 +193,7 @@ export default function ProgressPage() {
               {isMaxLevel ? "Tingkat Tertinggi 🎉" : `Menuju Tingkat ${nextLevel}`}
             </p>
             <span className="text-xs font-semibold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
-              {pathLabel}
+              {activeChallenge ? activeChallenge.name : "Tantangan Komunikasi"}
             </span>
           </div>
 
@@ -215,47 +215,61 @@ export default function ProgressPage() {
         </div>
       </Card>
 
-      {/* Ganti Jalur (F-09) */}
-      <Card>
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <RefreshCw size={15} strokeWidth={1.75} className="text-ink-faint" />
-            <p className="text-sm font-semibold text-ink">Jalur Latihan</p>
-          </div>
-          <p className="text-xs text-ink-faint -mt-1">
-            Pilih jalur yang paling sesuai kondisimu sekarang.
-          </p>
-          <div className="flex flex-col gap-2">
-            {PATHS.map((p) => {
-              const isActive = state.currentPathId === p.id;
-              return (
-                <button
-                  key={p.id}
-                  onClick={() => {
-                    if (isActive) return;
-                    saveState({ currentPathId: p.id, currentLevel: 1 });
-                    const s = loadState();
-                    setState(s);
-                    setStreak(calculateStreak(s.dailyTasks));
-                    setActiveDays(countActiveDays(s.dailyTasks));
-                  }}
-                  className={[
-                    "w-full text-left px-4 py-3 rounded-card border text-sm transition-colors",
-                    isActive
-                      ? "bg-mint-tint border-transparent text-action font-semibold"
-                      : "bg-canvas border-hairline text-ink-secondary hover:border-action hover:text-ink",
-                  ].join(" ")}
-                >
-                  <span className="font-medium">{p.name}</span>
-                  {isActive && (
-                    <span className="ml-2 text-xs font-normal text-ink-faint">(aktif)</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+      {/* Section: Tantangan Berjalan (menggantikan Jalur Latihan lama) */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-ink">Tantangan Berjalan</p>
+          <button
+            onClick={() => router.push("/tantangan")}
+            className="text-xs font-semibold text-action hover:underline"
+          >
+            {activeChallenge ? "Ganti tantangan →" : "Pilih tantangan →"}
+          </button>
         </div>
-      </Card>
+
+        {activeChallenge ? (
+          <Card>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-canvas border border-hairline flex items-center justify-center text-xl shrink-0">
+                    <span role="img" aria-label={activeChallenge.name}>
+                      {activeChallenge.emoji}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-ink">{activeChallenge.name}</p>
+                    <p className="text-xs text-ink-faint">
+                      Hari {challengeDayN} dari {activeChallenge.durationDays}
+                    </p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
+                  {challengePercent}%
+                </span>
+              </div>
+
+              <ProgressBar value={challengePercent} />
+            </div>
+          </Card>
+        ) : (
+          <Card>
+            <div className="flex items-center justify-between py-1">
+              <div>
+                <p className="text-sm font-semibold text-ink">Belum ada tantangan aktif</p>
+                <p className="text-xs text-ink-faint mt-0.5">Pilih salah satu dari 8 tantangan terarah</p>
+              </div>
+              <Button
+                variant="secondary"
+                onClick={() => router.push("/tantangan")}
+                className="text-xs py-2 px-3"
+              >
+                Pilih
+              </Button>
+            </div>
+          </Card>
+        )}
+      </div>
 
       {/* Grafik tren skor kuis */}
       <Card>

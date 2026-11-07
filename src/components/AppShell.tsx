@@ -20,7 +20,7 @@ const NAV_ITEMS = [
 const NO_NAV_PATHS = ["/onboarding", "/quiz", "/result", "/journal"];
 
 function isNoNav(pathname: string) {
-  return NO_NAV_PATHS.some((p) => pathname.startsWith(p)) || pathname.startsWith("/task/");
+  return NO_NAV_PATHS.some((p) => pathname.startsWith(p));
 }
 
 export default function AppShell({ children }: { children: React.ReactNode }) {

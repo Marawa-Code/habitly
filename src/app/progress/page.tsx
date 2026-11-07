@@ -11,6 +11,8 @@ import {
   Footprints,
   PenLine,
   Award,
+  Lock,
+  RefreshCw,
 } from "lucide-react";
 import {
   LineChart,
@@ -25,7 +27,7 @@ import Card from "@/components/ui/Card";
 import BadgeCard from "@/components/ui/BadgeCard";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Button from "@/components/ui/Button";
-import { loadState } from "@/lib/storage";
+import { loadState, saveState } from "@/lib/storage";
 import { calculateStreak, countActiveDays } from "@/lib/streak";
 import { badges } from "@/lib/badges";
 import { seedDemoData } from "@/lib/seed";
@@ -48,6 +50,12 @@ const PATH_LABELS: Record<string, string> = {
   "bicara-kelas": "Bicara di Kelas",
   "kerja-kelompok": "Kerja Kelompok",
 };
+
+const PATHS = [
+  { id: "percaya-diri", name: "Percaya Diri Berkomunikasi" },
+  { id: "bicara-kelas", name: "Bicara di Kelas" },
+  { id: "kerja-kelompok", name: "Kerja Kelompok" },
+];
 
 const TASKS_PER_LEVEL = 5;
 
@@ -207,6 +215,48 @@ export default function ProgressPage() {
         </div>
       </Card>
 
+      {/* Ganti Jalur (F-09) */}
+      <Card>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-2">
+            <RefreshCw size={15} strokeWidth={1.75} className="text-ink-faint" />
+            <p className="text-sm font-semibold text-ink">Jalur Latihan</p>
+          </div>
+          <p className="text-xs text-ink-faint -mt-1">
+            Pilih jalur yang paling sesuai kondisimu sekarang.
+          </p>
+          <div className="flex flex-col gap-2">
+            {PATHS.map((p) => {
+              const isActive = state.currentPathId === p.id;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => {
+                    if (isActive) return;
+                    saveState({ currentPathId: p.id, currentLevel: 1 });
+                    const s = loadState();
+                    setState(s);
+                    setStreak(calculateStreak(s.dailyTasks));
+                    setActiveDays(countActiveDays(s.dailyTasks));
+                  }}
+                  className={[
+                    "w-full text-left px-4 py-3 rounded-card border text-sm transition-colors",
+                    isActive
+                      ? "bg-mint-tint border-transparent text-action font-semibold"
+                      : "bg-canvas border-hairline text-ink-secondary hover:border-action hover:text-ink",
+                  ].join(" ")}
+                >
+                  <span className="font-medium">{p.name}</span>
+                  {isActive && (
+                    <span className="ml-2 text-xs font-normal text-ink-faint">(aktif)</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </Card>
+
       {/* Grafik tren skor kuis */}
       <Card>
         <div className="flex flex-col gap-4">
@@ -304,6 +354,42 @@ export default function ProgressPage() {
         </div>
       </div>
 
+      {/* Riwayat Refleksi (F-16) */}
+      {state.journalEntries.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="text-sm font-semibold text-ink">Riwayat Refleksi</p>
+            <p className="text-xs text-ink-faint mt-0.5">
+              {state.journalEntries.length} catatan tersimpan · hanya terlihat olehmu.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            {[...state.journalEntries].reverse().slice(0, 5).map((entry) => (
+              <Card key={entry.id}>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <Lock size={12} className="text-ink-faint" strokeWidth={1.75} />
+                    <p className="text-xs text-ink-faint">
+                      {new Date(entry.createdAt).toLocaleDateString("id-ID", {
+                        day: "numeric", month: "long", year: "numeric",
+                      })}
+                    </p>
+                  </div>
+                  {entry.answers
+                    .filter((a: string) => a.trim())
+                    .slice(0, 2)
+                    .map((answer: string, i: number) => (
+                      <p key={i} className="text-sm text-ink-secondary leading-relaxed line-clamp-2">
+                        &ldquo;{answer}&rdquo;
+                      </p>
+                    ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Tombol demo — hapus setelah presentasi */}
       <div className="flex flex-col gap-2 pt-2 border-t border-hairline">
         <p className="text-xs text-ink-faint">Mode Demo (presentasi)</p>
@@ -315,4 +401,3 @@ export default function ProgressPage() {
     </div>
   );
 }
-

@@ -4,18 +4,19 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Shield } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { saveUser, saveState } from "@/lib/storage";
+import { Input } from "@/components/ui/Input";
+import { saveUser } from "@/lib/storage";
 
 export default function OnboardingPage() {
   const router = useRouter();
   const [agreed, setAgreed] = useState(false);
+  const [nickname, setNickname] = useState("");
 
   function handleMulai() {
     if (!agreed) return;
-    // Simpan user sementara (nickname bisa diisi nanti, untuk sekarang pakai default)
     saveUser({
       id: crypto.randomUUID(),
-      nickname: "Kamu",
+      nickname: nickname.trim() || "Kamu",
       joinedAt: new Date().toISOString(),
       consentedAt: new Date().toISOString(),
     });
@@ -51,6 +52,20 @@ export default function OnboardingPage() {
             Habitly adalah <strong>alat bantu latihan</strong>, bukan pengganti
             psikolog atau tenaga profesional. Jika kamu butuh bantuan lebih,
             bicarakan dengan orang dewasa yang kamu percaya.
+          </p>
+        </div>
+
+        {/* Input nama panggilan (opsional) */}
+        <div className="w-full">
+          <Input
+            label="Nama panggilanmu (opsional)"
+            placeholder="misal: Rani"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            maxLength={32}
+          />
+          <p className="mt-1.5 text-xs text-ink-faint">
+            Dikosongkan juga tidak apa-apa — kami akan menyapamu sebagai &quot;Kamu&quot;.
           </p>
         </div>
 

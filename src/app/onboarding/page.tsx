@@ -20,14 +20,6 @@ import { saveUser } from "@/lib/storage";
 
 type Step = "hero" | "setup" | "choose";
 
-/* Dekorasi ikon floating di hero */
-const FLOATS = [
-  { Icon: Ear, top: "14%", left: "8%", bg: "bg-mint-tint", color: "text-action", size: 18, delay: "0s" },
-  { Icon: Mic, top: "10%", right: "10%", bg: "bg-sky-light-tint", color: "text-info-text", size: 16, delay: "0.4s" },
-  { Icon: MessageCircle, bottom: "22%", left: "6%", bg: "bg-sky-light-tint", color: "text-info-text", size: 15, delay: "0.8s" },
-  { Icon: UserPlus, bottom: "26%", right: "8%", bg: "bg-mint-tint", color: "text-action", size: 17, delay: "0.6s" },
-];
-
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState<Step>("hero");
@@ -52,35 +44,32 @@ export default function OnboardingPage() {
     return (
       <div className="relative h-screen bg-canvas flex flex-col overflow-hidden">
 
-        {/* ── Ikon floating ── */}
-        {FLOATS.map(({ Icon, top, left, right, bottom, bg, color, size, delay }, i) => (
-          <div
-            key={i}
-            className="absolute pointer-events-none select-none"
-            style={{ top, left, right, bottom, animationDelay: delay }}
-            aria-hidden
-          >
-            <div className={`w-11 h-11 rounded-2xl ${bg} ${color} flex items-center justify-center shadow-soft opacity-70`}>
-              <Icon size={size} strokeWidth={1.75} />
-            </div>
-          </div>
-        ))}
+        {/* Ikon floating — hardcoded agar tidak ada hydration mismatch */}
+        <div className="absolute top-[14%] left-[8%] w-11 h-11 rounded-2xl bg-mint-tint text-action flex items-center justify-center shadow-soft opacity-70 pointer-events-none select-none" aria-hidden>
+          <Ear size={18} strokeWidth={1.75} />
+        </div>
+        <div className="absolute top-[10%] right-[10%] w-11 h-11 rounded-2xl bg-sky-light-tint text-info-text flex items-center justify-center shadow-soft opacity-70 pointer-events-none select-none" aria-hidden>
+          <Mic size={16} strokeWidth={1.75} />
+        </div>
+        <div className="absolute bottom-[22%] left-[6%] w-11 h-11 rounded-2xl bg-sky-light-tint text-info-text flex items-center justify-center shadow-soft opacity-60 pointer-events-none select-none" aria-hidden>
+          <MessageCircle size={15} strokeWidth={1.75} />
+        </div>
+        <div className="absolute bottom-[26%] right-[8%] w-11 h-11 rounded-2xl bg-mint-tint text-action flex items-center justify-center shadow-soft opacity-60 pointer-events-none select-none" aria-hidden>
+          <UserPlus size={17} strokeWidth={1.75} />
+        </div>
 
-        {/* ── Konten utama ── */}
+        {/* Konten utama */}
         <div className="relative z-10 flex-1 flex flex-col items-center justify-between px-6 pt-16 pb-8 max-w-sm mx-auto w-full">
 
-          {/* Logo + Nama */}
+          {/* Logo + Headline */}
           <div className="flex flex-col items-center gap-4">
-            {/* Lingkaran besar */}
             <div className="relative">
               <div className="w-24 h-24 rounded-full bg-action flex items-center justify-center shadow-modal">
                 <span className="text-white font-bold text-4xl tracking-tighter">H</span>
               </div>
-              {/* Cincin */}
               <div className="absolute inset-0 rounded-full border-[6px] border-action/15 scale-[1.3]" />
             </div>
 
-            {/* Headline */}
             <div className="text-center mt-2">
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-action">Habitly</p>
               <h1 className="mt-2 text-[28px] font-bold text-ink leading-[1.2] tracking-tight">
@@ -92,7 +81,7 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          {/* 3 Poin horizontal — compact */}
+          {/* 3 Poin horizontal */}
           <div className="flex gap-3 w-full">
             {[
               { icon: <Sparkles size={14} strokeWidth={2} />, label: "Personal" },
@@ -124,7 +113,7 @@ export default function OnboardingPage() {
   }
 
   /* ══════════════════════════════════════════════
-     STEP 2 — SETUP (nama + consent)
+     STEP 2 — SETUP
   ══════════════════════════════════════════════ */
   if (step === "setup") {
     return (
@@ -141,7 +130,7 @@ export default function OnboardingPage() {
               Kembali
             </button>
 
-            {/* Angka langkah */}
+            {/* Progress dots */}
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
                 <div className="w-6 h-1.5 rounded-full bg-hairline" />
@@ -157,7 +146,7 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          {/* Input + disclaimer */}
+          {/* Form */}
           <div className="flex flex-col gap-3">
             <Input
               label="Nama panggilan"
@@ -178,7 +167,7 @@ export default function OnboardingPage() {
               </p>
             </div>
 
-            {/* Checkbox consent */}
+            {/* Checkbox */}
             <label className="flex items-start gap-3 cursor-pointer bg-surface border border-hairline rounded-card px-3.5 py-3.5 shadow-soft hover:border-action/50 transition-colors">
               <input
                 type="checkbox"
@@ -240,16 +229,14 @@ export default function OnboardingPage() {
         {/* Dua kartu — full flex-1 */}
         <div className="grid grid-cols-2 gap-3 flex-1">
 
-          {/* Kuis */}
+          {/* Kuis Rekomendasi */}
           <button
             onClick={() => handleMulai("quiz")}
             className="group relative text-left flex flex-col bg-action rounded-container px-4 py-5 shadow-modal hover:bg-action-pressed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2"
           >
-            {/* Badge */}
             <span className="absolute top-3 right-3 text-[9px] font-bold bg-white/20 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">
               Rekomendasi
             </span>
-
             <div className="flex-1 flex flex-col justify-between gap-3">
               <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
                 <Sparkles size={22} strokeWidth={1.75} className="text-white" />

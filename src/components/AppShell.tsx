@@ -26,9 +26,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex h-full min-h-screen">
-      {/* Sidebar — desktop */}
-      <aside className="hidden lg:flex flex-col w-60 shrink-0 border-r border-hairline bg-surface">
+    <div className="flex h-screen overflow-hidden">
+      {/* Sidebar — desktop, tidak ikut scroll */}
+      <aside className="hidden lg:flex flex-col w-60 shrink-0 border-r border-hairline bg-surface h-screen">
         <div className="px-6 py-8">
           <span className="text-xl font-bold text-action tracking-tight">Habitly</span>
         </div>
@@ -56,8 +56,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Konten utama */}
-      <div className="flex flex-col flex-1 min-w-0">
+      {/* Konten utama — hanya area ini yang scroll */}
+      <div className="flex flex-col flex-1 min-w-0 h-screen">
         <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 lg:py-8">
             {children}

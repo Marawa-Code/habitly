@@ -5,9 +5,13 @@ import type { DailyTask } from "@/types";
  * Toleransi 1 hari terlewat (P1).
  */
 export function calculateStreak(dailyTasks: DailyTask[]): number {
-  const doneDates = dailyTasks
-    .filter((t) => t.status === "done" || t.status === "swapped")
-    .map((t) => t.date)
+  const doneDates = Array.from(
+    new Set(
+      dailyTasks
+        .filter((t) => t.status === "done" || t.status === "swapped")
+        .map((t) => t.date)
+    )
+  )
     .sort()
     .reverse(); // terbaru dulu
 

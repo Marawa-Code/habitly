@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import {
   ArrowLeft,
+  ArrowRight,
   Sparkles,
   CheckCircle,
   HelpCircle,
@@ -202,16 +203,69 @@ export default function TaskDetailPage() {
       {/* Aksi Selesai / Tombol Interaksi */}
       <div className="pt-2">
         {isDone ? (
-          <div className="bg-mint-tint border border-mint/40 rounded-card p-4 flex flex-col gap-2 items-center text-center">
+          <div className="bg-mint-tint border border-mint/40 rounded-card p-4 flex flex-col gap-3 items-center text-center">
             <CheckCircle size={24} className="text-action" />
-            <p className="text-sm font-bold text-ink">Misi ini sudah kamu selesaikan!</p>
-            <Button
-              variant="secondary"
-              onClick={() => router.push("/journal")}
-              className="text-xs underline text-action"
-            >
-              Lihat Jurnal Refleksi →
-            </Button>
+            <div>
+              <p className="text-sm font-bold text-ink">Misi Hari ke-{task.day} sudah selesai!</p>
+              <p className="text-xs text-action font-medium mt-0.5">Langkah kecil yang berarti ✨</p>
+            </div>
+
+            {/* Tombol Lanjutkan ke Misi Berikutnya */}
+            {(() => {
+              const nextTask = (challengeTasksData as ChallengeTask[]).find(
+                (t) => t.challengeId === challenge.id && t.day === task.day + 1
+              );
+              if (nextTask) {
+                return (
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      if (state.user && state.activeChallengeId === challenge.id) {
+                        const existing = state.dailyTasks.find((dt) => dt.taskId === nextTask.id);
+                        if (!existing) {
+                          saveDailyTask({
+                            id: crypto.randomUUID(),
+                            userId: state.user.id,
+                            challengeId: challenge.id,
+                            taskId: nextTask.id,
+                            day: nextTask.day,
+                            date: todayString(),
+                            status: "pending",
+                          });
+                        }
+                      }
+                      router.push(`/task/${nextTask.id}`);
+                    }}
+                    className="flex items-center justify-center gap-2 py-3 text-sm shadow-soft mt-1"
+                  >
+                    <span>Lanjutkan ke Misi Hari ke-{nextTask.day}</span>
+                    <ArrowRight size={16} />
+                  </Button>
+                );
+              }
+              return (
+                <p className="text-xs text-action font-bold">
+                  🎉 Selamat! Kamu telah menuntaskan seluruh misi tantangan ini!
+                </p>
+              );
+            })()}
+
+            <div className="flex gap-3 pt-1">
+              <Button
+                variant="secondary"
+                onClick={() => router.push("/journal")}
+                className="text-xs underline text-action"
+              >
+                Lihat Jurnal Refleksi →
+              </Button>
+              <Button
+                variant="secondary"
+                onClick={() => router.push("/")}
+                className="text-xs text-ink-secondary"
+              >
+                Kembali ke Beranda
+              </Button>
+            </div>
           </div>
         ) : isActiveChallenge ? (
           <div className="flex flex-col gap-2">

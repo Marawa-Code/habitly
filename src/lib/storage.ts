@@ -81,5 +81,16 @@ export function todayString(): string {
 }
 
 export function getTodayTask(state: AppState): DailyTask | undefined {
-  return state.dailyTasks.find((t) => t.date === todayString());
+  if (!state.activeChallengeId) {
+    return state.dailyTasks[state.dailyTasks.length - 1];
+  }
+  const challengeTasks = state.dailyTasks.filter((t) => t.challengeId === state.activeChallengeId);
+  // Prioritaskan task yang masih pending
+  const pending = challengeTasks.find((t) => t.status === "pending");
+  if (pending) return pending;
+  // Jika semua sudah selesai, kembalikan task dengan hari tertinggi
+  if (challengeTasks.length > 0) {
+    return challengeTasks.reduce((prev, curr) => (curr.day > prev.day ? curr : prev));
+  }
+  return undefined;
 }

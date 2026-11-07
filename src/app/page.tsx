@@ -21,6 +21,7 @@ import {
   Sparkles,
   Sprout,
   Clock,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -126,7 +127,43 @@ export default function HomePage() {
     const earned = evaluateBadges(s2);
     saveState({ earnedBadgeIds: earned });
 
+    setState(s2);
     setTodayTask(updated);
+    setStreak(calculateStreak(s2.dailyTasks));
+  }
+
+  function handleNextMission() {
+    if (!state || !state.user || !state.activeChallengeId || !todayTask) return;
+    const nextDay = todayTask.day + 1;
+    const tasks = challengeTasksData as ChallengeTask[];
+    const nextTask = tasks.find(
+      (t) => t.challengeId === state.activeChallengeId && t.day === nextDay
+    );
+
+    if (nextTask) {
+      const nextDt: DailyTask = {
+        id: crypto.randomUUID(),
+        userId: state.user.id,
+        challengeId: state.activeChallengeId,
+        taskId: nextTask.id,
+        day: nextDay,
+        date: todayString(),
+        status: "pending",
+      };
+      saveDailyTask(nextDt);
+      const s2 = loadState();
+      setState(s2);
+      setTodayTask(nextDt);
+      setCurrentTaskDetail(nextTask);
+    } else {
+      // Jika semua misi dalam tantangan ini sudah selesai
+      if (!state.completedChallengeIds.includes(state.activeChallengeId)) {
+        saveState({
+          completedChallengeIds: [...state.completedChallengeIds, state.activeChallengeId],
+        });
+      }
+      router.push("/progress");
+    }
   }
 
   if (!state) {
@@ -145,19 +182,24 @@ export default function HomePage() {
   const challenges = challengesData as Challenge[];
   const activeChallenge = challenges.find((c) => c.id === state.activeChallengeId);
 
-  let challengeDayN = 1;
+  let challengeDayN = todayTask ? todayTask.day : 1;
   let challengePercent = 0;
   let remainingDays = 0;
   if (activeChallenge) {
-    if (state.challengeStartDate) {
-      const start = new Date(state.challengeStartDate).getTime();
-      const now = new Date(todayString()).getTime();
-      const diffDays = Math.max(0, Math.floor((now - start) / (1000 * 60 * 60 * 24)));
-      challengeDayN = Math.min(activeChallenge.durationDays, diffDays + 1);
-    }
-    challengePercent = Math.round((challengeDayN / activeChallenge.durationDays) * 100);
-    remainingDays = Math.max(0, activeChallenge.durationDays - challengeDayN);
+    const completedTasksCount = state.dailyTasks.filter(
+      (t) => t.challengeId === activeChallenge.id && (t.status === "done" || t.status === "swapped")
+    ).length;
+    challengePercent = Math.min(100, Math.round((completedTasksCount / activeChallenge.durationDays) * 100));
+    remainingDays = Math.max(0, activeChallenge.durationDays - completedTasksCount);
   }
+
+  const nextTaskAvailable = Boolean(
+    activeChallenge &&
+    todayTask &&
+    (challengeTasksData as ChallengeTask[]).some(
+      (t) => t.challengeId === activeChallenge.id && t.day === todayTask.day + 1
+    )
+  );
 
   const ActiveIcon = activeChallenge ? (ICON_MAP[activeChallenge.icon] ?? Sparkles) : Sparkles;
   const popularChallenges = challenges.filter((c) => c.available).slice(0, 3);
@@ -296,11 +338,14 @@ export default function HomePage() {
                 </div>
 
                 {isDone ? (
-                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-3.5 flex flex-col gap-2">
+                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-4 flex flex-col gap-3 shadow-soft">
                     <div className="flex items-start gap-2.5">
-                      <CheckCircle size={18} className="text-action shrink-0 mt-0.5" strokeWidth={2} />
+                      <CheckCircle size={20} className="text-action shrink-0 mt-0.5" strokeWidth={2.2} />
                       <div className="flex flex-col gap-0.5">
-                        <p className="text-sm font-bold text-ink leading-snug">
+                        <span className="text-[10px] font-bold uppercase tracking-wider bg-action text-white px-2 py-0.5 rounded-full w-fit">
+                          Hari ke-{todayTask?.day} Selesai
+                        </span>
+                        <p className="text-sm font-bold text-ink leading-snug mt-1">
                           {currentTaskDetail.title}
                         </p>
                         <p className="text-xs text-ink-secondary leading-relaxed">
@@ -310,15 +355,41 @@ export default function HomePage() {
                         </p>
                       </div>
                     </div>
-                    <p className="text-xs text-action font-medium">
-                      Langkah kecil yang berarti ✨
-                    </p>
-                    <button
-                      onClick={() => router.push("/journal")}
-                      className="self-start text-xs font-bold text-action underline mt-1"
-                    >
-                      Tulis refleksi harian →
-                    </button>
+
+                    <div className="flex items-center justify-between text-xs text-action font-medium pt-1 border-t border-action/15">
+                      <span>Langkah kecil yang berarti ✨</span>
+                      <button
+                        onClick={() => router.push("/journal")}
+                        className="text-xs font-bold text-action underline hover:text-action-pressed"
+                      >
+                        Tulis refleksi harian →
+                      </button>
+                    </div>
+
+                    {/* Tombol Lanjutkan ke Misi Berikutnya */}
+                    {nextTaskAvailable ? (
+                      <Button
+                        fullWidth
+                        onClick={handleNextMission}
+                        className="flex items-center justify-center gap-2 py-3 text-sm shadow-soft mt-1"
+                      >
+                        <span>Lanjutkan ke Misi Hari ke-{(todayTask?.day ?? 0) + 1}</span>
+                        <ArrowRight size={16} />
+                      </Button>
+                    ) : (
+                      <div className="p-3 bg-surface rounded-card border border-action/20 text-center flex flex-col gap-2 mt-1">
+                        <p className="text-xs font-bold text-action">
+                          🎉 Selamat! Seluruh misi pada tantangan ini telah kamu selesaikan!
+                        </p>
+                        <Button
+                          fullWidth
+                          onClick={() => router.push("/tantangan")}
+                          className="py-2.5 text-xs"
+                        >
+                          Jelajahi Tantangan Lainnya
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">

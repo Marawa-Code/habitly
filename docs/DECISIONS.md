@@ -11,6 +11,7 @@
 | 7 Nov 2026 | Algoritma rekomendasi matematis dengan penalti kesulitan | Menyeimbangkan kebutuhan intervensi pengguna dengan kesiapan kapasitas psikologis tanpa model ML. |
 | 7 Nov 2026 | Penajaman Judul & Positioning: "Habitly: Latihan Kebiasaan Kecil untuk Remaja yang Ingin Lebih Percaya Diri Berkomunikasi" | Memfokuskan seluruh 8 tantangan hanya pada keterampilan komunikasi praktis sehari-hari, menanggalkan istilah klinis/diagnosis medis. Tantangan 2, 3, dan 4 dipilih sebagai konten prototipe bertingkat. Batasan etika ketat: interaksi lawan jenis & teman dekat non-romantis di lingkungan yang dikenal, tanpa kontak orang asing/internet. |
 | 7 Nov 2026 | Item Profil Akun di Bawah Sidebar & Modal Pengaturan Akun | Menempatkan profil nama pengguna di bagian paling bawah sidebar desktop (dengan tombol pintasan di header mobile) yang membuka modal pengaturan akun (ubah nama panggilan, preferensi pengingat, privasi 100% lokal, unduh data cadangan JSON, dan reset progres). |
+| 7 Nov 2026 | Mode Gelap (Dark Mode) di Pengaturan & Token CSS Variabel | Mengimplementasikan Mode Gelap berbasis kelas `.dark` dan token semantik CSS variabel RGB di `globals.css` & `tailwind.config.ts`. Pilihan: Terang (Sun), Gelap (Moon), dan Sistem (Monitor). Skrip pencegah flash (FOUC) dipasang di layout. |
 
 Tambahkan baris baru untuk setiap keputusan teknis penting (konteks, pilihan, alasan).
 

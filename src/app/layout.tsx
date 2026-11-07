@@ -36,7 +36,24 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${jakartaSans.variable} h-full antialiased`}>
+    <html lang="id" suppressHydrationWarning className={`${jakartaSans.variable} h-full antialiased`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem("habitly_theme");
+                const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                if (theme === "dark" || (theme === "system" && systemDark) || (!theme && systemDark)) {
+                  document.documentElement.classList.add("dark");
+                } else {
+                  document.documentElement.classList.remove("dark");
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-canvas text-ink font-sans">
         <Suspense fallback={null}>
           <AppShell>{children}</AppShell>

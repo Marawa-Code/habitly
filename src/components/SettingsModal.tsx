@@ -13,10 +13,14 @@ import {
   ExternalLink,
   Info,
   AlertTriangle,
+  Sun,
+  Moon,
+  Monitor,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { loadState, saveState, clearState } from "@/lib/storage";
+import { getStoredTheme, applyTheme, type Theme } from "@/lib/theme";
 import type { User } from "@/types";
 
 interface SettingsModalProps {
@@ -35,6 +39,7 @@ export default function SettingsModal({
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [theme, setTheme] = useState<Theme>("system");
   const [reminderTime, setReminderTime] = useState<string>("pagi");
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
@@ -44,6 +49,7 @@ export default function SettingsModal({
       setNickname(currentUser?.nickname || "");
       setSaveSuccess(false);
       setShowResetConfirm(false);
+      setTheme(getStoredTheme());
 
       // Load preferensi waktu pengingat dari localStorage jika ada
       try {
@@ -109,6 +115,11 @@ export default function SettingsModal({
 
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
+  }
+
+  function handleSelectTheme(newTheme: Theme) {
+    setTheme(newTheme);
+    applyTheme(newTheme);
   }
 
   function handleSelectReminder(time: string) {
@@ -226,7 +237,49 @@ export default function SettingsModal({
             </form>
           </div>
 
-          {/* Section 2: Preferensi Waktu Pengingat */}
+          {/* Section 2: Mode Tampilan (Dark Mode) */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Moon size={16} className="text-action" />
+              <h3 className="text-sm font-bold text-ink uppercase tracking-wider">
+                Mode Tampilan
+              </h3>
+            </div>
+            <p className="text-xs text-ink-secondary">
+              Pilih mode visual yang paling nyaman untuk matamu:
+            </p>
+
+            <div className="grid grid-cols-3 gap-2.5">
+              {[
+                { id: "light", title: "Terang", desc: "Segar & lapang", Icon: Sun },
+                { id: "dark", title: "Gelap", desc: "Teduh di mata", Icon: Moon },
+                { id: "system", title: "Sistem", desc: "Ikuti perangkat", Icon: Monitor },
+              ].map(({ id, title, desc, Icon }) => {
+                const selected = theme === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => handleSelectTheme(id as Theme)}
+                    className={`p-3 rounded-card text-left border transition-all cursor-pointer ${
+                      selected
+                        ? "bg-mint-tint/50 border-action text-action shadow-xs"
+                        : "bg-surface border-hairline text-ink-secondary hover:border-action/40"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1.5">
+                      <Icon size={16} className={selected ? "text-action" : "text-ink-secondary"} />
+                      {selected && <Check size={14} className="text-action" />}
+                    </div>
+                    <span className="text-xs font-bold text-ink block">{title}</span>
+                    <p className="text-[10px] text-ink-faint mt-0.5">{desc}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Section 3: Preferensi Waktu Pengingat */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Clock size={16} className="text-action" />

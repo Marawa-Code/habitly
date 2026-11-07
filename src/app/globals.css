@@ -2,9 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --canvas-rgb: 246 250 249;
+  --surface-rgb: 255 255 255;
+  --hairline-rgb: 221 231 228;
+  --ink-rgb: 30 43 42;
+  --ink-secondary-rgb: 82 98 95;
+  --ink-faint-rgb: 138 152 149;
+  --mint-rgb: 134 197 166;
+  --mint-tint-rgb: 228 243 236;
+  --sky-rgb: 91 181 224;
+  --sky-light-rgb: 165 212 234;
+  --sky-light-tint-rgb: 230 243 250;
+  --action-rgb: 47 122 92;
+  --action-pressed-rgb: 37 99 74;
+  --info-text-rgb: 42 86 112;
+}
+
+.dark {
+  --canvas-rgb: 18 24 23;        /* #121817 deep dark sage / night forest */
+  --surface-rgb: 26 36 34;       /* #1A2422 elevated dark surface */
+  --hairline-rgb: 42 56 53;      /* #2A3835 hairline dark */
+  --ink-rgb: 236 243 241;        /* #ECF3F1 bright crisp readable text */
+  --ink-secondary-rgb: 156 176 170; /* #9CB0AA soft muted sage */
+  --ink-faint-rgb: 98 120 115;   /* #627873 faint placeholder/hint */
+  --mint-rgb: 134 197 166;       /* #86C5A6 mint accent */
+  --mint-tint-rgb: 28 54 43;     /* #1C362B mint tint container in dark */
+  --sky-rgb: 91 181 224;         /* #5BB5E0 sky accent */
+  --sky-light-rgb: 165 212 234;
+  --sky-light-tint-rgb: 24 47 59; /* #182F3B sky tint container in dark */
+  --action-rgb: 62 166 126;      /* #3EA67E crisp mint green with >5:1 contrast */
+  --action-pressed-rgb: 47 122 92;
+  --info-text-rgb: 155 211 240;  /* #9BD3F0 info text readable in dark mode */
+}
+
 body {
-  background-color: #F6FAF9;
-  color: #1E2B2A;
+  background-color: rgb(var(--canvas-rgb));
+  color: rgb(var(--ink-rgb));
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Aksesibilitas: hormati preferensi pengguna untuk mengurangi gerak */
@@ -21,7 +56,7 @@ body {
 
 /* Fokus keyboard selalu terlihat (tidak disembunyikan untuk mouse) */
 :focus-visible {
-  outline: 2px solid #2F7A5C;
+  outline: 2px solid rgb(var(--action-rgb));
   outline-offset: 2px;
   border-radius: 4px;
 }

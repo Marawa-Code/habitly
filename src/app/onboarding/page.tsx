@@ -6,6 +6,7 @@ import {
   Sparkles,
   Compass,
   ArrowRight,
+  ArrowLeft,
   Check,
   ShieldCheck,
   Clock,
@@ -156,7 +157,7 @@ export default function OnboardingPage() {
     return (
       <div className="min-h-screen bg-canvas flex flex-col justify-between px-6 py-6 lg:px-16 lg:py-8">
         {/* Top Navbar */}
-        <header className="flex items-center gap-4 w-full max-w-6xl mx-auto">
+        <header className="flex items-center justify-between w-full max-w-6xl mx-auto">
           <div className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -170,10 +171,12 @@ export default function OnboardingPage() {
           </div>
 
           <button
+            type="button"
             onClick={() => setStep("hero")}
-            className="text-xs font-semibold text-action hover:underline cursor-pointer flex items-center gap-1"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-ink-secondary hover:text-action bg-surface border border-hairline shadow-soft hover:border-action/40 transition-all cursor-pointer"
           >
-            ← Kembali
+            <ArrowLeft size={14} />
+            <span>Kembali</span>
           </button>
         </header>
 
@@ -289,7 +292,7 @@ export default function OnboardingPage() {
   return (
     <div className="min-h-screen bg-canvas flex flex-col justify-between px-6 py-6 lg:px-16 lg:py-8">
       {/* Top Navbar */}
-      <header className="flex items-center gap-4 w-full max-w-6xl mx-auto">
+      <header className="flex items-center justify-between w-full max-w-6xl mx-auto">
         <div className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -303,10 +306,12 @@ export default function OnboardingPage() {
         </div>
 
         <button
+          type="button"
           onClick={() => setStep("setup")}
-          className="text-xs font-semibold text-action hover:underline cursor-pointer flex items-center gap-1"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-ink-secondary hover:text-action bg-surface border border-hairline shadow-soft hover:border-action/40 transition-all cursor-pointer"
         >
-          ← Kembali ke Kenalan
+          <ArrowLeft size={14} />
+          <span>Kembali</span>
         </button>
       </header>
 

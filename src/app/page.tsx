@@ -392,45 +392,43 @@ export default function HomePage() {
 
             {/* Box Tugas Hari Ini (Atomic Habits) */}
             {currentTaskDetail && (
-              <div className="mt-2 pt-4 border-t border-hairline flex flex-col gap-3">
+              <div className="mt-2 pt-4 border-t border-hairline flex flex-col gap-3.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-action">
-                    Latihan Hari Ini (Hari ke-{challengeDayN})
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
+                      Misi Hari ke-{challengeDayN}
+                    </span>
+                    <span className="text-xs text-ink-faint">· 2–5 menit</span>
+                  </div>
                   <Link
                     href={`/task/${currentTaskDetail.id}`}
-                    className="text-[11px] font-semibold text-action hover:underline"
+                    className="text-xs font-semibold text-action hover:underline flex items-center gap-0.5"
                   >
-                    Detail misi →
+                    <span>Lihat panduan</span>
+                    <ChevronRight size={14} />
                   </Link>
                 </div>
 
                 {isDone ? (
-                  <div className="bg-mint-tint border border-mint/40 rounded-xl p-4 flex flex-col gap-3 shadow-soft">
-                    <div className="flex items-start gap-2.5">
-                      <CheckCircle size={20} className="text-action shrink-0 mt-0.5" strokeWidth={2.2} />
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-[10px] font-bold uppercase tracking-wider bg-action text-white px-2 py-0.5 rounded-full w-fit">
-                          Hari ke-{todayTask?.day} Selesai
-                        </span>
-                        <p className="text-sm font-bold text-ink leading-snug mt-1">
-                          {currentTaskDetail.title}
-                        </p>
-                        <p className="text-xs text-ink-secondary leading-relaxed">
-                          {todayTask?.status === "swapped"
-                            ? currentTaskDetail.easierText
-                            : currentTaskDetail.text}
-                        </p>
+                  <div className="bg-mint-tint/50 border border-mint/40 rounded-xl p-4 flex flex-col gap-3 shadow-soft">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <CheckCircle size={20} className="text-action shrink-0" strokeWidth={2.5} />
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-ink truncate">
+                            {currentTaskDetail.title}
+                          </p>
+                          <p className="text-[11px] text-action font-medium">
+                            Hari ke-{todayTask?.day} selesai! Langkah kecil yang berarti ✨
+                          </p>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="flex items-center justify-between text-xs text-action font-medium pt-1 border-t border-action/15">
-                      <span>Langkah kecil yang berarti ✨</span>
                       <button
                         onClick={() => router.push("/journal")}
-                        className="text-xs font-bold text-action underline hover:text-action-pressed"
+                        className="text-xs font-bold text-action underline hover:text-action-pressed shrink-0"
                       >
-                        Tulis refleksi harian →
+                        Refleksi →
                       </button>
                     </div>
 
@@ -439,7 +437,7 @@ export default function HomePage() {
                       <Button
                         fullWidth
                         onClick={handleNextMission}
-                        className="flex items-center justify-center gap-2 py-3 text-sm shadow-soft mt-1"
+                        className="flex items-center justify-center gap-2 py-3 text-sm shadow-soft"
                       >
                         <span>Lanjutkan ke Misi Hari ke-{(todayTask?.day ?? 0) + 1}</span>
                         <ArrowRight size={16} />
@@ -460,57 +458,25 @@ export default function HomePage() {
                     )}
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-3">
-                    {/* Judul & Deskripsi Misi */}
+                  <div className="bg-canvas/60 border border-hairline rounded-card p-4 flex flex-col gap-3">
                     <div className="flex flex-col gap-1">
-                      <h4 className="text-sm font-bold text-ink leading-snug">
+                      <h4 className="text-base font-bold text-ink leading-snug">
                         {currentTaskDetail.title}
                       </h4>
-                      <p className="text-xs text-ink-secondary leading-relaxed">
+                      <p className="text-xs text-ink-secondary leading-relaxed line-clamp-2">
                         {currentTaskDetail.description}
                       </p>
                     </div>
 
-                    {/* Pemicu Habit */}
-                    <div className="bg-canvas border border-hairline rounded-lg px-3 py-2 text-xs text-ink-secondary">
-                      <span className="font-semibold text-ink">Pemicu: </span>
-                      {currentTaskDetail.trigger}
-                    </div>
-
-                    {/* Tindakan */}
-                    <div className="p-3 bg-surface border border-action/25 rounded-card flex flex-col gap-1 shadow-soft">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-action">
-                        Tindakan Hari Ini
-                      </span>
-                      <p className="text-sm text-ink font-semibold leading-relaxed">
-                        {currentTaskDetail.text}
-                      </p>
-                    </div>
-
-                    {/* Kalimat Identitas */}
-                    <p className="text-xs text-ink-faint italic">
-                      &ldquo;{currentTaskDetail.identityStatement}&rdquo;
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
-                      <Button fullWidth onClick={() => markDone("done")} className="py-2.5 text-xs">
-                        Sudah kulakukan ✓
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        fullWidth
-                        className="py-2.5 text-xs"
-                        onClick={() => markDone("swapped")}
-                      >
-                        Pakai versi lebih ringan
-                      </Button>
-                    </div>
-
-                    {currentTaskDetail.easierText && (
-                      <p className="text-[11px] text-ink-faint">
-                        Versi ringan: {currentTaskDetail.easierText}
-                      </p>
-                    )}
+                    {/* Tombol Utama: Membuka Halaman Latihan Misi */}
+                    <Button
+                      fullWidth
+                      onClick={() => router.push(`/task/${currentTaskDetail.id}`)}
+                      className="flex items-center justify-center gap-2 py-3 text-sm font-bold shadow-soft"
+                    >
+                      <span>Mulai Latihan Hari Ini</span>
+                      <ArrowRight size={16} />
+                    </Button>
                   </div>
                 )}
               </div>

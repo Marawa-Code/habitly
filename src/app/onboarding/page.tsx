@@ -12,12 +12,21 @@ import {
   Mic,
   UserPlus,
   CheckCircle2,
+  ChevronLeft,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { saveUser } from "@/lib/storage";
 
 type Step = "hero" | "setup" | "choose";
+
+/* Dekorasi ikon floating di hero */
+const FLOATS = [
+  { Icon: Ear, top: "14%", left: "8%", bg: "bg-mint-tint", color: "text-action", size: 18, delay: "0s" },
+  { Icon: Mic, top: "10%", right: "10%", bg: "bg-sky-light-tint", color: "text-info-text", size: 16, delay: "0.4s" },
+  { Icon: MessageCircle, bottom: "22%", left: "6%", bg: "bg-sky-light-tint", color: "text-info-text", size: 15, delay: "0.8s" },
+  { Icon: UserPlus, bottom: "26%", right: "8%", bg: "bg-mint-tint", color: "text-action", size: 17, delay: "0.6s" },
+];
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -36,118 +45,141 @@ export default function OnboardingPage() {
     router.push(tujuan === "quiz" ? "/quiz" : "/tantangan");
   }
 
-  /* ─────────── STEP 1: HERO — satu layar penuh tanpa scroll ─────────── */
+  /* ══════════════════════════════════════════════
+     STEP 1 — HERO
+  ══════════════════════════════════════════════ */
   if (step === "hero") {
     return (
-      <div className="h-screen bg-canvas flex flex-col overflow-hidden">
-        {/* Ikon floating dekoratif */}
-        <div className="absolute inset-0 pointer-events-none select-none" aria-hidden>
-          <div className="absolute top-6 left-5 w-10 h-10 rounded-2xl bg-mint-tint flex items-center justify-center text-action shadow-soft opacity-60">
-            <Ear size={18} strokeWidth={1.75} />
-          </div>
-          <div className="absolute top-10 right-6 w-9 h-9 rounded-2xl bg-sky-light-tint flex items-center justify-center text-info-text shadow-soft opacity-50">
-            <Mic size={16} strokeWidth={1.75} />
-          </div>
-          <div className="absolute bottom-28 left-5 w-8 h-8 rounded-xl bg-sky-light-tint flex items-center justify-center text-info-text shadow-soft opacity-40">
-            <MessageCircle size={14} strokeWidth={1.75} />
-          </div>
-          <div className="absolute bottom-24 right-6 w-9 h-9 rounded-2xl bg-mint-tint flex items-center justify-center text-action shadow-soft opacity-40">
-            <UserPlus size={16} strokeWidth={1.75} />
-          </div>
-        </div>
+      <div className="relative h-screen bg-canvas flex flex-col overflow-hidden">
 
-        {/* Konten utama: flex-1 distribute ruang */}
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-between px-6 py-8 max-w-sm mx-auto w-full">
-
-          {/* Logo + headline */}
-          <div className="flex flex-col items-center gap-3 text-center">
-            <div className="w-16 h-16 rounded-3xl bg-action flex items-center justify-center shadow-modal">
-              <span className="text-white font-bold text-2xl tracking-tight">H</span>
+        {/* ── Ikon floating ── */}
+        {FLOATS.map(({ Icon, top, left, right, bottom, bg, color, size, delay }, i) => (
+          <div
+            key={i}
+            className="absolute pointer-events-none select-none"
+            style={{ top, left, right, bottom, animationDelay: delay }}
+            aria-hidden
+          >
+            <div className={`w-11 h-11 rounded-2xl ${bg} ${color} flex items-center justify-center shadow-soft opacity-70`}>
+              <Icon size={size} strokeWidth={1.75} />
             </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-action">Habitly</p>
-              <h1 className="mt-1.5 text-2xl font-bold text-ink leading-tight tracking-tight">
+          </div>
+        ))}
+
+        {/* ── Konten utama ── */}
+        <div className="relative z-10 flex-1 flex flex-col items-center justify-between px-6 pt-16 pb-8 max-w-sm mx-auto w-full">
+
+          {/* Logo + Nama */}
+          <div className="flex flex-col items-center gap-4">
+            {/* Lingkaran besar */}
+            <div className="relative">
+              <div className="w-24 h-24 rounded-full bg-action flex items-center justify-center shadow-modal">
+                <span className="text-white font-bold text-4xl tracking-tighter">H</span>
+              </div>
+              {/* Cincin */}
+              <div className="absolute inset-0 rounded-full border-[6px] border-action/15 scale-[1.3]" />
+            </div>
+
+            {/* Headline */}
+            <div className="text-center mt-2">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-action">Habitly</p>
+              <h1 className="mt-2 text-[28px] font-bold text-ink leading-[1.2] tracking-tight">
                 Percaya diri itu<br />bisa dilatih.
               </h1>
+              <p className="mt-3 text-sm text-ink-secondary leading-relaxed">
+                Latihan komunikasi kecil setiap hari — langkah demi langkah, sesuai ritme kamu.
+              </p>
             </div>
           </div>
 
-          {/* 3 fitur utama — horizontal grid */}
-          <div className="grid grid-cols-3 gap-2.5 w-full">
+          {/* 3 Poin horizontal — compact */}
+          <div className="flex gap-3 w-full">
             {[
-              { icon: <Sparkles size={18} strokeWidth={2} />, label: "Rekomendasi", sub: "Personal sesuai kebutuhanmu" },
-              { icon: <CheckCircle2 size={18} strokeWidth={2} />, label: "Tugas Harian", sub: "Selesai dalam hitungan menit" },
-              { icon: <Compass size={18} strokeWidth={2} />, label: "8 Jalur", sub: "Dari menyapa hingga berpendapat" },
+              { icon: <Sparkles size={14} strokeWidth={2} />, label: "Personal" },
+              { icon: <CheckCircle2 size={14} strokeWidth={2} />, label: "Harian" },
+              { icon: <Compass size={14} strokeWidth={2} />, label: "8 Jalur" },
             ].map((f, i) => (
-              <div key={i} className="bg-surface border border-hairline rounded-container px-2.5 py-3 flex flex-col items-center gap-1.5 text-center shadow-soft">
-                <div className="w-9 h-9 rounded-xl bg-mint-tint flex items-center justify-center text-action">
+              <div key={i} className="flex-1 flex flex-col items-center gap-1.5 bg-surface border border-hairline rounded-container py-3 px-1 shadow-soft">
+                <div className="w-8 h-8 rounded-xl bg-mint-tint flex items-center justify-center text-action">
                   {f.icon}
                 </div>
-                <p className="text-xs font-bold text-ink leading-tight">{f.label}</p>
-                <p className="text-[10px] text-ink-faint leading-tight">{f.sub}</p>
+                <span className="text-[11px] font-semibold text-ink">{f.label}</span>
               </div>
             ))}
           </div>
 
-          {/* CTA + footnote */}
+          {/* CTA */}
           <div className="flex flex-col gap-2 w-full">
             <Button fullWidth onClick={() => setStep("setup")}>
               Mulai Sekarang
+              <ArrowRight size={16} />
             </Button>
             <p className="text-[11px] text-ink-faint text-center">
-              Gratis · Tanpa akun · Data pribadi tersimpan di perangkatmu
+              Gratis · Tanpa akun · Data tersimpan di perangkatmu
             </p>
           </div>
-
         </div>
       </div>
     );
   }
 
-  /* ─────────── STEP 2: SETUP — satu layar penuh tanpa scroll ─────────── */
+  /* ══════════════════════════════════════════════
+     STEP 2 — SETUP (nama + consent)
+  ══════════════════════════════════════════════ */
   if (step === "setup") {
     return (
       <div className="h-screen bg-canvas flex flex-col overflow-hidden">
-        <div className="flex-1 flex flex-col justify-between px-6 py-6 max-w-sm mx-auto w-full">
+        <div className="flex-1 flex flex-col justify-between px-6 pt-5 pb-8 max-w-sm mx-auto w-full">
 
-          {/* Header */}
-          <div className="flex flex-col gap-1">
+          {/* Back + header */}
+          <div className="flex flex-col gap-3">
             <button
               onClick={() => setStep("hero")}
-              className="text-xs font-semibold text-action flex items-center gap-1 hover:underline self-start"
+              className="text-sm font-semibold text-action flex items-center gap-1 hover:underline self-start min-h-[44px] -ml-1 px-1"
             >
-              ← Kembali
+              <ChevronLeft size={16} />
+              Kembali
             </button>
-            <h2 className="mt-2 text-xl font-bold text-ink leading-tight">Kenalan dulu, yuk!</h2>
-            <p className="text-sm text-ink-secondary">Isi nama panggilanmu — atau langsung lanjut.</p>
+
+            {/* Angka langkah */}
+            <div className="flex items-center gap-2">
+              <div className="flex gap-1.5">
+                <div className="w-6 h-1.5 rounded-full bg-hairline" />
+                <div className="w-6 h-1.5 rounded-full bg-action" />
+                <div className="w-6 h-1.5 rounded-full bg-hairline" />
+              </div>
+              <span className="text-[11px] text-ink-faint">Langkah 1 dari 2</span>
+            </div>
+
+            <div className="mt-1">
+              <h2 className="text-2xl font-bold text-ink leading-tight">Siapa kamu?</h2>
+              <p className="mt-1 text-sm text-ink-secondary">Nama panggilanmu (boleh dikosongkan).</p>
+            </div>
           </div>
 
-          {/* Form area */}
+          {/* Input + disclaimer */}
           <div className="flex flex-col gap-3">
-            {/* Input nama */}
-            <div>
-              <Input
-                label="Nama panggilanmu (opsional)"
-                placeholder="misal: Rani, Dika, Ara…"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                maxLength={32}
-              />
-              <p className="mt-1 text-[11px] text-ink-faint">
-                Dikosongkan juga boleh — kami menyapamu sebagai &quot;Kamu&quot;.
-              </p>
-            </div>
+            <Input
+              label="Nama panggilan"
+              placeholder="misal: Rani, Dika, Ara…"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              maxLength={32}
+            />
+            <p className="text-[11px] text-ink-faint -mt-1">
+              Dikosongkan juga boleh — kami menyapamu sebagai &quot;Kamu&quot;.
+            </p>
 
-            {/* Disclaimer: ringkas horizontal */}
-            <div className="bg-sky-light-tint rounded-card px-3 py-2.5 flex gap-2.5 border border-hairline/80">
-              <Shield size={15} className="text-info-text shrink-0 mt-0.5" strokeWidth={1.75} />
+            {/* Disclaimer */}
+            <div className="flex gap-2.5 bg-sky-light-tint border border-hairline/70 rounded-card px-3 py-2.5">
+              <Shield size={14} className="text-info-text shrink-0 mt-0.5" strokeWidth={1.75} />
               <p className="text-[11px] text-info-text leading-relaxed">
-                Habitly adalah <strong>alat bantu latihan</strong>, bukan terapi. Data tidak dikirim ke mana pun.
+                Habitly adalah <strong>alat bantu latihan</strong>, bukan terapi. Data tidak dikirim ke mana pun dan tersimpan hanya di perangkat ini.
               </p>
             </div>
 
-            {/* Persetujuan */}
-            <label className="flex items-start gap-3 cursor-pointer bg-surface border border-hairline rounded-card px-3 py-3 shadow-soft hover:border-action/40 transition-colors">
+            {/* Checkbox consent */}
+            <label className="flex items-start gap-3 cursor-pointer bg-surface border border-hairline rounded-card px-3.5 py-3.5 shadow-soft hover:border-action/50 transition-colors">
               <input
                 type="checkbox"
                 checked={agreed}
@@ -160,88 +192,100 @@ export default function OnboardingPage() {
             </label>
           </div>
 
-          {/* Tombol lanjut */}
+          {/* Lanjut */}
           <Button
             fullWidth
             disabled={!agreed}
             onClick={() => setStep("choose")}
             className="flex items-center justify-center gap-2"
           >
-            <span>Lanjut</span>
+            Lanjut
             <ArrowRight size={16} />
           </Button>
-
         </div>
       </div>
     );
   }
 
-  /* ─────────── STEP 3: CHOOSE — dua kartu side-by-side ─────────── */
+  /* ══════════════════════════════════════════════
+     STEP 3 — CHOOSE
+  ══════════════════════════════════════════════ */
   return (
     <div className="h-screen bg-canvas flex flex-col overflow-hidden">
-      <div className="flex-1 flex flex-col justify-between px-6 py-6 max-w-sm mx-auto w-full">
+      <div className="flex-1 flex flex-col px-6 pt-5 pb-8 max-w-sm mx-auto w-full gap-5">
 
-        {/* Header */}
-        <div className="flex flex-col gap-1">
+        {/* Back + langkah */}
+        <div className="flex flex-col gap-3">
           <button
             onClick={() => setStep("setup")}
-            className="text-xs font-semibold text-action flex items-center gap-1 hover:underline self-start"
+            className="text-sm font-semibold text-action flex items-center gap-1 hover:underline self-start min-h-[44px] -ml-1 px-1"
           >
-            ← Kembali
+            <ChevronLeft size={16} />
+            Kembali
           </button>
-          <h2 className="mt-2 text-xl font-bold text-ink leading-tight">Bagaimana kamu ingin memulai?</h2>
-          <p className="text-sm text-ink-secondary">Keduanya sama baiknya — pilih yang paling nyaman.</p>
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-6 h-1.5 rounded-full bg-hairline" />
+              <div className="w-6 h-1.5 rounded-full bg-hairline" />
+              <div className="w-6 h-1.5 rounded-full bg-action" />
+            </div>
+            <span className="text-[11px] text-ink-faint">Langkah 2 dari 2</span>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-ink leading-tight">Bagaimana kamu<br />ingin memulai?</h2>
+            <p className="mt-1 text-sm text-ink-secondary">Keduanya sama baiknya.</p>
+          </div>
         </div>
 
-        {/* Dua kartu horizontal side-by-side */}
-        <div className="grid grid-cols-2 gap-3 flex-1 my-4">
+        {/* Dua kartu — full flex-1 */}
+        <div className="grid grid-cols-2 gap-3 flex-1">
 
-          {/* Kartu: Kuis Rekomendasi */}
+          {/* Kuis */}
           <button
             onClick={() => handleMulai("quiz")}
-            className="group relative text-left border-2 border-action/30 bg-surface rounded-container px-3.5 py-4 shadow-soft hover:border-action/60 hover:shadow-modal transition-all flex flex-col gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action"
+            className="group relative text-left flex flex-col bg-action rounded-container px-4 py-5 shadow-modal hover:bg-action-pressed transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2"
           >
-            {/* Badge rekomendasi */}
-            <span className="absolute top-3 right-3 text-[9px] font-bold bg-action text-white px-2 py-0.5 rounded-full uppercase tracking-wide">
+            {/* Badge */}
+            <span className="absolute top-3 right-3 text-[9px] font-bold bg-white/20 text-white px-2 py-0.5 rounded-full uppercase tracking-wide">
               Rekomendasi
             </span>
 
-            <div className="w-11 h-11 rounded-2xl bg-mint-tint flex items-center justify-center text-action group-hover:scale-105 transition-transform">
-              <Sparkles size={20} strokeWidth={2} />
-            </div>
-
-            <div className="flex-1 flex flex-col gap-1">
-              <h3 className="text-sm font-bold text-ink leading-snug">Lewat Kuis Singkat</h3>
-              <p className="text-[11px] text-ink-secondary leading-relaxed">
-                Jawab 8 pertanyaan dan dapatkan tantangan yang paling cocok untukmu.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-1 text-action font-semibold text-xs">
-              <span>Mulai Kuis</span>
-              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            <div className="flex-1 flex flex-col justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-white/15 flex items-center justify-center">
+                <Sparkles size={22} strokeWidth={1.75} className="text-white" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white leading-snug">Lewat Kuis Singkat</h3>
+                <p className="mt-1 text-[11px] text-white/75 leading-relaxed">
+                  Jawab 8 pertanyaan, dapat rekomendasi yang cocok.
+                </p>
+              </div>
+              <div className="flex items-center gap-1 text-white font-semibold text-xs">
+                <span>Mulai Kuis</span>
+                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+              </div>
             </div>
           </button>
 
-          {/* Kartu: Pilih Sendiri */}
+          {/* Pilih Sendiri */}
           <button
             onClick={() => handleMulai("tantangan")}
-            className="group text-left border border-hairline bg-surface rounded-container px-3.5 py-4 shadow-soft hover:border-action/40 hover:shadow-modal transition-all flex flex-col gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action"
+            className="group text-left flex flex-col bg-surface border-2 border-hairline rounded-container px-4 py-5 shadow-soft hover:border-action/40 hover:shadow-modal transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-2"
           >
-            <div className="w-11 h-11 rounded-2xl bg-sky-light-tint flex items-center justify-center text-info-text group-hover:scale-105 transition-transform">
-              <Compass size={20} strokeWidth={2} />
-            </div>
-
-            <div className="flex-1 flex flex-col gap-1">
-              <h3 className="text-sm font-bold text-ink leading-snug">Pilih Sendiri</h3>
-              <p className="text-[11px] text-ink-secondary leading-relaxed">
-                Jelajahi 8 jalur komunikasi dan tentukan tantanganmu sendiri.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-1 text-ink-secondary font-semibold text-xs group-hover:text-action transition-colors">
-              <span>Jelajahi</span>
-              <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+            <div className="flex-1 flex flex-col justify-between gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-sky-light-tint flex items-center justify-center">
+                <Compass size={22} strokeWidth={1.75} className="text-info-text" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-ink leading-snug">Pilih Sendiri</h3>
+                <p className="mt-1 text-[11px] text-ink-secondary leading-relaxed">
+                  Jelajahi 8 jalur dan tentukan pilihanmu.
+                </p>
+              </div>
+              <div className="flex items-center gap-1 text-ink-secondary font-semibold text-xs group-hover:text-action transition-colors">
+                <span>Jelajahi</span>
+                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+              </div>
             </div>
           </button>
         </div>
@@ -249,7 +293,6 @@ export default function OnboardingPage() {
         <p className="text-[11px] text-ink-faint text-center leading-relaxed">
           Kamu bisa mengubah pilihan ini kapan saja dari menu Tantangan.
         </p>
-
       </div>
     </div>
   );

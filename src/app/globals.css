@@ -19,6 +19,10 @@
   --info-text-rgb: 42 86 112;
 }
 
+:root.dark,
+html.dark,
+body.dark,
+[data-theme="dark"],
 .dark {
   --canvas-rgb: 18 24 23;        /* #121817 deep dark sage / night forest */
   --surface-rgb: 26 36 34;       /* #1A2422 elevated dark surface */
@@ -34,6 +38,7 @@
   --action-rgb: 62 166 126;      /* #3EA67E crisp mint green with >5:1 contrast */
   --action-pressed-rgb: 47 122 92;
   --info-text-rgb: 155 211 240;  /* #9BD3F0 info text readable in dark mode */
+  color-scheme: dark;
 }
 
 body {

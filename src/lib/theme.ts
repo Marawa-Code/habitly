@@ -27,13 +27,18 @@ export function applyTheme(theme: Theme): void {
   }
 
   const root = document.documentElement;
+  const body = document.body;
   const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const isDark = theme === "dark" || (theme === "system" && systemPrefersDark);
 
   if (isDark) {
     root.classList.add("dark");
+    root.setAttribute("data-theme", "dark");
+    if (body) body.classList.add("dark");
   } else {
     root.classList.remove("dark");
+    root.setAttribute("data-theme", "light");
+    if (body) body.classList.remove("dark");
   }
 
   window.dispatchEvent(new CustomEvent("habitly_theme_change", { detail: { theme, isDark } }));

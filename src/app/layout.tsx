@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import React from "react";
+import React, { Suspense } from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AppShell from "@/components/AppShell";
 import "./globals.css";
@@ -20,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" className={`${jakartaSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-canvas text-ink font-sans">
-        <AppShell>{children}</AppShell>
+        <Suspense fallback={null}>
+          <AppShell>{children}</AppShell>
+        </Suspense>
       </body>
     </html>
   );

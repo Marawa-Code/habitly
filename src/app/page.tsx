@@ -196,15 +196,27 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div>
-          <button
+        <div className="flex flex-col gap-2">
+          <Button
+            fullWidth
             onClick={() => router.push("/quiz")}
-            className="w-full bg-surface border border-hairline hover:border-action/50 text-ink font-bold text-sm py-3 px-5 rounded-full shadow-soft hover:shadow transition-all flex items-center justify-center gap-2 group"
+            className="flex items-center justify-center gap-2"
           >
-            <Zap size={16} className="text-action fill-action group-hover:scale-110 transition-transform" />
-            <span>Mulai Penilaian Diri</span>
-            <ChevronRight size={16} className="text-ink-faint group-hover:translate-x-0.5 transition-transform" />
-          </button>
+            <Sparkles size={16} />
+            <span>{activeChallenge ? "Ikuti Ulang Kuis Refleksi" : "Mulai Kuis Rekomendasi"}</span>
+          </Button>
+
+          {!activeChallenge && (
+            <Button
+              variant="secondary"
+              fullWidth
+              onClick={() => router.push("/tantangan")}
+              className="flex items-center justify-center gap-2"
+            >
+              <Compass size={16} />
+              <span>Pilih Tantangan Sendiri</span>
+            </Button>
+          )}
         </div>
 
         {/* Baris Statistik */}

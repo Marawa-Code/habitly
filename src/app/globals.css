@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Palet Merek === */
+  --color-mint: #86C5A6;
+  --color-mint-tint: #E4F3EC;
+  --color-sky: #5BB5E0;
+  --color-sky-light: #A5D4EA;
+  --color-sky-light-tint: #E6F3FA;
+
+  /* === Warna Fungsional === */
+  --color-canvas: #F6FAF9;
+  --color-surface: #FFFFFF;
+  --color-hairline: #DDE7E4;
+  --color-ink: #1E2B2A;
+  --color-ink-secondary: #52625F;
+  --color-ink-faint: #8A9895;
+  --color-action: #2F7A5C;
+  --color-action-pressed: #25634A;
+  --color-info-text: #2A5670;
+
+  /* === Tipografi === */
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+
+  /* === Border Radius === */
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-container: 16px;
+
+  /* === Shadow === */
+  --shadow-soft: 0 1px 2px rgba(30,43,42,0.04), 0 4px 12px rgba(30,43,42,0.04);
+  --shadow-modal: 0 12px 32px rgba(30,43,42,0.10);
+}
+
+body {
+  background-color: #F6FAF9;
+  color: #1E2B2A;
+}

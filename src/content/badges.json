@@ -1,0 +1,59 @@
+[
+  {
+    "id": "first-step",
+    "name": "Langkah Pertama",
+    "description": "Menyelesaikan tugas pertamamu. Keren!",
+    "rule": "totalDone>=1",
+    "icon": "Footprints"
+  },
+  {
+    "id": "streak-3",
+    "name": "Konsisten 3 Hari",
+    "description": "Berlatih 3 hari berturut-turut.",
+    "rule": "streak>=3",
+    "icon": "Flame"
+  },
+  {
+    "id": "streak-7",
+    "name": "Seminggu Penuh",
+    "description": "Berlatih 7 hari berturut-turut. Luar biasa!",
+    "rule": "streak>=7",
+    "icon": "Star"
+  },
+  {
+    "id": "level-up",
+    "name": "Naik Tingkat",
+    "description": "Berhasil naik ke tingkat berikutnya.",
+    "rule": "leveledUp>=1",
+    "icon": "TrendingUp"
+  },
+  {
+    "id": "first-journal",
+    "name": "Jurnal Pertama",
+    "description": "Menulis refleksi pertamamu.",
+    "rule": "totalJournals>=1",
+    "icon": "BookOpen"
+  },
+  {
+    "id": "journal-5",
+    "name": "Penulis Setia",
+    "description": "Menulis jurnal sebanyak 5 kali.",
+    "rule": "totalJournals>=5",
+    "icon": "PenLine"
+  },
+  {
+    "id": "tasks-5",
+    "name": "Lima Langkah",
+    "description": "Menyelesaikan 5 tugas.",
+    "rule": "totalDone>=5",
+    "icon": "CheckCircle"
+  },
+  {
+    "id": "tasks-10",
+    "name": "Sepuluh Maju",
+    "description": "Menyelesaikan 10 tugas.",
+    "rule": "totalDone>=10",
+    "icon": "Award"
+  }
+]
+

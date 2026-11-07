@@ -1,0 +1,35 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Seberapa sering kamu merasa gugup saat harus berbicara di depan kelas atau kelompok?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    },
+    {
+      "id": "q2",
+      "text": "Seberapa sering kamu menghindari memulai percakapan dengan orang yang belum kamu kenal?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    },
+    {
+      "id": "q3",
+      "text": "Seberapa sering kamu kesulitan bertanya kepada guru atau dosen meski tidak paham?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    },
+    {
+      "id": "q4",
+      "text": "Seberapa sering kamu merasa khawatir ditertawakan saat menyampaikan pendapat?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    },
+    {
+      "id": "q5",
+      "text": "Seberapa sering kamu menghindari bergabung dalam diskusi kelompok?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    },
+    {
+      "id": "q6",
+      "text": "Seberapa sering rasa cemas membuat kamu mengurungkan niat untuk bersosialisasi?",
+      "options": ["Tidak pernah", "Kadang-kadang", "Sering", "Hampir selalu"]
+    }
+  ]
+}
+

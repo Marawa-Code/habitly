@@ -1,0 +1,143 @@
+[
+  {
+    "id": "t-pd-1-1",
+    "pathId": "percaya-diri",
+    "level": 1,
+    "text": "Tersenyum atau mengangguk pada satu orang yang kamu temui hari ini.",
+    "easierText": "Tersenyum pada diri sendiri di depan cermin selama 10 detik."
+  },
+  {
+    "id": "t-pd-1-2",
+    "pathId": "percaya-diri",
+    "level": 1,
+    "text": "Ucapkan \"terima kasih\" dengan lantang kepada satu orang hari ini.",
+    "easierText": "Tulis ucapan terima kasih di selembar kertas untuk seseorang."
+  },
+  {
+    "id": "t-pd-1-3",
+    "pathId": "percaya-diri",
+    "level": 1,
+    "text": "Buat kontak mata sebentar dengan satu orang saat berpapasan.",
+    "easierText": "Latih kontak mata di depan cermin selama 5 detik."
+  },
+  {
+    "id": "t-pd-2-1",
+    "pathId": "percaya-diri",
+    "level": 2,
+    "text": "Sapa satu teman dengan menyebut namanya hari ini.",
+    "easierText": "Kirim pesan singkat \"Hai, apa kabar?\" ke satu teman lewat chat."
+  },
+  {
+    "id": "t-pd-2-2",
+    "pathId": "percaya-diri",
+    "level": 2,
+    "text": "Tanya kabar satu orang yang sudah lama tidak kamu ajak bicara.",
+    "easierText": "Balas satu pesan teman yang belum kamu balas hari ini."
+  },
+  {
+    "id": "t-pd-2-3",
+    "pathId": "percaya-diri",
+    "level": 2,
+    "text": "Minta pendapat satu teman tentang sesuatu yang ringan (film, makanan, dll).",
+    "easierText": "Tulis pertanyaan yang ingin kamu tanyakan, meski belum ditanyakan."
+  },
+  {
+    "id": "t-pd-3-1",
+    "pathId": "percaya-diri",
+    "level": 3,
+    "text": "Ajukan satu pertanyaan di kelas atau perkuliahan hari ini.",
+    "easierText": "Siapkan satu pertanyaan tertulis yang ingin kamu tanyakan."
+  },
+  {
+    "id": "t-pd-3-2",
+    "pathId": "percaya-diri",
+    "level": 3,
+    "text": "Minta klarifikasi kepada guru atau dosen jika ada yang belum jelas.",
+    "easierText": "Catat hal yang ingin kamu tanyakan untuk disampaikan nanti."
+  },
+  {
+    "id": "t-pd-3-3",
+    "pathId": "percaya-diri",
+    "level": 3,
+    "text": "Jawab satu pertanyaan yang dilempar guru/dosen ke kelas.",
+    "easierText": "Tulis jawabanmu di buku catatan, meski tidak diucapkan."
+  },
+  {
+    "id": "t-pd-4-1",
+    "pathId": "percaya-diri",
+    "level": 4,
+    "text": "Sampaikan satu pendapat dalam diskusi kelompok hari ini.",
+    "easierText": "Tulis pendapatmu, lalu bacakan ke satu teman dekat."
+  },
+  {
+    "id": "t-pd-4-2",
+    "pathId": "percaya-diri",
+    "level": 4,
+    "text": "Usulkan satu ide kepada anggota kelompokmu.",
+    "easierText": "Bagikan idemu lewat chat grup, bukan tatap muka."
+  },
+  {
+    "id": "t-pd-4-3",
+    "pathId": "percaya-diri",
+    "level": 4,
+    "text": "Setujui atau tanggapi pendapat satu anggota kelompok secara lisan.",
+    "easierText": "Beri reaksi (like/emoji) pada ide teman di grup chat."
+  },
+  {
+    "id": "t-pd-5-1",
+    "pathId": "percaya-diri",
+    "level": 5,
+    "text": "Presentasikan satu poin singkat di depan kelompok kecil (2-4 orang).",
+    "easierText": "Latih presentasimu di depan satu orang yang kamu percaya."
+  },
+  {
+    "id": "t-pd-5-2",
+    "pathId": "percaya-diri",
+    "level": 5,
+    "text": "Pimpin diskusi singkat (5 menit) di kelompok kecilmu.",
+    "easierText": "Buat agenda diskusi tertulis sebagai persiapan memimpin."
+  },
+  {
+    "id": "t-bk-1-1",
+    "pathId": "bicara-kelas",
+    "level": 1,
+    "text": "Duduk di baris yang lebih depan dari biasanya di kelas hari ini.",
+    "easierText": "Duduk satu baris lebih maju dari tempat biasamu."
+  },
+  {
+    "id": "t-bk-2-1",
+    "pathId": "bicara-kelas",
+    "level": 2,
+    "text": "Jawab pertanyaan guru dengan mengangguk atau mengangkat tangan.",
+    "easierText": "Siapkan jawaban dalam hati saat guru bertanya, meski tidak diucapkan."
+  },
+  {
+    "id": "t-bk-3-1",
+    "pathId": "bicara-kelas",
+    "level": 3,
+    "text": "Minta guru mengulang penjelasan yang belum kamu mengerti.",
+    "easierText": "Tanyakan kepada teman setelah kelas tentang hal yang belum jelas."
+  },
+  {
+    "id": "t-kk-1-1",
+    "pathId": "kerja-kelompok",
+    "level": 1,
+    "text": "Hadir dan duduk bersama kelompokmu tanpa langsung pergi.",
+    "easierText": "Duduk di dekat kelompok meski belum berbicara."
+  },
+  {
+    "id": "t-kk-2-1",
+    "pathId": "kerja-kelompok",
+    "level": 2,
+    "text": "Setujui atau tanggapi ide satu anggota kelompok secara verbal.",
+    "easierText": "Beri reaksi positif (senyum, anggukan) pada ide anggota kelompok."
+  },
+  {
+    "id": "t-kk-3-1",
+    "pathId": "kerja-kelompok",
+    "level": 3,
+    "text": "Ambil satu tanggung jawab kecil dalam tugas kelompok.",
+    "easierText": "Tawarkan bantuan mengetik atau mencatat hasil diskusi."
+  }
+]
+

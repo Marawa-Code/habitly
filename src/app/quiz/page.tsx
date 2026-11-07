@@ -85,7 +85,14 @@ export default function QuizPage() {
           </div>
 
           {/* Bilah progres */}
-          <div className="h-1.5 bg-sky-light-tint rounded-full overflow-hidden">
+          <div
+            className="h-1.5 bg-sky-light-tint rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuenow={progress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Pertanyaan ${index + 1} dari ${questions.length}`}
+          >
             <div
               className="h-full bg-sky rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}

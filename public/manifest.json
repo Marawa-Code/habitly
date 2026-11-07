@@ -1,0 +1,27 @@
+{
+  "name": "Habitly — Latih Percaya Dirimu",
+  "short_name": "Habitly",
+  "description": "Latih rasa percaya diri berkomunikasi lewat kebiasaan kecil harian.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6FAF9",
+  "theme_color": "#2F7A5C",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "health", "lifestyle"]
+}
+

@@ -6,3 +6,33 @@ body {
   background-color: #F6FAF9;
   color: #1E2B2A;
 }
+
+/* Aksesibilitas: hormati preferensi pengguna untuk mengurangi gerak */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fokus keyboard selalu terlihat (tidak disembunyikan untuk mouse) */
+:focus-visible {
+  outline: 2px solid #2F7A5C;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Sembunyikan outline untuk klik mouse, tetap tampil untuk keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Pastikan teks tidak terlalu sempit saat zoom 200% */
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}

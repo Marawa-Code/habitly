@@ -169,8 +169,8 @@ Isi saat hackathon. Sesuaikan dengan jumlah anggota (3-5 orang).
 | 3 | Belum | | |
 | 4 | Belum | | |
 | 5 | Belum | | |
-| 6 | Belum | | |
-| 7 | Belum | | |
+| 6 | Selesai | AI | Halaman komunitas: feed anonim, kirim dukungan preset, bagikan pencapaian, like feed |
+| 7 | Sebagian | AI | PWA manifest, ikon, SW offline, prefers-reduced-motion, skip link, aria, focus — deploy dikerjakan tim |
 | 8 | Belum | | |
 | 9 | Belum | | |
 

@@ -2,7 +2,16 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Flame, ChevronRight, CheckCircle, Compass } from "lucide-react";
+import Link from "next/link";
+import {
+  Flame,
+  ChevronRight,
+  CheckCircle,
+  Compass,
+  MessageCircle,
+  BarChart2,
+  Zap,
+} from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Chip from "@/components/ui/Chip";
@@ -28,13 +37,11 @@ export default function HomePage() {
 
     // Jika belum onboarding
     if (!s.user) { router.replace("/onboarding"); return; }
-    // Jika belum kuis
-    if (s.quizResults.length === 0) { router.replace("/quiz"); return; }
 
     setState(s);
     setStreak(calculateStreak(s.dailyTasks));
 
-    // Cari atau buat tugas hari ini
+    // Cari atau buat tugas hari ini jika ada jalur latihan aktif
     let dt = getTodayTask(s);
     if (!dt && s.currentPathId) {
       const usedIds = s.dailyTasks.map((t) => t.taskId);
@@ -93,13 +100,14 @@ export default function HomePage() {
     (t) => t.status === "done" || t.status === "swapped"
   ).length;
 
+  const challenges = challengesData as Challenge[];
+
   // Cek tantangan aktif
-  const activeChallenge = (challengesData as Challenge[]).find(
-    (c) => c.id === state.activeChallengeId
-  );
+  const activeChallenge = challenges.find((c) => c.id === state.activeChallengeId);
 
   let challengeDayN = 1;
   let challengePercent = 0;
+  let remainingDays = 0;
   if (activeChallenge) {
     if (state.challengeStartDate) {
       const start = new Date(state.challengeStartDate).getTime();
@@ -108,74 +116,73 @@ export default function HomePage() {
       challengeDayN = Math.min(activeChallenge.durationDays, diffDays + 1);
     }
     challengePercent = Math.round((challengeDayN / activeChallenge.durationDays) * 100);
+    remainingDays = Math.max(0, activeChallenge.durationDays - challengeDayN);
   }
 
-  return (
-    <div className="flex flex-col gap-6">
+  // 3 Tantangan Populer untuk fallback ketika belum ada tantangan aktif
+  const popularChallenges = challenges.slice(0, 3);
 
-      {/* Sapaan */}
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-ink-secondary">Hai, {state.user?.nickname} 👋</p>
-          <h1 className="text-2xl font-bold text-ink mt-0.5">Hari Ini</h1>
+  return (
+    <div className="flex flex-col gap-6 pb-6">
+
+      {/* Top Header: Logo + App Name & Streak */}
+      <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-mint-tint flex items-center justify-center text-action font-bold text-sm shadow-soft">
+            🌱
+          </div>
+          <span className="font-extrabold text-sm tracking-wider uppercase text-action">
+            Habitly
+          </span>
         </div>
+
         <Chip variant="mint" icon={<Flame size={14} strokeWidth={2} />}>
-          {streak} hari
+          {streak} Hari
         </Chip>
       </div>
 
-      {/* Card Tantangan Aktif / Ajakan Memilih */}
-      {activeChallenge ? (
-        <div
-          onClick={() => router.push(`/tantangan/${activeChallenge.id}`)}
-          className="bg-surface border border-hairline rounded-card px-5 py-4 shadow-soft cursor-pointer hover:border-action/40 transition-colors flex flex-col gap-3"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <span className="text-2xl" role="img" aria-label={activeChallenge.name}>
-                {activeChallenge.emoji}
-              </span>
-              <div>
-                <p className="text-xs font-semibold text-ink-faint uppercase tracking-wider">
-                  Tantangan Aktif
-                </p>
-                <h2 className="text-sm font-bold text-ink">{activeChallenge.name}</h2>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-bold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
-                {challengePercent}%
-              </span>
-              <ChevronRight size={16} className="text-ink-faint" />
-            </div>
-          </div>
+      {/* Hero Banner: Mulai Tumbuh, Satu Hari Satu Langkah */}
+      <div className="relative overflow-hidden rounded-card bg-gradient-to-br from-mint-tint/80 via-mint-tint/50 to-sky-light-tint/50 border border-hairline p-6 shadow-soft flex flex-col gap-4">
+        <div className="flex flex-col gap-1.5">
+          <p className="text-[11px] font-bold text-action uppercase tracking-widest">
+            Selamat Datang Kembali 👋
+          </p>
+          <h1 className="text-2xl font-bold text-ink leading-tight">
+            Mulai tumbuh,<br />
+            satu hari satu langkah 🌿
+          </h1>
+          <p className="text-xs text-ink-secondary leading-relaxed mt-0.5">
+            Temukan tantangan yang tepat untukmu dan jadilah versi terbaik dirimu, {state.user?.nickname}.
+          </p>
+        </div>
 
-          <ProgressBar
-            value={challengePercent}
-            label={`Hari ke-${challengeDayN} dari ${activeChallenge.durationDays}`}
-          />
+        <div>
+          <button
+            onClick={() => router.push("/quiz")}
+            className="w-full bg-surface border border-hairline/80 hover:border-action/50 text-ink font-bold text-sm py-3 px-5 rounded-full shadow-soft hover:shadow transition-all flex items-center justify-center gap-2 group"
+          >
+            <Zap size={16} className="text-action fill-action group-hover:scale-110 transition-transform" />
+            <span>Mulai Kuis Sekarang</span>
+            <ChevronRight size={16} className="text-ink-faint group-hover:translate-x-0.5 transition-transform" />
+          </button>
         </div>
-      ) : (
-        <div
-          onClick={() => router.push("/tantangan")}
-          className="bg-gradient-to-r from-mint-tint/60 to-sky-light-tint/60 border border-hairline rounded-card px-5 py-4 flex items-center justify-between cursor-pointer hover:border-action/40 transition-all shadow-soft group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-surface border border-hairline/60 flex items-center justify-center text-action shrink-0 shadow-soft">
-              <Compass size={20} strokeWidth={2} />
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <p className="text-xs font-bold text-action uppercase tracking-wide">
-                Mulai Tantangan Terpandu
-              </p>
-              <p className="text-sm font-semibold text-ink group-hover:text-action transition-colors">
-                Pilih 1 dari 8 tantangan terarah untukmu →
-              </p>
-            </div>
+
+        {/* Stats Row */}
+        <div className="grid grid-cols-3 gap-2 pt-3 border-t border-hairline/60 text-center">
+          <div>
+            <p className="text-lg font-extrabold text-ink">8</p>
+            <p className="text-[11px] text-ink-faint">Tantangan</p>
           </div>
-          <ChevronRight size={18} className="text-action shrink-0 group-hover:translate-x-0.5 transition-transform" />
+          <div className="border-x border-hairline/60">
+            <p className="text-lg font-extrabold text-ink">{totalDone > 0 ? totalDone : "2.1k"}</p>
+            <p className="text-[11px] text-ink-faint">{totalDone > 0 ? "Tugas Selesai" : "Pengguna"}</p>
+          </div>
+          <div>
+            <p className="text-lg font-extrabold text-ink">84%</p>
+            <p className="text-[11px] text-ink-faint">Berhasil</p>
+          </div>
         </div>
-      )}
+      </div>
 
       {/* Notifikasi naik tingkat */}
       {leveledUp && (
@@ -189,109 +196,197 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* Kartu tugas harian */}
-      {taskDetail ? (
-        <Card accent>
-          <div className="flex flex-col gap-4">
-            {/* Label eyebrow */}
-            <span className="text-xs font-semibold text-ink-faint tracking-wide uppercase">
-              Tingkat {state.currentLevel} dari 5 · {activeChallenge ? activeChallenge.name : (
-                state.currentPathId === "percaya-diri"
-                  ? "Percaya Diri" : state.currentPathId === "bicara-kelas"
-                  ? "Bicara di Kelas" : "Kerja Kelompok"
-              )}
-            </span>
+      {/* Section: Tantangan Aktif */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-bold text-ink">Tantangan Aktif</h2>
+          <Link
+            href="/tantangan"
+            className="text-xs font-semibold text-action hover:underline flex items-center gap-0.5"
+          >
+            <span>Lihat semua</span>
+            <ChevronRight size={14} />
+          </Link>
+        </div>
 
-            {isDone ? (
-              /* Status selesai */
-              <div className="flex flex-col gap-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle
-                    size={24}
-                    className="text-action shrink-0 mt-0.5"
-                    strokeWidth={2}
-                  />
-                  <p className="text-lg font-semibold text-ink leading-snug">
-                    {taskDetail.text}
+        {activeChallenge ? (
+          <div className="bg-surface border border-hairline rounded-card p-5 shadow-soft flex flex-col gap-4">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-12 h-12 rounded-2xl bg-canvas border border-hairline flex items-center justify-center text-2xl shrink-0">
+                  <span role="img" aria-label={activeChallenge.name}>
+                    {activeChallenge.emoji}
+                  </span>
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-bold text-ink truncate">
+                    {activeChallenge.name}
+                  </h3>
+                  <p className="text-xs text-ink-faint">
+                    Hari {challengeDayN} dari {activeChallenge.durationDays}
                   </p>
                 </div>
-                <p className="text-sm text-action font-medium">
-                  {todayTask?.status === "swapped"
-                    ? "Langkah ringan pun tetap langkah maju. ✨"
-                    : "Langkah kecil yang berarti. ✨"}
-                </p>
-                <Button
-                  variant="secondary"
-                  onClick={() => router.push("/journal")}
-                  className="self-start"
-                >
-                  Tulis refleksi →
-                </Button>
               </div>
-            ) : (
-              /* Status pending */
-              <div className="flex flex-col gap-5">
-                <p className="text-xl font-semibold text-ink leading-snug">
-                  {taskDetail.text}
-                </p>
-                <div className="flex flex-col gap-2">
-                  <Button fullWidth onClick={() => markDone("done")}>
-                    Sudah kulakukan ✓
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    fullWidth
-                    onClick={() => {
-                      // Ganti ke versi lebih ringan
-                      const usedIds = state.dailyTasks.map((t) => t.taskId);
-                      const easier = pickTask(
-                        state.currentPathId!,
-                        Math.max(1, state.currentLevel - 1) as AppState["currentLevel"],
-                        usedIds
-                      );
-                      if (easier && todayTask) {
-                        const updated: DailyTask = { ...todayTask, taskId: easier.id };
-                        saveDailyTask(updated);
-                        setTodayTask(updated);
-                        setTaskDetail(easier);
-                      }
-                    }}
-                  >
-                    Pakai versi lebih ringan
-                  </Button>
+
+              <Button
+                variant="primary"
+                onClick={() => router.push(`/tantangan/${activeChallenge.id}`)}
+                className="text-xs py-2 px-4 shrink-0 shadow-none"
+              >
+                Lanjut
+              </Button>
+            </div>
+
+            {/* Progress bar */}
+            <div>
+              <ProgressBar value={challengePercent} />
+              <div className="flex items-center justify-between text-xs text-ink-faint mt-1.5">
+                <span>{challengePercent}% selesai</span>
+                <span>{remainingDays > 0 ? `${remainingDays} hari lagi 🎯` : "Tantangan selesai! 🎉"}</span>
+              </div>
+            </div>
+
+            {/* Box Tantangan Hari Ini */}
+            {taskDetail && (
+              <div className="mt-2 pt-4 border-t border-hairline flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-action">
+                    Tantangan Hari Ini
+                  </span>
+                  <span className="text-xs text-ink-faint">
+                    Tingkat {state.currentLevel} dari 5
+                  </span>
                 </div>
-                {taskDetail.easierText && (
-                  <p className="text-xs text-ink-faint italic">
-                    Versi ringan: {taskDetail.easierText}
-                  </p>
+
+                {isDone ? (
+                  <div className="bg-mint-tint/40 border border-mint/40 rounded-xl p-3 flex flex-col gap-2">
+                    <div className="flex items-start gap-2.5">
+                      <CheckCircle size={18} className="text-action shrink-0 mt-0.5" strokeWidth={2} />
+                      <p className="text-sm font-semibold text-ink leading-snug">
+                        {taskDetail.text}
+                      </p>
+                    </div>
+                    <p className="text-xs text-action font-medium">
+                      Langkah kecil yang berarti ✨
+                    </p>
+                    <button
+                      onClick={() => router.push("/journal")}
+                      className="self-start text-xs font-bold text-action underline mt-1"
+                    >
+                      Tulis refleksi harian →
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-3">
+                    <p className="text-sm text-ink font-semibold leading-relaxed">
+                      {taskDetail.text}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button fullWidth onClick={() => markDone("done")} className="py-2.5 text-xs">
+                        Sudah kulakukan ✓
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        fullWidth
+                        className="py-2.5 text-xs"
+                        onClick={() => {
+                          const usedIds = state.dailyTasks.map((t) => t.taskId);
+                          const easier = pickTask(
+                            state.currentPathId!,
+                            Math.max(1, state.currentLevel - 1) as AppState["currentLevel"],
+                            usedIds
+                          );
+                          if (easier && todayTask) {
+                            const updated: DailyTask = { ...todayTask, taskId: easier.id };
+                            saveDailyTask(updated);
+                            setTodayTask(updated);
+                            setTaskDetail(easier);
+                          }
+                        }}
+                      >
+                        Versi lebih ringan
+                      </Button>
+                    </div>
+                    {taskDetail.easierText && (
+                      <p className="text-xs text-ink-faint italic">
+                        Versi ringan: {taskDetail.easierText}
+                      </p>
+                    )}
+                  </div>
                 )}
               </div>
             )}
           </div>
-        </Card>
-      ) : (
-        <Card>
-          <p className="text-ink-secondary text-sm text-center py-4">
-            Belum ada tugas untuk hari ini. Kembali lagi besok ya!
-          </p>
-        </Card>
-      )}
+        ) : (
+          /* Jika belum ada tantangan aktif, tampilkan kartu tantangan populer */
+          <div className="flex flex-col gap-2.5">
+            {popularChallenges.map((c) => (
+              <div
+                key={c.id}
+                onClick={() => router.push(`/tantangan/${c.id}`)}
+                className="bg-surface border border-hairline rounded-card px-4 py-3.5 flex items-center gap-3 cursor-pointer hover:border-action/40 shadow-soft transition-all group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-canvas border border-hairline flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
+                  <span role="img" aria-label={c.name}>{c.emoji}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-bold text-ink truncate group-hover:text-action transition-colors">
+                    {c.name}
+                  </h3>
+                  <p className="text-xs text-ink-faint">
+                    {c.durationDays} Hari · {c.difficulty}
+                  </p>
+                </div>
+                <ChevronRight size={16} className="text-ink-faint group-hover:text-action group-hover:translate-x-0.5 transition-all" />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* Kartu perjalanan */}
-      <div
-        className="bg-surface border border-hairline rounded-card px-5 py-4 flex items-center justify-between cursor-pointer hover:border-action/40 transition-colors"
-        onClick={() => router.push("/progress")}
-      >
-        <div className="flex flex-col gap-0.5">
-          <p className="text-xs font-semibold text-ink-faint uppercase tracking-wide">
-            Perjalananmu
-          </p>
-          <p className="text-sm text-ink">
-            <span className="font-bold text-action">{totalDone}</span> tugas selesai ·{" "}
-            <span className="font-bold text-action">{streak}</span> hari berturut-turut
-          </p>
+      {/* Section: 3 Quick Access Cards (Jelajahi, Komunitas, Progress) */}
+      <div className="grid grid-cols-3 gap-3">
+        {/* Jelajahi */}
+        <div
+          onClick={() => router.push("/tantangan")}
+          className="bg-surface border border-hairline rounded-card p-3.5 flex flex-col items-center text-center gap-2 cursor-pointer hover:border-action/40 hover:shadow-soft transition-all group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-mint-tint flex items-center justify-center text-action group-hover:scale-110 transition-transform">
+            <Compass size={20} strokeWidth={2} />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-ink">Jelajahi</p>
+            <p className="text-[10px] text-ink-faint mt-0.5">8 tantangan</p>
+          </div>
         </div>
-        <ChevronRight size={18} className="text-ink-faint" />
+
+        {/* Komunitas */}
+        <div
+          onClick={() => router.push("/community")}
+          className="bg-surface border border-hairline rounded-card p-3.5 flex flex-col items-center text-center gap-2 cursor-pointer hover:border-action/40 hover:shadow-soft transition-all group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-sky-light-tint flex items-center justify-center text-info-text group-hover:scale-110 transition-transform">
+            <MessageCircle size={20} strokeWidth={2} />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-ink">Komunitas</p>
+            <p className="text-[10px] text-ink-faint mt-0.5">Cerita teman</p>
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div
+          onClick={() => router.push("/progress")}
+          className="bg-surface border border-hairline rounded-card p-3.5 flex flex-col items-center text-center gap-2 cursor-pointer hover:border-action/40 hover:shadow-soft transition-all group"
+        >
+          <div className="w-10 h-10 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 group-hover:scale-110 transition-transform">
+            <BarChart2 size={20} strokeWidth={2} />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-ink">Progress</p>
+            <p className="text-[10px] text-ink-faint mt-0.5">Lihat statistik</p>
+          </div>
+        </div>
       </div>
 
     </div>

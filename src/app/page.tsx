@@ -27,7 +27,15 @@ import {
 import Button from "@/components/ui/Button";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Chip from "@/components/ui/Chip";
-import { loadState, saveState, getTodayTask, saveDailyTask, todayString } from "@/lib/storage";
+import {
+  loadState,
+  saveState,
+  getTodayTask,
+  saveDailyTask,
+  todayString,
+  getJoinedChallengeIds,
+  getChallengeProgress,
+} from "@/lib/storage";
 import { calculateStreak } from "@/lib/streak";
 import { evaluateBadges } from "@/lib/badges";
 import type { AppState, DailyTask, Challenge, ChallengeTask } from "@/types";
@@ -201,6 +209,10 @@ export default function HomePage() {
     )
   );
 
+  const joinedIds = getJoinedChallengeIds(state);
+  const joinedChallenges = challenges.filter((c) => joinedIds.includes(c.id));
+  const otherJoinedChallenges = joinedChallenges.filter((c) => c.id !== state.activeChallengeId);
+
   const ActiveIcon = activeChallenge ? (ICON_MAP[activeChallenge.icon] ?? Sparkles) : Sparkles;
   const popularChallenges = challenges.filter((c) => c.available).slice(0, 3);
 
@@ -281,7 +293,14 @@ export default function HomePage() {
       {/* Section: Tantangan Aktif */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-ink">Tantangan Aktif</h2>
+          <div>
+            <h2 className="text-base font-bold text-ink">Tantangan Aktif</h2>
+            {joinedChallenges.length > 1 && (
+              <p className="text-[11px] text-ink-faint">
+                {joinedChallenges.length} tantangan sedang kamu ikuti
+              </p>
+            )}
+          </div>
           <Link
             href="/tantangan"
             className="text-xs font-semibold text-action hover:underline flex items-center gap-0.5"
@@ -290,6 +309,41 @@ export default function HomePage() {
             <ChevronRight size={14} />
           </Link>
         </div>
+
+        {/* Switcher Tab jika mengikuti lebih dari 1 tantangan */}
+        {joinedChallenges.length > 1 && (
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {joinedChallenges.map((jc) => {
+              const isCurrent = jc.id === state.activeChallengeId;
+              const prog = getChallengeProgress(state, jc.id, jc.durationDays);
+              return (
+                <button
+                  key={jc.id}
+                  onClick={() => {
+                    saveState({ activeChallengeId: jc.id });
+                    refresh();
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isCurrent
+                      ? "bg-action text-white shadow-soft ring-2 ring-action/20"
+                      : "bg-surface border border-hairline text-ink-secondary hover:border-action/40"
+                  }`}
+                >
+                  <span className="truncate max-w-[150px]">{jc.name}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      isCurrent
+                        ? "bg-white/20 text-white"
+                        : "bg-mint-tint text-action"
+                    }`}
+                  >
+                    Hari {prog.currentDay}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {activeChallenge ? (
           <div className="bg-surface border border-hairline rounded-card p-5 shadow-soft flex flex-col gap-4">
@@ -474,6 +528,53 @@ export default function HomePage() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Tantangan Lain yang Sedang Kamu Ikuti */}
+        {otherJoinedChallenges.length > 0 && (
+          <div className="flex flex-col gap-2.5 pt-2">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-ink-faint">
+              Tantangan Lain yang Kamu Ikuti ({otherJoinedChallenges.length})
+            </h3>
+            <div className="flex flex-col gap-2">
+              {otherJoinedChallenges.map((oc) => {
+                const OtherIcon = ICON_MAP[oc.icon] ?? Sparkles;
+                const prog = getChallengeProgress(state, oc.id, oc.durationDays);
+                return (
+                  <div
+                    key={oc.id}
+                    className="bg-surface border border-hairline rounded-card p-3.5 flex items-center justify-between gap-3 shadow-soft hover:border-action/40 transition-colors"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-xl bg-sky-light-tint flex items-center justify-center text-info-text shrink-0">
+                        <OtherIcon size={20} strokeWidth={2} />
+                      </div>
+                      <div className="min-w-0">
+                        <h4 className="text-xs font-bold text-ink truncate">
+                          {oc.name}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-0.5 text-[11px] text-ink-faint">
+                          <span>Hari {prog.currentDay} dari {oc.durationDays}</span>
+                          <span>·</span>
+                          <span className="font-semibold text-action">{prog.percent}% selesai</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        saveState({ activeChallengeId: oc.id });
+                        refresh();
+                      }}
+                      className="text-xs font-semibold text-action bg-mint-tint hover:bg-mint-tint/80 px-3 py-1.5 rounded-full shrink-0 cursor-pointer transition-colors"
+                    >
+                      Buka latihan →
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

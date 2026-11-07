@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import Chip from "@/components/ui/Chip";
 import Button from "@/components/ui/Button";
-import { loadState } from "@/lib/storage";
+import ProgressBar from "@/components/ui/ProgressBar";
+import { loadState, getChallengeProgress } from "@/lib/storage";
 import type { AppState, Challenge } from "@/types";
 import challengesData from "@/content/challenges.json";
 
@@ -77,6 +78,7 @@ export default function TantanganPage() {
         {challenges.map((c) => {
           const isActive = state.activeChallengeId === c.id;
           const IconComponent = ICON_MAP[c.icon] ?? Sparkles;
+          const progress = getChallengeProgress(state, c.id, c.durationDays);
 
           return (
             <div
@@ -105,7 +107,17 @@ export default function TantanganPage() {
                   </h2>
                   {isActive && (
                     <Chip variant="mint" className="text-[11px] py-0 px-2 font-medium">
-                      Aktif ✓
+                      Aktif Utama ✓
+                    </Chip>
+                  )}
+                  {!isActive && progress.hasStarted && (
+                    <Chip variant="sky" className="text-[11px] py-0 px-2 font-medium">
+                      Sedang Diikuti (Hari {progress.currentDay})
+                    </Chip>
+                  )}
+                  {progress.isCompleted && (
+                    <Chip variant="mint" className="text-[11px] py-0 px-2 font-medium">
+                      Selesai 🎉
                     </Chip>
                   )}
                   {!c.available && (
@@ -118,6 +130,17 @@ export default function TantanganPage() {
                 <p className="text-xs text-ink-secondary line-clamp-1 leading-relaxed">
                   {c.focus}
                 </p>
+
+                {/* Progress bar jika sudah dimulai */}
+                {progress.hasStarted && (
+                  <div className="py-0.5 flex flex-col gap-1">
+                    <ProgressBar value={progress.percent} />
+                    <div className="flex justify-between text-[10px] text-ink-faint">
+                      <span>Hari {progress.currentDay} dari {c.durationDays}</span>
+                      <span className="font-semibold text-action">{progress.percent}%</span>
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex items-center gap-2 mt-0.5">
                   <Chip variant="sky" className="text-[11px] py-0 px-2 font-medium">

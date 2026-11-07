@@ -73,6 +73,7 @@ export interface AppState {
   user: User | null;
   quizResults: QuizResult[];
   activeChallengeId: string | null;
+  joinedChallengeIds?: string[];      // Daftar tantangan yang sedang diikuti (progres tidak hilang saat pindah)
   completedChallengeIds: string[];
   challengeStartDate: string | null;
   currentLevel?: number;

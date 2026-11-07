@@ -25,7 +25,14 @@ import {
 import Card from "@/components/ui/Card";
 import Chip from "@/components/ui/Chip";
 import Button from "@/components/ui/Button";
-import { loadState, saveState, todayString } from "@/lib/storage";
+import ProgressBar from "@/components/ui/ProgressBar";
+import {
+  loadState,
+  saveState,
+  todayString,
+  getJoinedChallengeIds,
+  getChallengeProgress,
+} from "@/lib/storage";
 import type { AppState, Challenge, ChallengeTask } from "@/types";
 import challengesData from "@/content/challenges.json";
 import challengeTasksData from "@/content/challenge_tasks.json";
@@ -86,12 +93,37 @@ export default function DetailTantanganPage() {
 
   const isActive = state.activeChallengeId === challenge.id;
   const ChallengeIcon = ICON_MAP[challenge.icon] ?? Sparkles;
+  const progress = getChallengeProgress(state, challenge.id, challenge.durationDays);
 
   function handleStartChallenge() {
-    if (!challenge || !challenge.available) return;
+    if (!state || !challenge || !challenge.available) return;
+    const currentJoined = getJoinedChallengeIds(state);
+    const updatedJoined = Array.from(new Set([...currentJoined, challenge.id]));
+
+    // Cek apakah sudah pernah ada task untuk tantangan ini
+    const existingTasks = state.dailyTasks.filter((t) => t.challengeId === challenge.id);
+    let newDailyTasks = [...state.dailyTasks];
+
+    if (existingTasks.length === 0) {
+      // Buat tugas hari ke-1 jika belum pernah dimulai
+      const firstTask = tasks.find((t) => t.day === 1) || tasks[0];
+      if (firstTask && state.user) {
+        newDailyTasks.push({
+          id: crypto.randomUUID(),
+          userId: state.user.id,
+          challengeId: challenge.id,
+          taskId: firstTask.id,
+          day: 1,
+          date: todayString(),
+          status: "pending",
+        });
+      }
+    }
+
     saveState({
       activeChallengeId: challenge.id,
-      challengeStartDate: todayString(),
+      joinedChallengeIds: updatedJoined,
+      dailyTasks: newDailyTasks,
     });
     router.push("/");
   }
@@ -139,7 +171,17 @@ export default function DetailTantanganPage() {
           </Chip>
           {isActive && (
             <Chip variant="mint" className="text-xs py-1 px-3">
-              Sedang Aktif ✓
+              Sedang Aktif (Utama) ✓
+            </Chip>
+          )}
+          {!isActive && progress.hasStarted && (
+            <Chip variant="sky" className="text-xs py-1 px-3">
+              Sedang Diikuti (Hari {progress.currentDay})
+            </Chip>
+          )}
+          {progress.isCompleted && (
+            <Chip variant="mint" className="text-xs py-1 px-3">
+              Selesai 🎉
             </Chip>
           )}
           {!challenge.available && (
@@ -148,6 +190,20 @@ export default function DetailTantanganPage() {
             </Chip>
           )}
         </div>
+
+        {/* Progres jika sudah pernah dimulai */}
+        {progress.hasStarted && (
+          <div className="pt-2 border-t border-hairline flex flex-col gap-1.5">
+            <div className="flex items-center justify-between text-xs text-ink-secondary">
+              <span>Progres Tantangan</span>
+              <span className="font-bold text-action">{progress.percent}% tercapai</span>
+            </div>
+            <ProgressBar value={progress.percent} />
+            <p className="text-[11px] text-ink-faint">
+              {progress.completedCount} dari {challenge.durationDays} misi selesai
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Pendekatan Atomic Habits */}
@@ -231,7 +287,13 @@ export default function DetailTantanganPage() {
             onClick={handleStartChallenge}
             className="flex items-center justify-center gap-2 py-3.5 shadow-soft text-base"
           >
-            <span>{isActive ? "Lanjutkan Latihan Hari Ini" : "Mulai Tantangan Ini"}</span>
+            <span>
+              {isActive
+                ? "Lanjutkan Latihan Hari Ini"
+                : progress.hasStarted
+                ? "Buka / Jadikan Tantangan Utama"
+                : "Mulai Tantangan Ini"}
+            </span>
             <ArrowRight size={18} />
           </Button>
         ) : (

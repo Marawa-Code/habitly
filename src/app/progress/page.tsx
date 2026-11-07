@@ -35,7 +35,13 @@ import Card from "@/components/ui/Card";
 import BadgeCard from "@/components/ui/BadgeCard";
 import ProgressBar from "@/components/ui/ProgressBar";
 import Button from "@/components/ui/Button";
-import { loadState, todayString } from "@/lib/storage";
+import {
+  loadState,
+  saveState,
+  todayString,
+  getJoinedChallengeIds,
+  getChallengeProgress,
+} from "@/lib/storage";
 import { calculateStreak, countActiveDays } from "@/lib/streak";
 import { badges } from "@/lib/badges";
 import { seedDemoData } from "@/lib/seed";
@@ -234,7 +240,7 @@ export default function ProgressPage() {
         </div>
       </Card>
 
-      {/* Section: Tantangan Berjalan (menggantikan Jalur Latihan lama) */}
+      {/* Section: Tantangan Berjalan */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-ink">Tantangan Berjalan</p>
@@ -242,53 +248,91 @@ export default function ProgressPage() {
             onClick={() => router.push("/tantangan")}
             className="text-xs font-semibold text-action hover:underline"
           >
-            {activeChallenge ? "Ganti tantangan →" : "Pilih tantangan →"}
+            {activeChallenge ? "Jelajahi tantangan lain →" : "Pilih tantangan →"}
           </button>
         </div>
 
-        {activeChallenge ? (
-          <Card>
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0">
-                    {(() => {
-                      const IconComp = ICON_MAP[activeChallenge.icon] ?? Sparkles;
-                      return <IconComp size={20} strokeWidth={2} />;
-                    })()}
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-ink">{activeChallenge.name}</p>
-                    <p className="text-xs text-ink-faint">
-                      Hari {challengeDayN} dari {activeChallenge.durationDays}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-xs font-bold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
-                  {challengePercent}%
-                </span>
-              </div>
+        {(() => {
+          const joinedIds = getJoinedChallengeIds(state);
+          const allChallenges = challengesData as Challenge[];
+          const joinedList = allChallenges.filter((c) => joinedIds.includes(c.id));
 
-              <ProgressBar value={challengePercent} />
+          if (joinedList.length === 0) {
+            return (
+              <Card>
+                <div className="flex items-center justify-between py-1">
+                  <div>
+                    <p className="text-sm font-semibold text-ink">Belum ada tantangan aktif</p>
+                    <p className="text-xs text-ink-faint mt-0.5">Pilih salah satu dari 8 tantangan terarah</p>
+                  </div>
+                  <Button
+                    variant="secondary"
+                    onClick={() => router.push("/tantangan")}
+                    className="text-xs py-2 px-3"
+                  >
+                    Pilih
+                  </Button>
+                </div>
+              </Card>
+            );
+          }
+
+          return (
+            <div className="flex flex-col gap-3">
+              {joinedList.map((ch) => {
+                const IconComp = ICON_MAP[ch.icon] ?? Sparkles;
+                const prog = getChallengeProgress(state, ch.id, ch.durationDays);
+                const isCurrentActive = state.activeChallengeId === ch.id;
+
+                return (
+                  <Card key={ch.id}>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-2xl bg-mint-tint flex items-center justify-center text-action shrink-0">
+                            <IconComp size={20} strokeWidth={2} />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2">
+                              <p className="text-sm font-bold text-ink truncate">{ch.name}</p>
+                              {isCurrentActive && (
+                                <span className="text-[10px] bg-action text-white font-bold px-2 py-0.2 rounded-full">
+                                  Aktif
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-ink-faint">
+                              Hari {prog.currentDay} dari {ch.durationDays}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-xs font-bold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
+                            {prog.percent}%
+                          </span>
+                          {!isCurrentActive && (
+                            <button
+                              onClick={() => {
+                                saveState({ activeChallengeId: ch.id });
+                                router.push("/");
+                              }}
+                              className="text-xs font-semibold text-action underline hover:text-action-pressed"
+                            >
+                              Buka di Beranda
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      <ProgressBar value={prog.percent} />
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
-          </Card>
-        ) : (
-          <Card>
-            <div className="flex items-center justify-between py-1">
-              <div>
-                <p className="text-sm font-semibold text-ink">Belum ada tantangan aktif</p>
-                <p className="text-xs text-ink-faint mt-0.5">Pilih salah satu dari 8 tantangan terarah</p>
-              </div>
-              <Button
-                variant="secondary"
-                onClick={() => router.push("/tantangan")}
-                className="text-xs py-2 px-3"
-              >
-                Pilih
-              </Button>
-            </div>
-          </Card>
-        )}
+          );
+        })()}
       </div>
 
       {/* Grafik tren skor kuis */}

@@ -8,6 +8,7 @@ const defaultState: AppState = {
   user: null,
   quizResults: [],
   activeChallengeId: null,
+  joinedChallengeIds: [],
   completedChallengeIds: [],
   challengeStartDate: null,
   dailyTasks: [],
@@ -20,7 +21,11 @@ export function loadState(): AppState {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return defaultState;
-    return { ...defaultState, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    const joined = parsed.joinedChallengeIds || (
+      parsed.activeChallengeId ? [parsed.activeChallengeId] : []
+    );
+    return { ...defaultState, ...parsed, joinedChallengeIds: joined };
   } catch {
     return defaultState;
   }
@@ -93,4 +98,48 @@ export function getTodayTask(state: AppState): DailyTask | undefined {
     return challengeTasks.reduce((prev, curr) => (curr.day > prev.day ? curr : prev));
   }
   return undefined;
+}
+
+/**
+ * Mengambil seluruh ID tantangan yang sedang diikuti (progres aman tersimpan).
+ */
+export function getJoinedChallengeIds(state: AppState): string[] {
+  const fromState = state.joinedChallengeIds || [];
+  const fromActive = state.activeChallengeId ? [state.activeChallengeId] : [];
+  const fromTasks = state.dailyTasks.map((t) => t.challengeId);
+  return Array.from(new Set([...fromState, ...fromActive, ...fromTasks]));
+}
+
+/**
+ * Menghitung detail progres untuk suatu tantangan spesifik.
+ */
+export function getChallengeProgress(
+  state: AppState,
+  challengeId: string,
+  durationDays: number
+) {
+  const tasks = state.dailyTasks.filter((t) => t.challengeId === challengeId);
+  const completedTasks = tasks.filter((t) => t.status === "done" || t.status === "swapped");
+  const completedCount = completedTasks.length;
+  const currentTask =
+    tasks.find((t) => t.status === "pending") ||
+    (tasks.length > 0
+      ? tasks.reduce((prev, curr) => (curr.day > prev.day ? curr : prev))
+      : null);
+  const currentDay = currentTask
+    ? currentTask.day
+    : completedCount > 0
+    ? Math.min(durationDays, completedCount + 1)
+    : 1;
+  const percent = Math.min(100, Math.round((completedCount / durationDays) * 100));
+  const isCompleted =
+    state.completedChallengeIds.includes(challengeId) || completedCount >= durationDays;
+
+  return {
+    completedCount,
+    currentDay,
+    percent,
+    isCompleted,
+    hasStarted: tasks.length > 0 || (state.joinedChallengeIds || []).includes(challengeId),
+  };
 }

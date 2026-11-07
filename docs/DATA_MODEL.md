@@ -78,7 +78,9 @@ export interface AppState {
   user: User | null;
   quizResults: QuizResult[];
   activeChallengeId: string | null;
+  joinedChallengeIds?: string[];      // Daftar tantangan yang sedang diikuti (progres tersimpan utuh)
   completedChallengeIds: string[];
+  challengeStartDate: string | null;
   dailyTasks: DailyTask[];
   journalEntries: JournalEntry[];
   earnedBadgeIds: string[];

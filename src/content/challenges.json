@@ -1,0 +1,186 @@
+[
+  {
+    "id": "menjadi-pendengar-yang-baik",
+    "pathId": "kerja-kelompok",
+    "name": "Menjadi Pendengar yang Baik",
+    "emoji": "👂",
+    "description": "Latih kemampuan mendengar secara aktif dan penuh perhatian",
+    "durationDays": 21,
+    "difficulty": "Pemula",
+    "science": {
+      "title": "Kekuatan mendengarkan secara aktif",
+      "body": "Penelitian psikologi komunikasi menunjukkan bahwa sebagian besar kecemasan sosial berasal dari fokus berlebihan pada diri sendiri (self-focused attention). Saat kamu mengalihkan fokus secara sadar untuk mendengarkan lawan bicara, beban kecemasan di otak prefrontal berkurang drastis, sekaligus membangun rasa aman dalam interaksi."
+    },
+    "facts": [
+      "Mendengar aktif meningkatkan kepercayaan interpersonal hingga 80%",
+      "Mengurangi fokus pada diri sendiri terbukti menurunkan detak jantung saat tegang",
+      "Lawan bicara 3x lebih nyaman berbicara dengan pendengar yang responsif"
+    ],
+    "benefits": [
+      "Mengurangi rasa tegang saat harus merespons",
+      "Membuat interaksi mengalir lebih alami tanpa rasa terpaksa",
+      "Membangun hubungan pertemanan yang lebih erat dan tulus"
+    ]
+  },
+  {
+    "id": "belajar-mengobrol",
+    "pathId": "bicara-kelas",
+    "name": "Belajar Mengobrol",
+    "emoji": "💬",
+    "description": "Bangun kepercayaan diri berbicara dengan orang baru",
+    "durationDays": 14,
+    "difficulty": "Menengah",
+    "science": {
+      "title": "Ilmu di balik kemampuan sosial",
+      "body": "Menurut psikolog sosial Amy Cuddy dari Harvard, kecemasan sosial terjadi karena amigdala mengaktifkan respons 'fight-or-flight' saat berinteraksi dengan orang asing. Namun otak bisa dilatih ulang melalui eksposur bertahap (gradual exposure therapy). Setiap percakapan baru yang berhasil melepaskan dopamin — neurotransmitter kepuasan — sehingga otak mulai mengasosiasikan interaksi sosial dengan perasaan positif."
+    },
+    "facts": [
+      "Eksposur bertahap terbukti 70% efektif mengurangi kecemasan sosial (CBT research)",
+      "Otak melepas dopamin setiap kali percakapan berjalan baik",
+      "Kemampuan sosial meningkat 60% setelah 2 minggu latihan rutin"
+    ],
+    "benefits": [
+      "Mengurangi rasa gugup saat bertemu orang baru",
+      "Meningkatkan kemampuan membangun koneksi obrolan",
+      "Membangun rasa percaya diri yang nyata dan bertahan lama"
+    ]
+  },
+  {
+    "id": "mengatur-emosi",
+    "pathId": "percaya-diri",
+    "name": "Mengatur Emosi",
+    "emoji": "🔥",
+    "description": "Kelola perasaan dengan sehat dan tetap tenang saat tegang",
+    "durationDays": 21,
+    "difficulty": "Menengah",
+    "science": {
+      "title": "Regulasi emosi dan sistem saraf",
+      "body": "Ketika merasa cemas, sistem saraf simpatik memicu reaksi fisik seperti telapak tangan berkeringat dan napas memburu. Dengan latihan penamaan emosi (affect labeling) dan grounding terarah, kamu mengaktifkan korteks prefrontal untuk menenangkan sistem limbik secara alami."
+    },
+    "facts": [
+      "Menamai emosi yang dirasakan menurunkan intensitas respons amigdala sebesar 50%",
+      "Teknik grounding 5-4-3-2-1 menstabilkan ritme jantung dalam hitungan menit",
+      "Regulasi emosi rutin melatih ketahanan mental jangka panjang"
+    ],
+    "benefits": [
+      "Tidak mudah panik saat berada di situasi sosial yang mendadak",
+      "Mengenali sinyal tubuh sebelum kecemasan memuncak",
+      "Mampu kembali tenang dengan cepat melalui teknik praktis"
+    ]
+  },
+  {
+    "id": "berbicara-di-depan-umum",
+    "pathId": "bicara-kelas",
+    "name": "Berbicara di Depan Umum",
+    "emoji": "🎤",
+    "description": "Latih keberanian dan teknik berbicara di hadapan kelompok",
+    "durationDays": 21,
+    "difficulty": "Pemula",
+    "science": {
+      "title": "Membiasakan diri dengan sorotan sosial",
+      "body": "Glossophobia atau ketakutan berbicara di depan umum adalah respons evolusioner terhadap risiko penolakan kelompok. Melalui teknik mikroskopik — mulai dari menyuarakan pendapat 5 detik hingga presentasi singkat — jalur saraf toleransi sosial terbentuk secara kokoh."
+    },
+    "facts": [
+      "73% remaja mengalami kecemasan saat berbicara di depan audiens",
+      "Mikro-latihan selama 10 detik setiap hari meningkatkan keberanian berbicara hingga 65%",
+      "Pernapasan diafragma sebelum berbicara mengurangi getaran pada suara"
+    ],
+    "benefits": [
+      "Lebih percaya diri saat presentasi atau kerja kelompok",
+      "Suara lebih stabil dan tidak mudah gemetar",
+      "Mampu menyampaikan ide secara jelas dan runtut"
+    ]
+  },
+  {
+    "id": "bilang-tidak",
+    "pathId": "percaya-diri",
+    "name": "Bilang Tidak",
+    "emoji": "🛡️",
+    "description": "Tegakkan batasan diri tanpa rasa bersalah berlebihan",
+    "durationDays": 7,
+    "difficulty": "Pemula",
+    "science": {
+      "title": "Menjaga batas diri (assertive boundaries)",
+      "body": "People-pleasing sering berakar dari ketakutan akan konflik atau penolakan. Mengembangkan ketegasan asertif mengajarkan sistem emosional bahwa menolak ajakan yang tidak sesuai bukan berarti merusak relasi, melainkan merawat energi diri."
+    },
+    "facts": [
+      "Menegakkan batasan yang jelas menurunkan tingkat burnout emosional hingga 40%",
+      "Komunikasi asertif terbukti memperkuat hubungan pertemanan jangka panjang",
+      "Menolak secara sopan mengurangi rasa cemas yang berkepanjangan"
+    ],
+    "benefits": [
+      "Mampu menolak ajakan tanpa rasa bersalah yang membebani",
+      "Melindungi waktu istirahat dan energi pribadi",
+      "Dihargai oleh teman sebaya karena memiliki prinsip yang jelas"
+    ]
+  },
+  {
+    "id": "hubungan-sehat",
+    "pathId": "kerja-kelompok",
+    "name": "Hubungan Sehat",
+    "emoji": "💖",
+    "description": "Pelajari pola komunikasi yang sehat dalam relasi pertemanan",
+    "durationDays": 14,
+    "difficulty": "Lanjutan",
+    "science": {
+      "title": "Koneksi sosial yang mendalam dan saling mendukung",
+      "body": "Hubungan pertemanan berkualitas tinggi didasari oleh rasa saling percaya dan keterbukaan emosional yang proporsional. Latihan empati kognitif membantu membedakan mana respons yang mendukung dan mana ekspektasi yang tidak realistis."
+    },
+    "facts": [
+      "Memiliki minimal satu teman yang suportif menurunkan risiko kecemasan hingga 50%",
+      "Keterbukaan bertahap memperkuat ikatan persahabatan secara signifikan",
+      "Komunikasi empati mencegah timbulnya kesalahpahaman antarteman"
+    ],
+    "benefits": [
+      "Memahami batasan yang sehat dalam pertemanan",
+      "Mampu menyelesaikan perbedaan pendapat dengan kepala dingin",
+      "Merasa didukung dan aman saat berbagi cerita"
+    ]
+  },
+  {
+    "id": "stop-overthinking",
+    "pathId": "percaya-diri",
+    "name": "Stop Overthinking",
+    "emoji": "🧘",
+    "description": "Latih pikiran untuk hidup di saat ini tanpa kecemasan berlebih",
+    "durationDays": 7,
+    "difficulty": "Menengah",
+    "science": {
+      "title": "Memutus rantai ruminasi pikiran",
+      "body": "Overthinking sosial biasanya berbentuk post-event processing (menganalisis kembali obrolan yang sudah lewat) dan anticipatory anxiety. Teknik restrukturisasi kognitif melatih otak untuk membedakan antara fakta objektif dan asumsi negatif buatan pikiran."
+    },
+    "facts": [
+      "85% hal yang kita khawatirkan dalam interaksi sosial terbukti tidak terjadi",
+      "Menulis pikiran di jurnal membebaskan ruang kerja memori kerja (working memory)",
+      "Teknik defusi kognitif memotong overthinking hingga 45% lebih cepat"
+    ],
+    "benefits": [
+      "Tidur lebih nyenyak tanpa memutar ulang kejadian seharian",
+      "Pikiran terasa lebih ringan dan tidak mudah lelah secara mental",
+      "Lebih menikmati momen interaksi yang sedang berlangsung"
+    ]
+  },
+  {
+    "id": "membangun-kepercayaan-diri",
+    "pathId": "percaya-diri",
+    "name": "Membangun Kepercayaan Diri",
+    "emoji": "💪",
+    "description": "Kenali kekuatanmu dan bangun rasa percaya diri yang berakar kuat",
+    "durationDays": 7,
+    "difficulty": "Menengah",
+    "science": {
+      "title": "Efikasi diri (self-efficacy) dan neuroplastisitas",
+      "body": "Kepercayaan diri bukanlah sifat bawaan, melainkan hasil akumulasi bukti kecil dari tindakan nyata yang berhasil diselesaikan. Dengan mencatat kemenangan-kemenangan kecil (small wins), sirkuit penghargaan di otak memperkuat keyakinan akan kemampuan diri sendiri."
+    },
+    "facts": [
+      "Merayakan pencapaian kecil meningkatkan motivasi harian hingga 55%",
+      "Self-efficacy yang tinggi berkorelasi langsung dengan ketahanan menghadapi stres",
+      "Afirmasi berbasis bukti nyata lebih efektif daripada sekadar berpikir positif"
+    ],
+    "benefits": [
+      "Lebih berani mengambil inisiatif dalam pergaulan sehari-hari",
+      "Menyadari kelebihan dan nilai unik yang kamu miliki",
+      "Tidak mudah minder saat membandingkan diri dengan orang lain"
+    ]
+  }
+]

@@ -3,10 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, BarChart2, Users, LifeBuoy } from "lucide-react";
+import { Home, Compass, BarChart2, Users, LifeBuoy } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/", label: "Hari Ini", Icon: Home },
+  { href: "/tantangan", label: "Tantangan", Icon: Compass },
   { href: "/progress", label: "Progres", Icon: BarChart2 },
   { href: "/community", label: "Komunitas", Icon: Users },
   { href: "/help", label: "Bantuan", Icon: LifeBuoy },

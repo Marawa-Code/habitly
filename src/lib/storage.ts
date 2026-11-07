@@ -12,6 +12,8 @@ const defaultState: AppState = {
   dailyTasks: [],
   journalEntries: [],
   earnedBadgeIds: [],
+  activeChallengeId: null,
+  challengeStartDate: null,
 };
 
 export function loadState(): AppState {

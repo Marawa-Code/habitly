@@ -55,6 +55,22 @@ export interface Badge {
   icon: string;           // nama ikon Lucide
 }
 
+export interface Challenge {
+  id: string;
+  pathId: string;
+  name: string;
+  emoji: string;
+  description: string;
+  durationDays: number;
+  difficulty: "Pemula" | "Menengah" | "Lanjutan";
+  science: {
+    title: string;
+    body: string;
+  };
+  facts: string[];
+  benefits: string[];
+}
+
 export interface AppState {
   user: User | null;
   quizResults: QuizResult[];
@@ -63,5 +79,7 @@ export interface AppState {
   dailyTasks: DailyTask[];
   journalEntries: JournalEntry[];
   earnedBadgeIds: string[];
+  activeChallengeId?: string | null;
+  challengeStartDate?: string | null;
 }
 

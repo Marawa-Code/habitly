@@ -2,16 +2,18 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Flame, ChevronRight, CheckCircle } from "lucide-react";
+import { Flame, ChevronRight, CheckCircle, Compass } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Chip from "@/components/ui/Chip";
+import ProgressBar from "@/components/ui/ProgressBar";
 import { loadState, saveState, getTodayTask, saveDailyTask, todayString } from "@/lib/storage";
 import { pickTask, shouldLevelUp } from "@/lib/recommend";
 import { calculateStreak } from "@/lib/streak";
 import { evaluateBadges } from "@/lib/badges";
-import type { AppState, DailyTask, Task } from "@/types";
+import type { AppState, DailyTask, Task, Challenge } from "@/types";
 import tasksData from "@/content/tasks.json";
+import challengesData from "@/content/challenges.json";
 
 export default function HomePage() {
   const router = useRouter();
@@ -91,6 +93,23 @@ export default function HomePage() {
     (t) => t.status === "done" || t.status === "swapped"
   ).length;
 
+  // Cek tantangan aktif
+  const activeChallenge = (challengesData as Challenge[]).find(
+    (c) => c.id === state.activeChallengeId
+  );
+
+  let challengeDayN = 1;
+  let challengePercent = 0;
+  if (activeChallenge) {
+    if (state.challengeStartDate) {
+      const start = new Date(state.challengeStartDate).getTime();
+      const now = new Date(todayString()).getTime();
+      const diffDays = Math.max(0, Math.floor((now - start) / (1000 * 60 * 60 * 24)));
+      challengeDayN = Math.min(activeChallenge.durationDays, diffDays + 1);
+    }
+    challengePercent = Math.round((challengeDayN / activeChallenge.durationDays) * 100);
+  }
+
   return (
     <div className="flex flex-col gap-6">
 
@@ -104,6 +123,59 @@ export default function HomePage() {
           {streak} hari
         </Chip>
       </div>
+
+      {/* Card Tantangan Aktif / Ajakan Memilih */}
+      {activeChallenge ? (
+        <div
+          onClick={() => router.push(`/tantangan/${activeChallenge.id}`)}
+          className="bg-surface border border-hairline rounded-card px-5 py-4 shadow-soft cursor-pointer hover:border-action/40 transition-colors flex flex-col gap-3"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="text-2xl" role="img" aria-label={activeChallenge.name}>
+                {activeChallenge.emoji}
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-ink-faint uppercase tracking-wider">
+                  Tantangan Aktif
+                </p>
+                <h2 className="text-sm font-bold text-ink">{activeChallenge.name}</h2>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold text-action bg-mint-tint px-2.5 py-0.5 rounded-full">
+                {challengePercent}%
+              </span>
+              <ChevronRight size={16} className="text-ink-faint" />
+            </div>
+          </div>
+
+          <ProgressBar
+            value={challengePercent}
+            label={`Hari ke-${challengeDayN} dari ${activeChallenge.durationDays}`}
+          />
+        </div>
+      ) : (
+        <div
+          onClick={() => router.push("/tantangan")}
+          className="bg-gradient-to-r from-mint-tint/60 to-sky-light-tint/60 border border-hairline rounded-card px-5 py-4 flex items-center justify-between cursor-pointer hover:border-action/40 transition-all shadow-soft group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-surface border border-hairline/60 flex items-center justify-center text-action shrink-0 shadow-soft">
+              <Compass size={20} strokeWidth={2} />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <p className="text-xs font-bold text-action uppercase tracking-wide">
+                Mulai Tantangan Terpandu
+              </p>
+              <p className="text-sm font-semibold text-ink group-hover:text-action transition-colors">
+                Pilih 1 dari 8 tantangan terarah untukmu →
+              </p>
+            </div>
+          </div>
+          <ChevronRight size={18} className="text-action shrink-0 group-hover:translate-x-0.5 transition-transform" />
+        </div>
+      )}
 
       {/* Notifikasi naik tingkat */}
       {leveledUp && (
@@ -123,9 +195,11 @@ export default function HomePage() {
           <div className="flex flex-col gap-4">
             {/* Label eyebrow */}
             <span className="text-xs font-semibold text-ink-faint tracking-wide uppercase">
-              Tingkat {state.currentLevel} dari 5 · {state.currentPathId === "percaya-diri"
-                ? "Percaya Diri" : state.currentPathId === "bicara-kelas"
-                ? "Bicara di Kelas" : "Kerja Kelompok"}
+              Tingkat {state.currentLevel} dari 5 · {activeChallenge ? activeChallenge.name : (
+                state.currentPathId === "percaya-diri"
+                  ? "Percaya Diri" : state.currentPathId === "bicara-kelas"
+                  ? "Bicara di Kelas" : "Kerja Kelompok"
+              )}
             </span>
 
             {isDone ? (

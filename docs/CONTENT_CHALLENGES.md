@@ -18,14 +18,14 @@ Konten disimpan sebagai JSON di `src/content/challenges.json` dan `src/content/c
 
 | No | ID | Nama Tantangan | Durasi | Tingkat Kesulitan | Ikon Lucide | Status Prototipe | Fokus |
 |---|---|---|---|---|---|---|---|
-| 1 | `menjadi-pendengar-yang-baik` | Menjadi Pendengar yang Baik | 14 hari | Pemula (1) | `Ear` | Segera hadir | Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon |
+| 1 | `menjadi-pendengar-yang-baik` | Menjadi Pendengar yang Baik | 14 hari | Pemula (1) | `Ear` | **Tersedia (Hari 1–7)** | Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon |
 | 2 | `menyapa-orang-baru` | Menyapa Orang Baru | 14 hari | Pemula (1) | `UserPlus` | **Tersedia (Hari 1–7)** | Membiasakan senyum ramah, kontak mata santai, dan sapaan wajar pada teman baru di sekolah/kampus |
 | 3 | `ngobrol-dengan-lawan-jenis` | Ngobrol dengan Lawan Jenis | 14 hari | Menengah (2) | `Users` | **Tersedia (Hari 1–7)** | Percakapan sopan, wajar, dan tenang dalam interaksi belajar atau organisasi dengan teman lawan jenis tanpa romantisme |
 | 4 | `ngobrol-dengan-orang-mulai-dekat` | Ngobrol dengan Orang yang Mulai Dekat | 14 hari | Menengah (2) | `MessageSquare` | **Tersedia (Hari 1–7)** | Membuka obrolan santai seputar minat, hobi, dan keseharian dengan teman yang mulai akrab di lingkungan sekitar |
-| 5 | `berbicara-di-depan-umum` | Berbicara di Depan Umum | 21 hari | Menengah (2) | `Mic` | Segera hadir | Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok |
-| 6 | `bertanya-dan-menjawab-di-kelas` | Bertanya dan Menjawab di Kelas | 7 hari | Pemula (1) | `HelpCircle` | Segera hadir | Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas |
-| 7 | `bilang-tidak` | Bilang Tidak | 7 hari | Pemula (1) | `Shield` | Segera hadir | Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah |
-| 8 | `menyampaikan-pendapat-dengan-sopan` | Menyampaikan Pendapat dengan Sopan | 14 hari | Lanjutan (3) | `MessageCircle` | Segera hadir | Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun |
+| 5 | `berbicara-di-depan-umum` | Berbicara di Depan Umum | 21 hari | Menengah (2) | `Mic` | **Tersedia (Hari 1–7)** | Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok |
+| 6 | `bertanya-dan-menjawab-di-kelas` | Bertanya dan Menjawab di Kelas | 7 hari | Pemula (1) | `HelpCircle` | **Tersedia (Hari 1–7)** | Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas |
+| 7 | `bilang-tidak` | Bilang Tidak | 7 hari | Pemula (1) | `Shield` | **Tersedia (Hari 1–7)** | Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah |
+| 8 | `menyampaikan-pendapat-dengan-sopan` | Menyampaikan Pendapat dengan Sopan | 14 hari | Lanjutan (3) | `MessageCircle` | **Tersedia (Hari 1–7)** | Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun |
 
 ---
 

@@ -8,7 +8,7 @@
     "difficulty": 1,
     "focus": "Mendengarkan aktif dan penuh perhatian tanpa terburu-buru memikirkan respon sendiri",
     "description": "Banyak remaja merasa cemas saat mengobrol karena sibuk memikirkan 'nanti aku harus balas apa ya?'. Tantangan ini melatihmu menjadi pendengar yang tenang, hadir seutuhnya, dan memberi ruang bagi lawan bicara tanpa tekanan harus langsung pintar merespons.",
-    "available": false
+    "available": true
   },
   {
     "id": "menyapa-orang-baru",
@@ -52,7 +52,7 @@
     "difficulty": 2,
     "focus": "Melatih ketenangan suara dan keberanian saat presentasi atau berbicara di depan kelompok",
     "description": "Gugup di depan banyak orang adalah reaksi alami tubuh. Tantangan ini melatihmu menguasai teknik napas tenang, kestabilan volume suara, dan kontak mata bertahap saat berbicara di hadapan audiens atau kelompok kelas.",
-    "available": false
+    "available": true
   },
   {
     "id": "bertanya-dan-menjawab-di-kelas",
@@ -63,7 +63,7 @@
     "difficulty": 1,
     "focus": "Membangun keberanian mengangkat tangan, bertanya, dan menjawab dalam sesi belajar di kelas",
     "description": "Takut dianggap bodoh atau salah bicara sering menahan kita untuk bertanya di kelas. Tantangan ini memandu langkah-langkah kecil untuk berani mengangkat tangan dan mengekspresikan rasa ingin tahu secara santun.",
-    "available": false
+    "available": true
   },
   {
     "id": "bilang-tidak",
@@ -74,7 +74,7 @@
     "difficulty": 1,
     "focus": "Menegakkan batasan diri dan menolak ajakan dengan sopan tanpa beban rasa bersalah",
     "description": "Menjaga hubungan baik bukan berarti harus selalu berkata 'iya'. Tantangan ini melatihmu menegakkan batasan personal yang sehat, menolak permintaan yang membebani secara sopan, dan terbebas dari rasa bersalah yang berlebihan.",
-    "available": false
+    "available": true
   },
   {
     "id": "menyampaikan-pendapat-dengan-sopan",
@@ -85,6 +85,6 @@
     "difficulty": 3,
     "focus": "Mengemukakan pandangan pribadi dan perbedaan opini secara tenang, runtut, dan santun",
     "description": "Menyuarakan gagasan pribadi di tengah kelompok membutuhkan keberanian dan seni berkomunikasi. Di sini kamu akan melatih cara menyampaikan argumen logis, menanggapi perbedaan pendapat, dan tetap menghargai lawan bicara.",
-    "available": false
+    "available": true
   }
 ]

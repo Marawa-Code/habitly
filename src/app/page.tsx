@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Flame,
   ChevronRight,
@@ -221,10 +222,14 @@ export default function HomePage() {
 
       {/* Top Header: Logo + App Name & Streak */}
       <div className="flex items-center justify-between pt-1">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-mint-tint flex items-center justify-center text-action shadow-soft">
-            <Sprout size={18} strokeWidth={2.2} />
-          </div>
+        <div className="flex items-center gap-2.5">
+          <Image
+            src="/logo.png"
+            alt="Habitly Logo"
+            width={32}
+            height={32}
+            className="w-8 h-8 rounded-full shadow-soft object-cover"
+          />
           <span className="font-extrabold text-sm tracking-wider uppercase text-action">
             Habitly
           </span>

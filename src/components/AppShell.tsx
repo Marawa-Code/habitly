@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Home, Compass, BarChart2, Users, LifeBuoy } from "lucide-react";
 
@@ -42,7 +43,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         className="hidden lg:flex flex-col w-60 shrink-0 border-r border-hairline bg-surface h-screen"
         aria-label="Navigasi utama"
       >
-        <div className="px-6 py-8">
+        <div className="px-6 py-8 flex items-center gap-3">
+          <Image
+            src="/logo.png"
+            alt="Habitly Logo"
+            width={36}
+            height={36}
+            className="w-9 h-9 rounded-full shadow-soft object-cover"
+          />
           <span className="text-xl font-bold text-action tracking-tight">Habitly</span>
         </div>
         <nav className="flex flex-col gap-1 px-3 flex-1" aria-label="Menu">

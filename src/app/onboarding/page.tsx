@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   Shield,
   Sparkles,
@@ -64,10 +65,17 @@ export default function OnboardingPage() {
           {/* Logo + Headline */}
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
-              <div className="w-24 h-24 rounded-full bg-action flex items-center justify-center shadow-modal">
-                <span className="text-white font-bold text-4xl tracking-tighter">H</span>
+              <div className="w-24 h-24 rounded-full overflow-hidden shadow-modal bg-action">
+                <Image
+                  src="/logo.png"
+                  alt="Habitly Logo"
+                  width={96}
+                  height={96}
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
-              <div className="absolute inset-0 rounded-full border-[6px] border-action/15 scale-[1.3]" />
+              <div className="absolute inset-0 rounded-full border-[6px] border-action/15 scale-[1.3] pointer-events-none" />
             </div>
 
             <div className="text-center mt-2">

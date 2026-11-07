@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   description:
     "Habitly membantu remaja membangun rasa percaya diri berkomunikasi lewat latihan kebiasaan kecil harian.",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

@@ -673,7 +673,6 @@ export default function CommunityPage() {
                     </form>
                   </div>
                 )}
-                </div>
               </div>
             );
           })

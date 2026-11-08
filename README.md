@@ -1,6 +1,8 @@
 # Habitly
 
-Aplikasi web mobile-first (PWA) untuk remaja dengan kecemasan sosial dan hambatan komunikasi. Dibuat untuk **Hackathon FIRETECH 2026**.
+Aplikasi web mobile-first (PWA) untuk remaja yang ingin membangun rasa percaya diri dalam berkomunikasi sehari-hari. Dibuat untuk **Hackathon FIRETECH 2026** (Tema: *Harmonizing Tech and Humanity: Creating Solutions for a Better Society*).
+
+🔗 **Live Demo (Vercel):** [https://habitly-marawa.vercel.app](https://habitly-marawa.vercel.app)
 
 ## Tentang
 

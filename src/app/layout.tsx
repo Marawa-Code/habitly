@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AppShell from "@/components/AppShell";
 import RegisterSW from "@/components/RegisterSW";
+import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
 const jakartaSans = Plus_Jakarta_Sans({
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-full flex flex-col bg-canvas text-ink font-sans">
+        <ThemeProvider />
         <Suspense fallback={null}>
           <AppShell>{children}</AppShell>
         </Suspense>

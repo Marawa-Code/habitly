@@ -692,7 +692,7 @@ export default function CommunityPage() {
                               navigator.clipboard.writeText(
                                 `"${post.content}" - ${post.authorName} di Habitly`
                               );
-                              showToast("Tautan cerita berhasil disalin!");
+                              showToast("Tautan cerita berhasil disalin ke papan klip! ✨");
                             }
                           }}
                           className="flex items-center gap-2 px-3.5 py-2 text-xs text-ink-secondary hover:text-ink hover:bg-canvas transition-colors text-left cursor-pointer"
@@ -749,7 +749,7 @@ export default function CommunityPage() {
                     </span>
                   </button>
 
-                  {/* Bagikan (dekoratif) */}
+                  {/* Bagikan */}
                   <button
                     type="button"
                     onClick={() => {
@@ -757,7 +757,7 @@ export default function CommunityPage() {
                         navigator.clipboard.writeText(
                           `"${post.content}" - ${post.authorName} di Habitly`
                         );
-                        alert("Tautan cerita berhasil disalin!");
+                        showToast("Tautan cerita berhasil disalin ke papan klip! ✨");
                       }
                     }}
                     className="flex items-center gap-1.5 text-ink-faint hover:text-ink transition-colors ml-auto cursor-pointer"
@@ -959,11 +959,21 @@ export default function CommunityPage() {
         </div>
       )}
 
-      {/* Toast Notifikasi */}
+      {/* Toast Notifikasi Modern & Estetik */}
       {toastMessage && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-ink text-canvas px-4 py-2.5 rounded-full text-xs font-medium shadow-card flex items-center gap-2 animate-fadeIn max-w-[90vw] text-center">
-          <Check size={14} className="text-action shrink-0" />
-          <span>{toastMessage}</span>
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-surface/95 backdrop-blur-md border border-hairline/90 px-4 py-3 rounded-2xl shadow-card text-ink text-xs font-semibold animate-fadeIn max-w-[92vw] sm:max-w-md ring-1 ring-action/20">
+          <div className="w-7 h-7 rounded-xl bg-mint-tint border border-mint/40 text-action flex items-center justify-center shrink-0 shadow-2xs">
+            <Check size={14} strokeWidth={2.5} />
+          </div>
+          <p className="flex-1 leading-snug">{toastMessage}</p>
+          <button
+            type="button"
+            onClick={() => setToastMessage(null)}
+            className="w-6 h-6 rounded-full flex items-center justify-center text-ink-faint hover:text-ink hover:bg-canvas transition-colors cursor-pointer shrink-0"
+            aria-label="Tutup notifikasi"
+          >
+            <X size={13} />
+          </button>
         </div>
       )}
 

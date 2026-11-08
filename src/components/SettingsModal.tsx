@@ -39,6 +39,7 @@ export default function SettingsModal({
   const router = useRouter();
   const [nickname, setNickname] = useState("");
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(false);
   const [theme, setTheme] = useState<Theme>("system");
   const [reminderTime, setReminderTime] = useState<string>("pagi");
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -144,8 +145,10 @@ export default function SettingsModal({
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
+      setExportSuccess(true);
+      setTimeout(() => setExportSuccess(false), 3000);
     } catch {
-      alert("Gagal mengekspor data.");
+      // no-op
     }
   }
 
@@ -348,7 +351,7 @@ export default function SettingsModal({
                 className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border border-hairline hover:border-action text-ink text-xs font-semibold rounded-card transition-colors flex-1"
               >
                 <Download size={14} className="text-action" />
-                Cadangkan Data (JSON)
+                {exportSuccess ? "Berhasil Dicadangkan ✓" : "Cadangkan Data (JSON)"}
               </button>
 
               <button
